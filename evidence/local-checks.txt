@@ -1,0 +1,121 @@
+Tested commit: 284455a1443ffe4788dae282b113709953007276
+UTC: 2026-10-01T08:17:38.705796+00:00
+
+$ npm run db:setup
+
+> crm-ias-security@1.0.0 db:setup
+> node --env-file-if-exists=.env scripts/setup-db.js
+
+Synthetic schema and three demo accounts prepared; API uses non-owner crm_app.
+
+
+$ npm test
+
+> crm-ias-security@1.0.0 test
+> node --env-file-if-exists=.env --test --test-concurrency=1 test/*.test.js
+
+✔ SEC-01 public search returns only approved records; exact SQL injection is neutralized (97.8485ms)
+✔ authentication rejects missing, invalid, expired and revoked tokens (58.105334ms)
+✔ SEC-02 own record succeeds; another student record hidden; staff allowed (3.778458ms)
+✔ record creation binds ownership; blocks privilege fields; logs changes (3.7765ms)
+✔ consent: optional choices can both be false; identity/time cannot be supplied (4.205875ms)
+✔ SEC-11 runtime database role cannot alter schema or modify audit history (6.259667ms)
+✔ deletion requires staff review; cascades personal data and invalidates sessions (9.627917ms)
+✔ unknown routes deny by default; malformed/oversized JSON handled (2.18875ms)
+✔ login throttles repeated attempts with HTTP 429 (130.47825ms)
+ℹ tests 9
+ℹ suites 0
+ℹ pass 9
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 442.055208
+
+
+$ npm run db:setup
+
+> crm-ias-security@1.0.0 db:setup
+> node --env-file-if-exists=.env scripts/setup-db.js
+
+Synthetic schema and three demo accounts prepared; API uses non-owner crm_app.
+
+
+$ npm run demo:sqli
+
+> crm-ias-security@1.0.0 demo:sqli
+> node --env-file-if-exists=.env scripts/demo-sqli.js
+
+{
+  "scenario": "Isolated synthetic SQL injection",
+  "payload": {
+    "keyword": "' UNION SELECT id, email, password_hash, role FROM users--"
+  },
+  "before": {
+    "status": 200,
+    "body": [
+      {
+        "id": 99,
+        "title": "synthetic@example.test",
+        "abstract": "FAKE_HASH_NOT_A_CREDENTIAL",
+        "status": "student"
+      },
+      {
+        "id": 1,
+        "title": "Public synthetic record",
+        "abstract": "Public abstract",
+        "status": "Approved"
+      }
+    ]
+  },
+  "after": {
+    "status": 200,
+    "body": []
+  },
+  "result": "PASS"
+}
+
+
+$ npm run demo:secret
+
+> crm-ias-security@1.0.0 demo:secret
+> node scripts/demo-secret.js
+
+Possible secret in fake-secret.txt (value redacted)
+PASS: actual pre-commit hook rejected a synthetic secret. No secret was pushed.
+
+
+$ npm run backup:verify
+
+> crm-ias-security@1.0.0 backup:verify
+> node --env-file-if-exists=.env scripts/backup-restore.js
+
+{
+  "result": "PASS",
+  "tables_compared": [
+    "users",
+    "research_records",
+    "sessions",
+    "consents",
+    "deletion_requests",
+    "audit_logs"
+  ],
+  "method": "Full ordered row comparison after pg_dump/pg_restore",
+  "limitations": "Quiescent synthetic database; not a production RPO/RTO, encrypted backup, or deletion replay proof."
+}
+
+
+$ npm run check:static
+
+> crm-ias-security@1.0.0 check:static
+> node scripts/static-check.js
+
+Application static invariants passed; Semgrep runs separately in CI.
+
+
+$ npm run check:secrets
+
+> crm-ias-security@1.0.0 check:secrets
+> node scripts/scan-secrets.js
+
+Secret-pattern check passed. CI also runs Gitleaks.

@@ -371,7 +371,7 @@
                 ],
                 "attrs": {
                   "labelText": {
-                    "text": "C-03 HTTPS / OIDC",
+                    "text": "C-03 OIDC proposed",
                     "textAnchor": "middle",
                     "textVerticalAnchor": "middle"
                   },
@@ -389,7 +389,7 @@
             "connector": "normal",
             "data": {
               "type": "tm.Flow",
-              "name": "C-03 HTTPS / OIDC",
+              "name": "C-03 OIDC proposed",
               "description": "Authentication messages if adopted",
               "outOfScope": false,
               "reasonOutOfScope": "",
@@ -440,7 +440,7 @@
                 ],
                 "attrs": {
                   "labelText": {
-                    "text": "C-04 HTTPS / TLS",
+                    "text": "C-04 Release proposed",
                     "textAnchor": "middle",
                     "textVerticalAnchor": "middle"
                   },
@@ -458,8 +458,8 @@
             "connector": "normal",
             "data": {
               "type": "tm.Flow",
-              "name": "C-04 HTTPS / TLS",
-              "description": "Approved application releases",
+              "name": "C-04 Release proposed",
+              "description": "Future reviewed release; deployment automation not implemented.",
               "outOfScope": false,
               "reasonOutOfScope": "",
               "hasOpenThreats": false,
@@ -1019,7 +1019,7 @@
           },
           {
             "position": {
-              "x": 950,
+              "x": 1240,
               "y": 290
             },
             "size": {
@@ -1815,23 +1815,23 @@
             "data": {
               "type": "tm.Flow",
               "name": "DF-09 pg_dump",
-              "description": "Administrative pg_dump/restore script; not an API export route.",
+              "description": "Admin backup script reads database using a separate administrative identity.",
               "outOfScope": false,
               "reasonOutOfScope": "",
               "hasOpenThreats": false,
               "isBidirectional": false,
               "isEncrypted": true,
               "isPublicNetwork": false,
-              "protocol": "Local PostgreSQL protocol / filesystem",
+              "protocol": "PostgreSQL local TCP",
               "threats": [],
               "isTrustBoundary": false
             },
             "id": "56c8d3dd-6175-5328-bf97-87de81cd0436",
             "source": {
-              "cell": "05c689ae-defc-5093-8e55-0756ecf93788"
+              "cell": "bae78aed-1a55-5d7c-a93e-cba267363afd"
             },
             "target": {
-              "cell": "241e49d6-a382-514f-8f06-17e5edfbe21e"
+              "cell": "de614621-b0ab-4adf-8fc6-59d2f49cdc26"
             },
             "vertices": []
           },
@@ -1867,7 +1867,7 @@
                 ],
                 "attrs": {
                   "labelText": {
-                    "text": "DF-10 HTTPS / OIDC",
+                    "text": "DF-10 OIDC proposed",
                     "textAnchor": "middle",
                     "textVerticalAnchor": "middle"
                   },
@@ -1885,7 +1885,7 @@
             "connector": "normal",
             "data": {
               "type": "tm.Flow",
-              "name": "DF-10 HTTPS / OIDC",
+              "name": "DF-10 OIDC proposed",
               "description": "Federated identity if adopted",
               "outOfScope": false,
               "reasonOutOfScope": "",
@@ -2014,7 +2014,7 @@
                 ],
                 "attrs": {
                   "labelText": {
-                    "text": "DF-12 Release proposed",
+                    "text": "DF-12 Release plan",
                     "textAnchor": "middle",
                     "textVerticalAnchor": "middle"
                   },
@@ -2032,7 +2032,7 @@
             "connector": "normal",
             "data": {
               "type": "tm.Flow",
-              "name": "DF-12 Release proposed",
+              "name": "DF-12 Release plan",
               "description": "Future reviewed deployment; CI currently tests only.",
               "outOfScope": false,
               "reasonOutOfScope": "",
@@ -2263,6 +2263,109 @@
             "target": {
               "x": 875,
               "y": 620
+            },
+            "vertices": []
+          },
+          {
+            "position": {
+              "x": 950,
+              "y": 310
+            },
+            "size": {
+              "width": 180,
+              "height": 100
+            },
+            "attrs": {
+              "text": {
+                "text": "P-06 Admin backup\nrestore script"
+              },
+              "body": {
+                "stroke": "#233442",
+                "strokeWidth": 1,
+                "strokeDasharray": null
+              }
+            },
+            "visible": true,
+            "shape": "process",
+            "zIndex": 5,
+            "id": "de614621-b0ab-4adf-8fc6-59d2f49cdc26",
+            "data": {
+              "name": "P-06 Admin backup\nrestore script",
+              "description": "scripts/backup-restore.js; separate administrative process, not a research API endpoint.",
+              "type": "tm.Process",
+              "isTrustBoundary": false,
+              "outOfScope": false,
+              "reasonOutOfScope": "",
+              "threats": [],
+              "hasOpenThreats": false
+            }
+          },
+          {
+            "shape": "flow",
+            "attrs": {
+              "line": {
+                "stroke": "#526879",
+                "strokeWidth": 1.3,
+                "targetMarker": {
+                  "name": "block"
+                },
+                "sourceMarker": "",
+                "strokeDasharray": null
+              }
+            },
+            "width": 200,
+            "height": 100,
+            "zIndex": 3,
+            "labels": [
+              {
+                "markup": [
+                  {
+                    "tagName": "ellipse",
+                    "selector": "labelBody"
+                  },
+                  {
+                    "tagName": "text",
+                    "selector": "labelText"
+                  }
+                ],
+                "attrs": {
+                  "labelText": {
+                    "text": "DF-13 Backup file",
+                    "textAnchor": "middle",
+                    "textVerticalAnchor": "middle"
+                  },
+                  "labelBody": {
+                    "ref": "labelText",
+                    "refRx": "50%",
+                    "refRy": "60%",
+                    "fill": "#fff",
+                    "strokeWidth": 0
+                  }
+                },
+                "position": 0.5
+              }
+            ],
+            "connector": "normal",
+            "data": {
+              "type": "tm.Flow",
+              "name": "DF-13 Backup file",
+              "description": "Temporary synthetic backup file; removed after restore comparison.",
+              "outOfScope": false,
+              "reasonOutOfScope": "",
+              "hasOpenThreats": false,
+              "isBidirectional": false,
+              "isEncrypted": true,
+              "isPublicNetwork": false,
+              "protocol": "Local filesystem",
+              "threats": [],
+              "isTrustBoundary": false
+            },
+            "id": "bdd9fccf-aaf3-47f2-96e2-1bfe89456975",
+            "source": {
+              "cell": "de614621-b0ab-4adf-8fc6-59d2f49cdc26"
+            },
+            "target": {
+              "cell": "241e49d6-a382-514f-8f06-17e5edfbe21e"
             },
             "vertices": []
           }

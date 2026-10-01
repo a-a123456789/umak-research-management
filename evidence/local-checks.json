@@ -1,0 +1,38 @@
+{
+  "tested_commit": "284455a1443ffe4788dae282b113709953007276",
+  "checks": [
+    {
+      "command": "npm run db:setup",
+      "exit_code": 0
+    },
+    {
+      "command": "npm test",
+      "exit_code": 0
+    },
+    {
+      "command": "npm run db:setup",
+      "exit_code": 0
+    },
+    {
+      "command": "npm run demo:sqli",
+      "exit_code": 0
+    },
+    {
+      "command": "npm run demo:secret",
+      "exit_code": 0
+    },
+    {
+      "command": "npm run backup:verify",
+      "exit_code": 0
+    },
+    {
+      "command": "npm run check:static",
+      "exit_code": 0
+    },
+    {
+      "command": "npm run check:secrets",
+      "exit_code": 0
+    }
+  ],
+  "all_passed": true
+}
