@@ -1,0 +1,37 @@
+name: algocom-correctness
+on:
+  push:
+    branches: [main, 'codex/**', 'team/**']
+  pull_request:
+    branches: [main]
+permissions:
+  contents: read
+jobs:
+  algocom:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Supplied correctness tests (includes 1000 random comparisons)
+        run: python -m unittest discover -s algocom -p 'test_prototype.py' -v
+      - name: Benchmark generator and argument checks (no timing threshold)
+        run: |
+          PYTHONPATH=algocom python - <<'PY'
+          import argparse
+          from bench import generate, positive_reps, SIZES, KINDS
+          from prototype import evaluate_proposed, evaluate_baseline, canonical
+          for value in ('0', '-1'):
+              try:
+                  positive_reps(value)
+              except argparse.ArgumentTypeError:
+                  pass
+              else:
+                  raise AssertionError('nonpositive repetitions accepted')
+          for kind in KINDS:
+              for n in SIZES:
+                  args = generate(kind, n, '20261001')
+                  assert canonical(evaluate_proposed(*args)) == canonical(evaluate_baseline(*args))
+          print('All nine benchmark inputs agree; nonpositive repetition counts rejected.')
+          PY
