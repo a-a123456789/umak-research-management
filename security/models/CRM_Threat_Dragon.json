@@ -1,0 +1,2273 @@
+{
+  "version": "2.6.2",
+  "summary": {
+    "title": "CRM IAS Tasks V and VI",
+    "owner": "Aaliyah Marie Balocating - CISO",
+    "description": "CRM IAS local Express/PostgreSQL implementation plus explicitly proposed external integrations. See docs/CONTROLS.md and evidence/STATUS.md. Local transport is not production TLS; risk figures are assumptions."
+  },
+  "detail": {
+    "contributors": [
+      {
+        "name": "bolanatics - III-BCSAD"
+      }
+    ],
+    "reviewer": "Pending team review",
+    "diagramTop": 2,
+    "threatTop": 11,
+    "diagrams": [
+      {
+        "id": 0,
+        "title": "Level 0 Context",
+        "description": "One system process. Identity-provider integration is optional.",
+        "diagramType": "STRIDE",
+        "version": "2.6.2",
+        "thumbnail": "",
+        "cells": [
+          {
+            "position": {
+              "x": 30,
+              "y": 120
+            },
+            "size": {
+              "width": 175,
+              "height": 75
+            },
+            "attrs": {
+              "text": {
+                "text": "Researchers"
+              },
+              "body": {
+                "stroke": "#233442",
+                "strokeWidth": 1,
+                "strokeDasharray": null
+              }
+            },
+            "visible": true,
+            "shape": "actor",
+            "zIndex": 5,
+            "id": "78e88344-508a-5c9f-aa07-0c844e47a0e4",
+            "data": {
+              "name": "Researchers",
+              "description": "Local implementation and target extensions; see docs/CONTROLS.md for evidence and limits.",
+              "type": "tm.Actor",
+              "isTrustBoundary": false,
+              "outOfScope": false,
+              "reasonOutOfScope": "",
+              "threats": [],
+              "hasOpenThreats": false,
+              "providesAuthentication": false
+            }
+          },
+          {
+            "position": {
+              "x": 30,
+              "y": 390
+            },
+            "size": {
+              "width": 175,
+              "height": 75
+            },
+            "attrs": {
+              "text": {
+                "text": "CRM staff and admin"
+              },
+              "body": {
+                "stroke": "#233442",
+                "strokeWidth": 1,
+                "strokeDasharray": null
+              }
+            },
+            "visible": true,
+            "shape": "actor",
+            "zIndex": 5,
+            "id": "641484c8-4dd8-588c-aea3-9aaedb0baa29",
+            "data": {
+              "name": "CRM staff and admin",
+              "description": "Local implementation and target extensions; see docs/CONTROLS.md for evidence and limits.",
+              "type": "tm.Actor",
+              "isTrustBoundary": false,
+              "outOfScope": false,
+              "reasonOutOfScope": "",
+              "threats": [],
+              "hasOpenThreats": false,
+              "providesAuthentication": false
+            }
+          },
+          {
+            "position": {
+              "x": 400,
+              "y": 230
+            },
+            "size": {
+              "width": 230,
+              "height": 150
+            },
+            "attrs": {
+              "text": {
+                "text": "P-0 CRM platform"
+              },
+              "body": {
+                "stroke": "#233442",
+                "strokeWidth": 1,
+                "strokeDasharray": null
+              }
+            },
+            "visible": true,
+            "shape": "process",
+            "zIndex": 5,
+            "id": "3caa6e3e-5d60-5954-8c00-0e9945067973",
+            "data": {
+              "name": "P-0 CRM platform",
+              "description": "Local implementation and target extensions; see docs/CONTROLS.md for evidence and limits.",
+              "type": "tm.Process",
+              "isTrustBoundary": false,
+              "outOfScope": false,
+              "reasonOutOfScope": "",
+              "threats": [],
+              "hasOpenThreats": false
+            }
+          },
+          {
+            "position": {
+              "x": 850,
+              "y": 120
+            },
+            "size": {
+              "width": 240,
+              "height": 75
+            },
+            "attrs": {
+              "text": {
+                "text": "Identity provider\noptional external API"
+              },
+              "body": {
+                "stroke": "#233442",
+                "strokeWidth": 1,
+                "strokeDasharray": null
+              }
+            },
+            "visible": true,
+            "shape": "actor",
+            "zIndex": 5,
+            "id": "255b330c-6b5b-51f6-bb3f-51f8c24a4a3f",
+            "data": {
+              "name": "Identity provider\noptional external API",
+              "description": "PROPOSED ONLY. No external identity integration is implemented.",
+              "type": "tm.Actor",
+              "isTrustBoundary": false,
+              "outOfScope": false,
+              "reasonOutOfScope": "",
+              "threats": [],
+              "hasOpenThreats": false,
+              "providesAuthentication": false
+            }
+          },
+          {
+            "position": {
+              "x": 850,
+              "y": 420
+            },
+            "size": {
+              "width": 240,
+              "height": 75
+            },
+            "attrs": {
+              "text": {
+                "text": "Development team\nand release pipeline"
+              },
+              "body": {
+                "stroke": "#233442",
+                "strokeWidth": 1,
+                "strokeDasharray": null
+              }
+            },
+            "visible": true,
+            "shape": "actor",
+            "zIndex": 5,
+            "id": "9b383230-a7ee-57fe-bf6a-58933ce8d42a",
+            "data": {
+              "name": "Development team\nand release pipeline",
+              "description": "Local implementation and target extensions; see docs/CONTROLS.md for evidence and limits.",
+              "type": "tm.Actor",
+              "isTrustBoundary": false,
+              "outOfScope": false,
+              "reasonOutOfScope": "",
+              "threats": [],
+              "hasOpenThreats": false,
+              "providesAuthentication": false
+            }
+          },
+          {
+            "shape": "flow",
+            "attrs": {
+              "line": {
+                "stroke": "#526879",
+                "strokeWidth": 1.3,
+                "targetMarker": {
+                  "name": "block"
+                },
+                "sourceMarker": {
+                  "name": "block"
+                },
+                "strokeDasharray": null
+              }
+            },
+            "width": 200,
+            "height": 100,
+            "zIndex": 3,
+            "labels": [
+              {
+                "markup": [
+                  {
+                    "tagName": "ellipse",
+                    "selector": "labelBody"
+                  },
+                  {
+                    "tagName": "text",
+                    "selector": "labelText"
+                  }
+                ],
+                "attrs": {
+                  "labelText": {
+                    "text": "C-01 HTTP local",
+                    "textAnchor": "middle",
+                    "textVerticalAnchor": "middle"
+                  },
+                  "labelBody": {
+                    "ref": "labelText",
+                    "refRx": "50%",
+                    "refRy": "60%",
+                    "fill": "#fff",
+                    "strokeWidth": 0
+                  }
+                },
+                "position": 0.5
+              }
+            ],
+            "connector": "normal",
+            "data": {
+              "type": "tm.Flow",
+              "name": "C-01 HTTP local",
+              "description": "Research and service requests; authorized records",
+              "outOfScope": false,
+              "reasonOutOfScope": "",
+              "hasOpenThreats": false,
+              "isBidirectional": true,
+              "isEncrypted": true,
+              "isPublicNetwork": false,
+              "protocol": "HTTP local; HTTPS required for production",
+              "threats": [],
+              "isTrustBoundary": false
+            },
+            "id": "a5c3c5cc-0f73-5a02-8665-d0b4a414abef",
+            "source": {
+              "cell": "78e88344-508a-5c9f-aa07-0c844e47a0e4"
+            },
+            "target": {
+              "cell": "3caa6e3e-5d60-5954-8c00-0e9945067973"
+            },
+            "vertices": []
+          },
+          {
+            "shape": "flow",
+            "attrs": {
+              "line": {
+                "stroke": "#526879",
+                "strokeWidth": 1.3,
+                "targetMarker": {
+                  "name": "block"
+                },
+                "sourceMarker": {
+                  "name": "block"
+                },
+                "strokeDasharray": null
+              }
+            },
+            "width": 200,
+            "height": 100,
+            "zIndex": 3,
+            "labels": [
+              {
+                "markup": [
+                  {
+                    "tagName": "ellipse",
+                    "selector": "labelBody"
+                  },
+                  {
+                    "tagName": "text",
+                    "selector": "labelText"
+                  }
+                ],
+                "attrs": {
+                  "labelText": {
+                    "text": "C-02 HTTP local",
+                    "textAnchor": "middle",
+                    "textVerticalAnchor": "middle"
+                  },
+                  "labelBody": {
+                    "ref": "labelText",
+                    "refRx": "50%",
+                    "refRy": "60%",
+                    "fill": "#fff",
+                    "strokeWidth": 0
+                  }
+                },
+                "position": 0.5
+              }
+            ],
+            "connector": "normal",
+            "data": {
+              "type": "tm.Flow",
+              "name": "C-02 HTTP local",
+              "description": "Administration; records and reports",
+              "outOfScope": false,
+              "reasonOutOfScope": "",
+              "hasOpenThreats": false,
+              "isBidirectional": true,
+              "isEncrypted": true,
+              "isPublicNetwork": false,
+              "protocol": "HTTP local; HTTPS required for production",
+              "threats": [],
+              "isTrustBoundary": false
+            },
+            "id": "f30c0cba-ae00-55fb-847e-0f643431dcdf",
+            "source": {
+              "cell": "641484c8-4dd8-588c-aea3-9aaedb0baa29"
+            },
+            "target": {
+              "cell": "3caa6e3e-5d60-5954-8c00-0e9945067973"
+            },
+            "vertices": []
+          },
+          {
+            "shape": "flow",
+            "attrs": {
+              "line": {
+                "stroke": "#526879",
+                "strokeWidth": 1.3,
+                "targetMarker": {
+                  "name": "block"
+                },
+                "sourceMarker": {
+                  "name": "block"
+                },
+                "strokeDasharray": null
+              }
+            },
+            "width": 200,
+            "height": 100,
+            "zIndex": 3,
+            "labels": [
+              {
+                "markup": [
+                  {
+                    "tagName": "ellipse",
+                    "selector": "labelBody"
+                  },
+                  {
+                    "tagName": "text",
+                    "selector": "labelText"
+                  }
+                ],
+                "attrs": {
+                  "labelText": {
+                    "text": "C-03 HTTPS / OIDC",
+                    "textAnchor": "middle",
+                    "textVerticalAnchor": "middle"
+                  },
+                  "labelBody": {
+                    "ref": "labelText",
+                    "refRx": "50%",
+                    "refRy": "60%",
+                    "fill": "#fff",
+                    "strokeWidth": 0
+                  }
+                },
+                "position": 0.5
+              }
+            ],
+            "connector": "normal",
+            "data": {
+              "type": "tm.Flow",
+              "name": "C-03 HTTPS / OIDC",
+              "description": "Authentication messages if adopted",
+              "outOfScope": false,
+              "reasonOutOfScope": "",
+              "hasOpenThreats": false,
+              "isBidirectional": true,
+              "isEncrypted": true,
+              "isPublicNetwork": false,
+              "protocol": "HTTPS / OIDC",
+              "threats": [],
+              "isTrustBoundary": false
+            },
+            "id": "17254d72-5ab5-51ba-9a6e-c0baa054e9c3",
+            "source": {
+              "cell": "3caa6e3e-5d60-5954-8c00-0e9945067973"
+            },
+            "target": {
+              "cell": "255b330c-6b5b-51f6-bb3f-51f8c24a4a3f"
+            },
+            "vertices": []
+          },
+          {
+            "shape": "flow",
+            "attrs": {
+              "line": {
+                "stroke": "#526879",
+                "strokeWidth": 1.3,
+                "targetMarker": {
+                  "name": "block"
+                },
+                "sourceMarker": "",
+                "strokeDasharray": null
+              }
+            },
+            "width": 200,
+            "height": 100,
+            "zIndex": 3,
+            "labels": [
+              {
+                "markup": [
+                  {
+                    "tagName": "ellipse",
+                    "selector": "labelBody"
+                  },
+                  {
+                    "tagName": "text",
+                    "selector": "labelText"
+                  }
+                ],
+                "attrs": {
+                  "labelText": {
+                    "text": "C-04 HTTPS / TLS",
+                    "textAnchor": "middle",
+                    "textVerticalAnchor": "middle"
+                  },
+                  "labelBody": {
+                    "ref": "labelText",
+                    "refRx": "50%",
+                    "refRy": "60%",
+                    "fill": "#fff",
+                    "strokeWidth": 0
+                  }
+                },
+                "position": 0.5
+              }
+            ],
+            "connector": "normal",
+            "data": {
+              "type": "tm.Flow",
+              "name": "C-04 HTTPS / TLS",
+              "description": "Approved application releases",
+              "outOfScope": false,
+              "reasonOutOfScope": "",
+              "hasOpenThreats": false,
+              "isBidirectional": false,
+              "isEncrypted": true,
+              "isPublicNetwork": false,
+              "protocol": "HTTPS / TLS",
+              "threats": [],
+              "isTrustBoundary": false
+            },
+            "id": "720d3f2b-9237-5c4e-acb0-bb3adeef5370",
+            "source": {
+              "cell": "9b383230-a7ee-57fe-bf6a-58933ce8d42a"
+            },
+            "target": {
+              "cell": "3caa6e3e-5d60-5954-8c00-0e9945067973"
+            },
+            "vertices": []
+          },
+          {
+            "shape": "trust-boundary-curve",
+            "attrs": {
+              "line": {
+                "targetMarker": "",
+                "sourceMarker": ""
+              }
+            },
+            "width": 200,
+            "height": 100,
+            "zIndex": 1,
+            "labels": [
+              {
+                "markup": [
+                  {
+                    "tagName": "ellipse",
+                    "selector": "labelBody"
+                  },
+                  {
+                    "tagName": "text",
+                    "selector": "labelText"
+                  }
+                ],
+                "attrs": {
+                  "labelText": {
+                    "text": "CRM system boundary",
+                    "textAnchor": "middle",
+                    "textVerticalAnchor": "middle"
+                  },
+                  "labelBody": {
+                    "ref": "labelText",
+                    "refRx": "50%",
+                    "refRy": "60%",
+                    "fill": "#fff",
+                    "strokeWidth": 0
+                  },
+                  "text": {
+                    "text": ""
+                  }
+                },
+                "position": {
+                  "distance": 0.5,
+                  "args": {
+                    "keepGradient": true,
+                    "ensureLegibility": true
+                  }
+                }
+              }
+            ],
+            "connector": "normal",
+            "data": {
+              "type": "tm.Boundary",
+              "name": "CRM system boundary",
+              "description": "CRM system boundary",
+              "isTrustBoundary": true,
+              "hasOpenThreats": false
+            },
+            "id": "c7fd125f-ba24-501b-b493-33b12a5008bc",
+            "source": {
+              "x": 330,
+              "y": 60
+            },
+            "target": {
+              "x": 330,
+              "y": 580
+            },
+            "vertices": []
+          },
+          {
+            "shape": "trust-boundary-curve",
+            "attrs": {
+              "line": {
+                "targetMarker": "",
+                "sourceMarker": ""
+              }
+            },
+            "width": 200,
+            "height": 100,
+            "zIndex": 1,
+            "labels": [
+              {
+                "markup": [
+                  {
+                    "tagName": "ellipse",
+                    "selector": "labelBody"
+                  },
+                  {
+                    "tagName": "text",
+                    "selector": "labelText"
+                  }
+                ],
+                "attrs": {
+                  "labelText": {
+                    "text": "CRM system boundary",
+                    "textAnchor": "middle",
+                    "textVerticalAnchor": "middle"
+                  },
+                  "labelBody": {
+                    "ref": "labelText",
+                    "refRx": "50%",
+                    "refRy": "60%",
+                    "fill": "#fff",
+                    "strokeWidth": 0
+                  },
+                  "text": {
+                    "text": ""
+                  }
+                },
+                "position": {
+                  "distance": 0.5,
+                  "args": {
+                    "keepGradient": true,
+                    "ensureLegibility": true
+                  }
+                }
+              }
+            ],
+            "connector": "normal",
+            "data": {
+              "type": "tm.Boundary",
+              "name": "CRM system boundary",
+              "description": "CRM system boundary",
+              "isTrustBoundary": true,
+              "hasOpenThreats": false
+            },
+            "id": "2e5ded94-fd41-5275-91f5-783faf97301f",
+            "source": {
+              "x": 740,
+              "y": 60
+            },
+            "target": {
+              "x": 740,
+              "y": 580
+            },
+            "vertices": []
+          }
+        ]
+      },
+      {
+        "id": 1,
+        "title": "Level 1 Implementation and Target Extensions",
+        "description": "Logical components; P-02/P-03/P-04 may share one application deployment. Trust controls are proposed.",
+        "diagramType": "STRIDE",
+        "version": "2.6.2",
+        "thumbnail": "",
+        "cells": [
+          {
+            "position": {
+              "x": 20,
+              "y": 150
+            },
+            "size": {
+              "width": 175,
+              "height": 75
+            },
+            "attrs": {
+              "text": {
+                "text": "E-01 Researchers"
+              },
+              "body": {
+                "stroke": "#233442",
+                "strokeWidth": 1,
+                "strokeDasharray": null
+              }
+            },
+            "visible": true,
+            "shape": "actor",
+            "zIndex": 5,
+            "id": "86498ec9-fc5e-5ce0-99ab-4aa5756fa1fb",
+            "data": {
+              "name": "E-01 Researchers",
+              "description": "Local implementation and target extensions; see docs/CONTROLS.md for evidence and limits.",
+              "type": "tm.Actor",
+              "isTrustBoundary": false,
+              "outOfScope": false,
+              "reasonOutOfScope": "",
+              "threats": [],
+              "hasOpenThreats": false,
+              "providesAuthentication": false
+            }
+          },
+          {
+            "position": {
+              "x": 20,
+              "y": 360
+            },
+            "size": {
+              "width": 175,
+              "height": 75
+            },
+            "attrs": {
+              "text": {
+                "text": "E-02 CRM staff"
+              },
+              "body": {
+                "stroke": "#233442",
+                "strokeWidth": 1,
+                "strokeDasharray": null
+              }
+            },
+            "visible": true,
+            "shape": "actor",
+            "zIndex": 5,
+            "id": "7fcad5e5-4bf6-5ec1-997f-3325e66c3c73",
+            "data": {
+              "name": "E-02 CRM staff",
+              "description": "Local implementation and target extensions; see docs/CONTROLS.md for evidence and limits.",
+              "type": "tm.Actor",
+              "isTrustBoundary": false,
+              "outOfScope": false,
+              "reasonOutOfScope": "",
+              "threats": [],
+              "hasOpenThreats": false,
+              "providesAuthentication": false
+            }
+          },
+          {
+            "position": {
+              "x": 310,
+              "y": 240
+            },
+            "size": {
+              "width": 160,
+              "height": 100
+            },
+            "attrs": {
+              "text": {
+                "text": "P-01 Express routing"
+              },
+              "body": {
+                "stroke": "#233442",
+                "strokeWidth": 1,
+                "strokeDasharray": null
+              }
+            },
+            "visible": true,
+            "shape": "process",
+            "zIndex": 5,
+            "id": "6d04aaa6-2e73-56b5-a829-9a1e0fcf4fe6",
+            "data": {
+              "name": "P-01 Express routing",
+              "description": "Middleware and rate limits in src/app.js. Local HTTP; no separate reverse proxy.",
+              "type": "tm.Process",
+              "isTrustBoundary": false,
+              "outOfScope": false,
+              "reasonOutOfScope": "",
+              "threats": [
+                {
+                  "id": "b27c35cf-135f-575b-982d-3c64799ae605",
+                  "threatId": "b27c35cf-135f-575b-982d-3c64799ae605",
+                  "number": 9,
+                  "title": "THREAT-09 Resource exhaustion",
+                  "type": "Denial of service",
+                  "modelType": "STRIDE",
+                  "severity": "High",
+                  "status": "Open",
+                  "score": "7.6",
+                  "description": "Repeated costly queries exhaust worker or database capacity and interrupt record and public-service access.\nR-09 / TVA-09 / A-02; A-04\nSecondary STRIDE: Denial of service",
+                  "mitigation": "Rate and concurrency limits, capped pagination/body size, timeouts and bounded queries. ACL-09 / SEC-09"
+                }
+              ],
+              "hasOpenThreats": true
+            }
+          },
+          {
+            "position": {
+              "x": 580,
+              "y": 60
+            },
+            "size": {
+              "width": 180,
+              "height": 100
+            },
+            "attrs": {
+              "text": {
+                "text": "P-02 Auth and\npermissions"
+              },
+              "body": {
+                "stroke": "#233442",
+                "strokeWidth": 1,
+                "strokeDasharray": null
+              }
+            },
+            "visible": true,
+            "shape": "process",
+            "zIndex": 5,
+            "id": "b7b581bc-7a17-5f1c-99e3-dadaba520e5b",
+            "data": {
+              "name": "P-02 Auth and\npermissions",
+              "description": "Local implementation and target extensions; see docs/CONTROLS.md for evidence and limits.",
+              "type": "tm.Process",
+              "isTrustBoundary": false,
+              "outOfScope": false,
+              "reasonOutOfScope": "",
+              "threats": [],
+              "hasOpenThreats": false
+            }
+          },
+          {
+            "position": {
+              "x": 580,
+              "y": 270
+            },
+            "size": {
+              "width": 180,
+              "height": 100
+            },
+            "attrs": {
+              "text": {
+                "text": "P-03 Research and\nprivacy API"
+              },
+              "body": {
+                "stroke": "#233442",
+                "strokeWidth": 1,
+                "strokeDasharray": null
+              }
+            },
+            "visible": true,
+            "shape": "process",
+            "zIndex": 5,
+            "id": "05c689ae-defc-5093-8e55-0756ecf93788",
+            "data": {
+              "name": "P-03 Research and\nprivacy API",
+              "description": "Search/create/read research, consent, deletion requests. Service tickets and uploads not implemented.",
+              "type": "tm.Process",
+              "isTrustBoundary": false,
+              "outOfScope": false,
+              "reasonOutOfScope": "",
+              "threats": [
+                {
+                  "id": "b56b38a7-b407-55c0-a4cf-4d67f99d534a",
+                  "threatId": "b56b38a7-b407-55c0-a4cf-4d67f99d534a",
+                  "number": 1,
+                  "title": "THREAT-01 SQL injection",
+                  "type": "Tampering",
+                  "modelType": "STRIDE",
+                  "severity": "High",
+                  "status": "Open",
+                  "score": "8.8",
+                  "description": "If search concatenates input, a crafted query can bypass record filtering and disclose nonpublic research metadata. Successful SQL injection depends on the actual query and database grants.\nR-01 / TVA-01 / A-02\nSecondary STRIDE: Tampering; Information disclosure",
+                  "mitigation": "Parameterized SQL, publication filter, least-privilege DB role, regression test. ACL-01 / SEC-01"
+                },
+                {
+                  "id": "b765e2a6-f696-5afc-8553-20c6fc8d8c7f",
+                  "threatId": "b765e2a6-f696-5afc-8553-20c6fc8d8c7f",
+                  "number": 2,
+                  "title": "THREAT-02 Object authorization bypass",
+                  "type": "Information disclosure",
+                  "modelType": "STRIDE",
+                  "severity": "High",
+                  "status": "Open",
+                  "score": "8.0",
+                  "description": "A user changes a record ID and reads another research team\u2019s nonpublic record or service request. Client-hidden links do not enforce authorization.\nR-02 / TVA-02 / A-02; A-03\nSecondary STRIDE: Information disclosure; Elevation of privilege",
+                  "mitigation": "Central object permission check using approved collaborator/staff grants; deny by default. ACL-02 / SEC-02"
+                },
+                {
+                  "id": "ed41e18f-9592-5bfa-b10a-7c84cd367e20",
+                  "threatId": "ed41e18f-9592-5bfa-b10a-7c84cd367e20",
+                  "number": 7,
+                  "title": "THREAT-07 Unsafe document processing",
+                  "type": "Tampering",
+                  "modelType": "STRIDE",
+                  "severity": "High",
+                  "status": "Open",
+                  "score": "7.0",
+                  "description": "If uploads are enabled, a malicious file exploits a vulnerable parser or unsafe execution path, giving a runtime foothold. A PDF extension or polyglot alone does not execute code.\nR-07 / TVA-07 / A-02\nSecondary STRIDE: Tampering; Elevation of privilege",
+                  "mitigation": "Defer upload route until confirmed; then isolated patched parser, size/type checks, quarantine, no execution. ACL-07 / SEC-07"
+                },
+                {
+                  "id": "70bd2788-f177-5f0b-9194-b7ac376016b5",
+                  "threatId": "70bd2788-f177-5f0b-9194-b7ac376016b5",
+                  "number": 10,
+                  "title": "THREAT-10 Stored browser script",
+                  "type": "Tampering",
+                  "modelType": "STRIDE",
+                  "severity": "Medium",
+                  "status": "Open",
+                  "score": "6.6",
+                  "description": "Stored content executes when another user views a record. It may perform same-origin actions; HttpOnly cookies cannot be read directly by script.\nR-10 / TVA-10 / A-02; A-01\nSecondary STRIDE: Tampering; Information disclosure",
+                  "mitigation": "Render plain text by default; approved sanitization for necessary rich text; CSP as added protection. ACL-10 / SEC-10"
+                }
+              ],
+              "hasOpenThreats": true
+            }
+          },
+          {
+            "position": {
+              "x": 580,
+              "y": 480
+            },
+            "size": {
+              "width": 180,
+              "height": 100
+            },
+            "attrs": {
+              "text": {
+                "text": "P-04 Audit writer"
+              },
+              "body": {
+                "stroke": "#233442",
+                "strokeWidth": 1,
+                "strokeDasharray": null
+              }
+            },
+            "visible": true,
+            "shape": "process",
+            "zIndex": 5,
+            "id": "2d2018ef-53ee-5a4e-a923-b33130bb4a2c",
+            "data": {
+              "name": "P-04 Audit writer",
+              "description": "Local implementation and target extensions; see docs/CONTROLS.md for evidence and limits.",
+              "type": "tm.Process",
+              "isTrustBoundary": false,
+              "outOfScope": false,
+              "reasonOutOfScope": "",
+              "threats": [],
+              "hasOpenThreats": false
+            }
+          },
+          {
+            "position": {
+              "x": 950,
+              "y": 60
+            },
+            "size": {
+              "width": 210,
+              "height": 75
+            },
+            "attrs": {
+              "text": {
+                "text": "D-01 PostgreSQL\nA-01 A-02"
+              },
+              "topLine": {
+                "stroke": "#233442"
+              },
+              "bottomLine": {
+                "stroke": "#233442"
+              }
+            },
+            "visible": true,
+            "shape": "store",
+            "zIndex": 5,
+            "id": "bae78aed-1a55-5d7c-a93e-cba267363afd",
+            "data": {
+              "name": "D-01 PostgreSQL\nA-01 A-02",
+              "description": "users, sessions, research_records, consents, deletion_requests. A-03 service workflow and A-04 public information remain proposed.",
+              "type": "tm.Store",
+              "isTrustBoundary": false,
+              "outOfScope": false,
+              "reasonOutOfScope": "",
+              "threats": [
+                {
+                  "id": "88cdc01e-2016-53fc-bf45-63d856376989",
+                  "threatId": "88cdc01e-2016-53fc-bf45-63d856376989",
+                  "number": 5,
+                  "title": "THREAT-05 Missing database isolation",
+                  "type": "Information disclosure",
+                  "modelType": "STRIDE",
+                  "severity": "Medium",
+                  "status": "Open",
+                  "score": "6.2",
+                  "description": "A missed application permission check exposes rows across research groups. Missing RLS is a defense gap, not by itself proof that a user can query the database.\nR-05 / TVA-05 / A-02\nSecondary STRIDE: Information disclosure; Elevation of privilege",
+                  "mitigation": "RLS or equivalent tested isolation; transaction-local trusted identity; no owner/superuser/BYPASSRLS runtime. ACL-05 / SEC-05"
+                },
+                {
+                  "id": "cf4a3698-9ea4-5330-84c7-6e9c343c284d",
+                  "threatId": "cf4a3698-9ea4-5330-84c7-6e9c343c284d",
+                  "number": 8,
+                  "title": "THREAT-08 Database extortion",
+                  "type": "Denial of service",
+                  "modelType": "STRIDE",
+                  "severity": "High",
+                  "status": "Open",
+                  "score": "8.6",
+                  "description": "An attacker reaches the DB, gains sufficient privileges, and corrupts or extracts research records. Permanent loss also requires unavailable or compromised recovery copies.\nR-08 / TVA-08 / A-02\nSecondary STRIDE: Denial of service; Tampering; Information disclosure",
+                  "mitigation": "Private DB ingress, separate runtime/migration roles, backup credentials isolated, immutable recovery copy and restore tests. ACL-08 / SEC-08"
+                }
+              ],
+              "hasOpenThreats": true,
+              "isALog": false,
+              "storesCredentials": true,
+              "isEncrypted": false,
+              "isSigned": false
+            }
+          },
+          {
+            "position": {
+              "x": 950,
+              "y": 490
+            },
+            "size": {
+              "width": 210,
+              "height": 75
+            },
+            "attrs": {
+              "text": {
+                "text": "D-02 Audit store\nA-07"
+              },
+              "topLine": {
+                "stroke": "#233442"
+              },
+              "bottomLine": {
+                "stroke": "#233442"
+              }
+            },
+            "visible": true,
+            "shape": "store",
+            "zIndex": 5,
+            "id": "46bd2063-f7b0-5f0c-8c41-283ff7c11d0d",
+            "data": {
+              "name": "D-02 Audit store\nA-07",
+              "description": "audit_logs in same PostgreSQL database. Runtime SELECT/INSERT only; admin can modify.",
+              "type": "tm.Store",
+              "isTrustBoundary": false,
+              "outOfScope": false,
+              "reasonOutOfScope": "",
+              "threats": [
+                {
+                  "id": "729ad496-cf7f-52b0-ac37-c7acaa06d2cd",
+                  "threatId": "729ad496-cf7f-52b0-ac37-c7acaa06d2cd",
+                  "number": 11,
+                  "title": "THREAT-11 Unattributable record changes",
+                  "type": "Repudiation",
+                  "modelType": "STRIDE",
+                  "severity": "Medium",
+                  "status": "Open",
+                  "score": "6.4",
+                  "description": "An editor changes a research stage then denies doing it; writable or missing logs prevent reliable reconstruction.\nR-11 / TVA-11 / A-07; A-02\nSecondary STRIDE: Repudiation; Tampering",
+                  "mitigation": "Server-derived actor and event IDs, protected append-only audit path, restricted readers, integrity monitoring. ACL-11 / SEC-11"
+                }
+              ],
+              "hasOpenThreats": true,
+              "isALog": false,
+              "storesCredentials": true,
+              "isEncrypted": false,
+              "isSigned": false
+            }
+          },
+          {
+            "position": {
+              "x": 950,
+              "y": 290
+            },
+            "size": {
+              "width": 210,
+              "height": 75
+            },
+            "attrs": {
+              "text": {
+                "text": "D-03 Local backup\nA-02"
+              },
+              "topLine": {
+                "stroke": "#233442"
+              },
+              "bottomLine": {
+                "stroke": "#233442"
+              }
+            },
+            "visible": true,
+            "shape": "store",
+            "zIndex": 5,
+            "id": "241e49d6-a382-514f-8f06-17e5edfbe21e",
+            "data": {
+              "name": "D-03 Local backup\nA-02",
+              "description": "Temporary pg_dump for verified synthetic restore exercise; deleted after comparison. Cloud exports proposed.",
+              "type": "tm.Store",
+              "isTrustBoundary": false,
+              "outOfScope": false,
+              "reasonOutOfScope": "",
+              "threats": [
+                {
+                  "id": "51e70560-0c95-5e2a-9836-74e143ce7f22",
+                  "threatId": "51e70560-0c95-5e2a-9836-74e143ce7f22",
+                  "number": 3,
+                  "title": "THREAT-03 Public private-data export",
+                  "type": "Information disclosure",
+                  "modelType": "STRIDE",
+                  "severity": "High",
+                  "status": "Open",
+                  "score": "7.6",
+                  "description": "An operator accidentally publishes a research export. Anyone with its URL can obtain nonpublic records; encryption at rest does not stop an authorized public read.\nR-03 / TVA-03 / A-02\nSecondary STRIDE: Information disclosure",
+                  "mitigation": "Private storage policy, public-access block, expiring authorized downloads, configuration tests. ACL-03 / SEC-03"
+                }
+              ],
+              "hasOpenThreats": true,
+              "isALog": false,
+              "storesCredentials": true,
+              "isEncrypted": false,
+              "isSigned": false
+            }
+          },
+          {
+            "position": {
+              "x": 580,
+              "y": 690
+            },
+            "size": {
+              "width": 210,
+              "height": 75
+            },
+            "attrs": {
+              "text": {
+                "text": "E-03 Identity provider\noptional external API"
+              },
+              "body": {
+                "stroke": "#233442",
+                "strokeWidth": 1,
+                "strokeDasharray": null
+              }
+            },
+            "visible": true,
+            "shape": "actor",
+            "zIndex": 5,
+            "id": "797188b5-043a-538f-b9dc-7cbdca021e29",
+            "data": {
+              "name": "E-03 Identity provider\noptional external API",
+              "description": "PROPOSED ONLY. No external identity integration is implemented.",
+              "type": "tm.Actor",
+              "isTrustBoundary": false,
+              "outOfScope": false,
+              "reasonOutOfScope": "",
+              "threats": [],
+              "hasOpenThreats": false,
+              "providesAuthentication": false
+            }
+          },
+          {
+            "position": {
+              "x": 20,
+              "y": 690
+            },
+            "size": {
+              "width": 175,
+              "height": 75
+            },
+            "attrs": {
+              "text": {
+                "text": "E-04 Developer\nworkstation"
+              },
+              "body": {
+                "stroke": "#233442",
+                "strokeWidth": 1,
+                "strokeDasharray": null
+              }
+            },
+            "visible": true,
+            "shape": "actor",
+            "zIndex": 5,
+            "id": "e95b93a7-7a03-5c51-8877-5e436792d587",
+            "data": {
+              "name": "E-04 Developer\nworkstation",
+              "description": "Local implementation and target extensions; see docs/CONTROLS.md for evidence and limits.",
+              "type": "tm.Actor",
+              "isTrustBoundary": false,
+              "outOfScope": false,
+              "reasonOutOfScope": "",
+              "threats": [
+                {
+                  "id": "fa9f382f-5671-5252-bf05-cddbefc7d08a",
+                  "threatId": "fa9f382f-5671-5252-bf05-cddbefc7d08a",
+                  "number": 4,
+                  "title": "THREAT-04 Committed credentials",
+                  "type": "Spoofing",
+                  "modelType": "STRIDE",
+                  "severity": "High",
+                  "status": "Open",
+                  "score": "9.0",
+                  "description": "A repository reader obtains a secret and impersonates a service if network access and credential permissions permit. Removing the file alone does not revoke a leaked secret.\nR-04 / TVA-04 / A-05; A-02\nSecondary STRIDE: Spoofing; Information disclosure; Elevation of privilege",
+                  "mitigation": "Secret scan on commits and CI, rotation and revocation, scoped service credentials, required review. ACL-04 / SEC-04"
+                }
+              ],
+              "hasOpenThreats": true,
+              "providesAuthentication": false
+            }
+          },
+          {
+            "position": {
+              "x": 310,
+              "y": 690
+            },
+            "size": {
+              "width": 190,
+              "height": 100
+            },
+            "attrs": {
+              "text": {
+                "text": "P-05 GitHub Actions\nand repository A-06"
+              },
+              "body": {
+                "stroke": "#233442",
+                "strokeWidth": 1,
+                "strokeDasharray": null
+              }
+            },
+            "visible": true,
+            "shape": "process",
+            "zIndex": 5,
+            "id": "85ade22c-9a9d-588a-ba83-3ed218a953c6",
+            "data": {
+              "name": "P-05 GitHub Actions\nand repository A-06",
+              "description": "Security CI, not automatic deployment. Applied status in evidence/STATUS.md.",
+              "type": "tm.Process",
+              "isTrustBoundary": false,
+              "outOfScope": false,
+              "reasonOutOfScope": "",
+              "threats": [],
+              "hasOpenThreats": false
+            }
+          },
+          {
+            "shape": "flow",
+            "attrs": {
+              "line": {
+                "stroke": "#526879",
+                "strokeWidth": 1.3,
+                "targetMarker": {
+                  "name": "block"
+                },
+                "sourceMarker": {
+                  "name": "block"
+                },
+                "strokeDasharray": null
+              }
+            },
+            "width": 200,
+            "height": 100,
+            "zIndex": 3,
+            "labels": [
+              {
+                "markup": [
+                  {
+                    "tagName": "ellipse",
+                    "selector": "labelBody"
+                  },
+                  {
+                    "tagName": "text",
+                    "selector": "labelText"
+                  }
+                ],
+                "attrs": {
+                  "labelText": {
+                    "text": "DF-01 HTTP local",
+                    "textAnchor": "middle",
+                    "textVerticalAnchor": "middle"
+                  },
+                  "labelBody": {
+                    "ref": "labelText",
+                    "refRx": "50%",
+                    "refRy": "60%",
+                    "fill": "#fff",
+                    "strokeWidth": 0
+                  }
+                },
+                "position": 0.5
+              }
+            ],
+            "connector": "normal",
+            "data": {
+              "type": "tm.Flow",
+              "name": "DF-01 HTTP local",
+              "description": "Research requests / views",
+              "outOfScope": false,
+              "reasonOutOfScope": "",
+              "hasOpenThreats": true,
+              "isBidirectional": true,
+              "isEncrypted": true,
+              "isPublicNetwork": false,
+              "protocol": "HTTP local; HTTPS required for production",
+              "threats": [
+                {
+                  "id": "ea2beffc-f8e8-562a-9c2c-0ce5b81dffef",
+                  "threatId": "ea2beffc-f8e8-562a-9c2c-0ce5b81dffef",
+                  "number": 6,
+                  "title": "THREAT-06 Session interception",
+                  "type": "Spoofing",
+                  "modelType": "STRIDE",
+                  "severity": "Medium",
+                  "status": "Open",
+                  "score": "6.0",
+                  "description": "A victim uses an insecure session path and an observer obtains a usable session. Ordinary Wi-Fi visibility does not decrypt correctly validated HTTPS.\nR-06 / TVA-06 / A-01; A-02\nSecondary STRIDE: Spoofing; Information disclosure",
+                  "mitigation": "HTTPS, HSTS after validation, Secure/HttpOnly cookies, suitable SameSite and CSRF protection, rotation on login. ACL-06 / SEC-06"
+                }
+              ],
+              "isTrustBoundary": false
+            },
+            "id": "cb1c5c6f-7b7e-5bcc-aa7c-3395e2ff11ff",
+            "source": {
+              "cell": "86498ec9-fc5e-5ce0-99ab-4aa5756fa1fb"
+            },
+            "target": {
+              "cell": "6d04aaa6-2e73-56b5-a829-9a1e0fcf4fe6"
+            },
+            "vertices": []
+          },
+          {
+            "shape": "flow",
+            "attrs": {
+              "line": {
+                "stroke": "#526879",
+                "strokeWidth": 1.3,
+                "targetMarker": {
+                  "name": "block"
+                },
+                "sourceMarker": {
+                  "name": "block"
+                },
+                "strokeDasharray": null
+              }
+            },
+            "width": 200,
+            "height": 100,
+            "zIndex": 3,
+            "labels": [
+              {
+                "markup": [
+                  {
+                    "tagName": "ellipse",
+                    "selector": "labelBody"
+                  },
+                  {
+                    "tagName": "text",
+                    "selector": "labelText"
+                  }
+                ],
+                "attrs": {
+                  "labelText": {
+                    "text": "DF-02 HTTP local",
+                    "textAnchor": "middle",
+                    "textVerticalAnchor": "middle"
+                  },
+                  "labelBody": {
+                    "ref": "labelText",
+                    "refRx": "50%",
+                    "refRy": "60%",
+                    "fill": "#fff",
+                    "strokeWidth": 0
+                  }
+                },
+                "position": 0.5
+              }
+            ],
+            "connector": "normal",
+            "data": {
+              "type": "tm.Flow",
+              "name": "DF-02 HTTP local",
+              "description": "Service and staff actions",
+              "outOfScope": false,
+              "reasonOutOfScope": "",
+              "hasOpenThreats": false,
+              "isBidirectional": true,
+              "isEncrypted": true,
+              "isPublicNetwork": false,
+              "protocol": "HTTP local; HTTPS required for production",
+              "threats": [],
+              "isTrustBoundary": false
+            },
+            "id": "740fc5b6-a053-5c49-b11f-be25272f095d",
+            "source": {
+              "cell": "7fcad5e5-4bf6-5ec1-997f-3325e66c3c73"
+            },
+            "target": {
+              "cell": "6d04aaa6-2e73-56b5-a829-9a1e0fcf4fe6"
+            },
+            "vertices": []
+          },
+          {
+            "shape": "flow",
+            "attrs": {
+              "line": {
+                "stroke": "#526879",
+                "strokeWidth": 1.3,
+                "targetMarker": {
+                  "name": "block"
+                },
+                "sourceMarker": {
+                  "name": "block"
+                },
+                "strokeDasharray": null
+              }
+            },
+            "width": 200,
+            "height": 100,
+            "zIndex": 3,
+            "labels": [
+              {
+                "markup": [
+                  {
+                    "tagName": "ellipse",
+                    "selector": "labelBody"
+                  },
+                  {
+                    "tagName": "text",
+                    "selector": "labelText"
+                  }
+                ],
+                "attrs": {
+                  "labelText": {
+                    "text": "DF-03 In-process",
+                    "textAnchor": "middle",
+                    "textVerticalAnchor": "middle"
+                  },
+                  "labelBody": {
+                    "ref": "labelText",
+                    "refRx": "50%",
+                    "refRy": "60%",
+                    "fill": "#fff",
+                    "strokeWidth": 0
+                  }
+                },
+                "position": 0.5
+              }
+            ],
+            "connector": "normal",
+            "data": {
+              "type": "tm.Flow",
+              "name": "DF-03 In-process",
+              "description": "Routing to authenticated handlers inside one Express process, not a network hop.",
+              "outOfScope": false,
+              "reasonOutOfScope": "",
+              "hasOpenThreats": false,
+              "isBidirectional": true,
+              "isEncrypted": true,
+              "isPublicNetwork": false,
+              "protocol": "In-process middleware",
+              "threats": [],
+              "isTrustBoundary": false
+            },
+            "id": "3db082ad-20dd-50c9-91a0-d1456077ed39",
+            "source": {
+              "cell": "6d04aaa6-2e73-56b5-a829-9a1e0fcf4fe6"
+            },
+            "target": {
+              "cell": "05c689ae-defc-5093-8e55-0756ecf93788"
+            },
+            "vertices": []
+          },
+          {
+            "shape": "flow",
+            "attrs": {
+              "line": {
+                "stroke": "#526879",
+                "strokeWidth": 1.3,
+                "targetMarker": {
+                  "name": "block"
+                },
+                "sourceMarker": {
+                  "name": "block"
+                },
+                "strokeDasharray": null
+              }
+            },
+            "width": 200,
+            "height": 100,
+            "zIndex": 3,
+            "labels": [
+              {
+                "markup": [
+                  {
+                    "tagName": "ellipse",
+                    "selector": "labelBody"
+                  },
+                  {
+                    "tagName": "text",
+                    "selector": "labelText"
+                  }
+                ],
+                "attrs": {
+                  "labelText": {
+                    "text": "DF-04 In-process call",
+                    "textAnchor": "middle",
+                    "textVerticalAnchor": "middle"
+                  },
+                  "labelBody": {
+                    "ref": "labelText",
+                    "refRx": "50%",
+                    "refRy": "60%",
+                    "fill": "#fff",
+                    "strokeWidth": 0
+                  }
+                },
+                "position": 0.5
+              }
+            ],
+            "connector": "normal",
+            "data": {
+              "type": "tm.Flow",
+              "name": "DF-04 In-process call",
+              "description": "Identity and permission checks",
+              "outOfScope": false,
+              "reasonOutOfScope": "",
+              "hasOpenThreats": false,
+              "isBidirectional": true,
+              "isEncrypted": false,
+              "isPublicNetwork": false,
+              "protocol": "In-process call",
+              "threats": [],
+              "isTrustBoundary": false
+            },
+            "id": "07ad2077-60db-5b59-b36a-3ebc66fa2c94",
+            "source": {
+              "cell": "05c689ae-defc-5093-8e55-0756ecf93788"
+            },
+            "target": {
+              "cell": "b7b581bc-7a17-5f1c-99e3-dadaba520e5b"
+            },
+            "vertices": []
+          },
+          {
+            "shape": "flow",
+            "attrs": {
+              "line": {
+                "stroke": "#526879",
+                "strokeWidth": 1.3,
+                "targetMarker": {
+                  "name": "block"
+                },
+                "sourceMarker": {
+                  "name": "block"
+                },
+                "strokeDasharray": null
+              }
+            },
+            "width": 200,
+            "height": 100,
+            "zIndex": 3,
+            "labels": [
+              {
+                "markup": [
+                  {
+                    "tagName": "ellipse",
+                    "selector": "labelBody"
+                  },
+                  {
+                    "tagName": "text",
+                    "selector": "labelText"
+                  }
+                ],
+                "attrs": {
+                  "labelText": {
+                    "text": "DF-05 PostgreSQL",
+                    "textAnchor": "middle",
+                    "textVerticalAnchor": "middle"
+                  },
+                  "labelBody": {
+                    "ref": "labelText",
+                    "refRx": "50%",
+                    "refRy": "60%",
+                    "fill": "#fff",
+                    "strokeWidth": 0
+                  }
+                },
+                "position": 0.5
+              }
+            ],
+            "connector": "normal",
+            "data": {
+              "type": "tm.Flow",
+              "name": "DF-05 PostgreSQL",
+              "description": "Account and grant queries",
+              "outOfScope": false,
+              "reasonOutOfScope": "",
+              "hasOpenThreats": false,
+              "isBidirectional": true,
+              "isEncrypted": true,
+              "isPublicNetwork": false,
+              "protocol": "PostgreSQL local TCP; production TLS proposed",
+              "threats": [],
+              "isTrustBoundary": false
+            },
+            "id": "20af10dc-e74f-5e19-8d97-830dc6f48905",
+            "source": {
+              "cell": "b7b581bc-7a17-5f1c-99e3-dadaba520e5b"
+            },
+            "target": {
+              "cell": "bae78aed-1a55-5d7c-a93e-cba267363afd"
+            },
+            "vertices": []
+          },
+          {
+            "shape": "flow",
+            "attrs": {
+              "line": {
+                "stroke": "#526879",
+                "strokeWidth": 1.3,
+                "targetMarker": {
+                  "name": "block"
+                },
+                "sourceMarker": {
+                  "name": "block"
+                },
+                "strokeDasharray": null
+              }
+            },
+            "width": 200,
+            "height": 100,
+            "zIndex": 3,
+            "labels": [
+              {
+                "markup": [
+                  {
+                    "tagName": "ellipse",
+                    "selector": "labelBody"
+                  },
+                  {
+                    "tagName": "text",
+                    "selector": "labelText"
+                  }
+                ],
+                "attrs": {
+                  "labelText": {
+                    "text": "DF-06 PostgreSQL",
+                    "textAnchor": "middle",
+                    "textVerticalAnchor": "middle"
+                  },
+                  "labelBody": {
+                    "ref": "labelText",
+                    "refRx": "50%",
+                    "refRy": "60%",
+                    "fill": "#fff",
+                    "strokeWidth": 0
+                  }
+                },
+                "position": 0.5
+              }
+            ],
+            "connector": "normal",
+            "data": {
+              "type": "tm.Flow",
+              "name": "DF-06 PostgreSQL",
+              "description": "Research and request records",
+              "outOfScope": false,
+              "reasonOutOfScope": "",
+              "hasOpenThreats": false,
+              "isBidirectional": true,
+              "isEncrypted": true,
+              "isPublicNetwork": false,
+              "protocol": "PostgreSQL local TCP; production TLS proposed",
+              "threats": [],
+              "isTrustBoundary": false
+            },
+            "id": "192fb590-bb08-5d42-afae-4c97f8a4c3ea",
+            "source": {
+              "cell": "05c689ae-defc-5093-8e55-0756ecf93788"
+            },
+            "target": {
+              "cell": "bae78aed-1a55-5d7c-a93e-cba267363afd"
+            },
+            "vertices": []
+          },
+          {
+            "shape": "flow",
+            "attrs": {
+              "line": {
+                "stroke": "#526879",
+                "strokeWidth": 1.3,
+                "targetMarker": {
+                  "name": "block"
+                },
+                "sourceMarker": "",
+                "strokeDasharray": null
+              }
+            },
+            "width": 200,
+            "height": 100,
+            "zIndex": 3,
+            "labels": [
+              {
+                "markup": [
+                  {
+                    "tagName": "ellipse",
+                    "selector": "labelBody"
+                  },
+                  {
+                    "tagName": "text",
+                    "selector": "labelText"
+                  }
+                ],
+                "attrs": {
+                  "labelText": {
+                    "text": "DF-07 In-process call",
+                    "textAnchor": "middle",
+                    "textVerticalAnchor": "middle"
+                  },
+                  "labelBody": {
+                    "ref": "labelText",
+                    "refRx": "50%",
+                    "refRy": "60%",
+                    "fill": "#fff",
+                    "strokeWidth": 0
+                  }
+                },
+                "position": 0.5
+              }
+            ],
+            "connector": "normal",
+            "data": {
+              "type": "tm.Flow",
+              "name": "DF-07 In-process call",
+              "description": "Actor and change events",
+              "outOfScope": false,
+              "reasonOutOfScope": "",
+              "hasOpenThreats": false,
+              "isBidirectional": false,
+              "isEncrypted": false,
+              "isPublicNetwork": false,
+              "protocol": "In-process call",
+              "threats": [],
+              "isTrustBoundary": false
+            },
+            "id": "2934423d-e8c3-5c38-8028-904248acee05",
+            "source": {
+              "cell": "05c689ae-defc-5093-8e55-0756ecf93788"
+            },
+            "target": {
+              "cell": "2d2018ef-53ee-5a4e-a923-b33130bb4a2c"
+            },
+            "vertices": []
+          },
+          {
+            "shape": "flow",
+            "attrs": {
+              "line": {
+                "stroke": "#526879",
+                "strokeWidth": 1.3,
+                "targetMarker": {
+                  "name": "block"
+                },
+                "sourceMarker": "",
+                "strokeDasharray": null
+              }
+            },
+            "width": 200,
+            "height": 100,
+            "zIndex": 3,
+            "labels": [
+              {
+                "markup": [
+                  {
+                    "tagName": "ellipse",
+                    "selector": "labelBody"
+                  },
+                  {
+                    "tagName": "text",
+                    "selector": "labelText"
+                  }
+                ],
+                "attrs": {
+                  "labelText": {
+                    "text": "DF-08 PostgreSQL",
+                    "textAnchor": "middle",
+                    "textVerticalAnchor": "middle"
+                  },
+                  "labelBody": {
+                    "ref": "labelText",
+                    "refRx": "50%",
+                    "refRy": "60%",
+                    "fill": "#fff",
+                    "strokeWidth": 0
+                  }
+                },
+                "position": 0.5
+              }
+            ],
+            "connector": "normal",
+            "data": {
+              "type": "tm.Flow",
+              "name": "DF-08 PostgreSQL",
+              "description": "Append audit event",
+              "outOfScope": false,
+              "reasonOutOfScope": "",
+              "hasOpenThreats": false,
+              "isBidirectional": false,
+              "isEncrypted": true,
+              "isPublicNetwork": false,
+              "protocol": "PostgreSQL local TCP; production TLS proposed",
+              "threats": [],
+              "isTrustBoundary": false
+            },
+            "id": "34fe55b2-0cf3-5d3f-9203-9199f31130dc",
+            "source": {
+              "cell": "2d2018ef-53ee-5a4e-a923-b33130bb4a2c"
+            },
+            "target": {
+              "cell": "46bd2063-f7b0-5f0c-8c41-283ff7c11d0d"
+            },
+            "vertices": []
+          },
+          {
+            "shape": "flow",
+            "attrs": {
+              "line": {
+                "stroke": "#526879",
+                "strokeWidth": 1.3,
+                "targetMarker": {
+                  "name": "block"
+                },
+                "sourceMarker": "",
+                "strokeDasharray": null
+              }
+            },
+            "width": 200,
+            "height": 100,
+            "zIndex": 3,
+            "labels": [
+              {
+                "markup": [
+                  {
+                    "tagName": "ellipse",
+                    "selector": "labelBody"
+                  },
+                  {
+                    "tagName": "text",
+                    "selector": "labelText"
+                  }
+                ],
+                "attrs": {
+                  "labelText": {
+                    "text": "DF-09 pg_dump",
+                    "textAnchor": "middle",
+                    "textVerticalAnchor": "middle"
+                  },
+                  "labelBody": {
+                    "ref": "labelText",
+                    "refRx": "50%",
+                    "refRy": "60%",
+                    "fill": "#fff",
+                    "strokeWidth": 0
+                  }
+                },
+                "position": 0.5
+              }
+            ],
+            "connector": "normal",
+            "data": {
+              "type": "tm.Flow",
+              "name": "DF-09 pg_dump",
+              "description": "Administrative pg_dump/restore script; not an API export route.",
+              "outOfScope": false,
+              "reasonOutOfScope": "",
+              "hasOpenThreats": false,
+              "isBidirectional": false,
+              "isEncrypted": true,
+              "isPublicNetwork": false,
+              "protocol": "Local PostgreSQL protocol / filesystem",
+              "threats": [],
+              "isTrustBoundary": false
+            },
+            "id": "56c8d3dd-6175-5328-bf97-87de81cd0436",
+            "source": {
+              "cell": "05c689ae-defc-5093-8e55-0756ecf93788"
+            },
+            "target": {
+              "cell": "241e49d6-a382-514f-8f06-17e5edfbe21e"
+            },
+            "vertices": []
+          },
+          {
+            "shape": "flow",
+            "attrs": {
+              "line": {
+                "stroke": "#526879",
+                "strokeWidth": 1.3,
+                "targetMarker": {
+                  "name": "block"
+                },
+                "sourceMarker": {
+                  "name": "block"
+                },
+                "strokeDasharray": null
+              }
+            },
+            "width": 200,
+            "height": 100,
+            "zIndex": 3,
+            "labels": [
+              {
+                "markup": [
+                  {
+                    "tagName": "ellipse",
+                    "selector": "labelBody"
+                  },
+                  {
+                    "tagName": "text",
+                    "selector": "labelText"
+                  }
+                ],
+                "attrs": {
+                  "labelText": {
+                    "text": "DF-10 HTTPS / OIDC",
+                    "textAnchor": "middle",
+                    "textVerticalAnchor": "middle"
+                  },
+                  "labelBody": {
+                    "ref": "labelText",
+                    "refRx": "50%",
+                    "refRy": "60%",
+                    "fill": "#fff",
+                    "strokeWidth": 0
+                  }
+                },
+                "position": 0.5
+              }
+            ],
+            "connector": "normal",
+            "data": {
+              "type": "tm.Flow",
+              "name": "DF-10 HTTPS / OIDC",
+              "description": "Federated identity if adopted",
+              "outOfScope": false,
+              "reasonOutOfScope": "",
+              "hasOpenThreats": false,
+              "isBidirectional": true,
+              "isEncrypted": true,
+              "isPublicNetwork": false,
+              "protocol": "HTTPS / OIDC",
+              "threats": [],
+              "isTrustBoundary": false
+            },
+            "id": "e4757f55-3ab9-5093-a8b8-bacaa132bd7a",
+            "source": {
+              "cell": "b7b581bc-7a17-5f1c-99e3-dadaba520e5b"
+            },
+            "target": {
+              "cell": "797188b5-043a-538f-b9dc-7cbdca021e29"
+            },
+            "vertices": [
+              {
+                "x": 800,
+                "y": 110
+              },
+              {
+                "x": 800,
+                "y": 727
+              }
+            ]
+          },
+          {
+            "shape": "flow",
+            "attrs": {
+              "line": {
+                "stroke": "#526879",
+                "strokeWidth": 1.3,
+                "targetMarker": {
+                  "name": "block"
+                },
+                "sourceMarker": "",
+                "strokeDasharray": null
+              }
+            },
+            "width": 200,
+            "height": 100,
+            "zIndex": 3,
+            "labels": [
+              {
+                "markup": [
+                  {
+                    "tagName": "ellipse",
+                    "selector": "labelBody"
+                  },
+                  {
+                    "tagName": "text",
+                    "selector": "labelText"
+                  }
+                ],
+                "attrs": {
+                  "labelText": {
+                    "text": "DF-11 Git over HTTPS",
+                    "textAnchor": "middle",
+                    "textVerticalAnchor": "middle"
+                  },
+                  "labelBody": {
+                    "ref": "labelText",
+                    "refRx": "50%",
+                    "refRy": "60%",
+                    "fill": "#fff",
+                    "strokeWidth": 0
+                  }
+                },
+                "position": 0.5
+              }
+            ],
+            "connector": "normal",
+            "data": {
+              "type": "tm.Flow",
+              "name": "DF-11 Git over HTTPS",
+              "description": "Reviewed code and configuration",
+              "outOfScope": false,
+              "reasonOutOfScope": "",
+              "hasOpenThreats": false,
+              "isBidirectional": false,
+              "isEncrypted": true,
+              "isPublicNetwork": false,
+              "protocol": "Git over HTTPS",
+              "threats": [],
+              "isTrustBoundary": false
+            },
+            "id": "27669581-6911-56d6-bda1-2adced1e9086",
+            "source": {
+              "cell": "e95b93a7-7a03-5c51-8877-5e436792d587"
+            },
+            "target": {
+              "cell": "85ade22c-9a9d-588a-ba83-3ed218a953c6"
+            },
+            "vertices": []
+          },
+          {
+            "shape": "flow",
+            "attrs": {
+              "line": {
+                "stroke": "#526879",
+                "strokeWidth": 1.3,
+                "targetMarker": {
+                  "name": "block"
+                },
+                "sourceMarker": "",
+                "strokeDasharray": null
+              }
+            },
+            "width": 200,
+            "height": 100,
+            "zIndex": 3,
+            "labels": [
+              {
+                "markup": [
+                  {
+                    "tagName": "ellipse",
+                    "selector": "labelBody"
+                  },
+                  {
+                    "tagName": "text",
+                    "selector": "labelText"
+                  }
+                ],
+                "attrs": {
+                  "labelText": {
+                    "text": "DF-12 Release proposed",
+                    "textAnchor": "middle",
+                    "textVerticalAnchor": "middle"
+                  },
+                  "labelBody": {
+                    "ref": "labelText",
+                    "refRx": "50%",
+                    "refRy": "60%",
+                    "fill": "#fff",
+                    "strokeWidth": 0
+                  }
+                },
+                "position": 0.5
+              }
+            ],
+            "connector": "normal",
+            "data": {
+              "type": "tm.Flow",
+              "name": "DF-12 Release proposed",
+              "description": "Future reviewed deployment; CI currently tests only.",
+              "outOfScope": false,
+              "reasonOutOfScope": "",
+              "hasOpenThreats": false,
+              "isBidirectional": false,
+              "isEncrypted": true,
+              "isPublicNetwork": false,
+              "protocol": "HTTPS / TLS",
+              "threats": [],
+              "isTrustBoundary": false
+            },
+            "id": "0c45c5ef-321c-53bf-bb8e-43a7e0ec7e6c",
+            "source": {
+              "cell": "85ade22c-9a9d-588a-ba83-3ed218a953c6"
+            },
+            "target": {
+              "cell": "05c689ae-defc-5093-8e55-0756ecf93788"
+            },
+            "vertices": [
+              {
+                "x": 525,
+                "y": 740
+              },
+              {
+                "x": 525,
+                "y": 320
+              }
+            ]
+          },
+          {
+            "shape": "trust-boundary-curve",
+            "attrs": {
+              "line": {
+                "targetMarker": "",
+                "sourceMarker": ""
+              }
+            },
+            "width": 200,
+            "height": 100,
+            "zIndex": 1,
+            "labels": [
+              {
+                "markup": [
+                  {
+                    "tagName": "ellipse",
+                    "selector": "labelBody"
+                  },
+                  {
+                    "tagName": "text",
+                    "selector": "labelText"
+                  }
+                ],
+                "attrs": {
+                  "labelText": {
+                    "text": "TB-01 Client to edge",
+                    "textAnchor": "middle",
+                    "textVerticalAnchor": "middle"
+                  },
+                  "labelBody": {
+                    "ref": "labelText",
+                    "refRx": "50%",
+                    "refRy": "60%",
+                    "fill": "#fff",
+                    "strokeWidth": 0
+                  },
+                  "text": {
+                    "text": ""
+                  }
+                },
+                "position": {
+                  "distance": 0.5,
+                  "args": {
+                    "keepGradient": true,
+                    "ensureLegibility": true
+                  }
+                }
+              }
+            ],
+            "connector": "normal",
+            "data": {
+              "type": "tm.Boundary",
+              "name": "TB-01 Client to edge",
+              "description": "TB-01 Client to edge",
+              "isTrustBoundary": true,
+              "hasOpenThreats": false
+            },
+            "id": "1abdcc9f-06aa-542a-b78e-53192d0ba814",
+            "source": {
+              "x": 250,
+              "y": 0
+            },
+            "target": {
+              "x": 250,
+              "y": 620
+            },
+            "vertices": []
+          },
+          {
+            "shape": "trust-boundary-curve",
+            "attrs": {
+              "line": {
+                "targetMarker": "",
+                "sourceMarker": ""
+              }
+            },
+            "width": 200,
+            "height": 100,
+            "zIndex": 1,
+            "labels": [
+              {
+                "markup": [
+                  {
+                    "tagName": "ellipse",
+                    "selector": "labelBody"
+                  },
+                  {
+                    "tagName": "text",
+                    "selector": "labelText"
+                  }
+                ],
+                "attrs": {
+                  "labelText": {
+                    "text": "TB-02 Routing to handlers",
+                    "textAnchor": "middle",
+                    "textVerticalAnchor": "middle"
+                  },
+                  "labelBody": {
+                    "ref": "labelText",
+                    "refRx": "50%",
+                    "refRy": "60%",
+                    "fill": "#fff",
+                    "strokeWidth": 0
+                  },
+                  "text": {
+                    "text": ""
+                  }
+                },
+                "position": {
+                  "distance": 0.5,
+                  "args": {
+                    "keepGradient": true,
+                    "ensureLegibility": true
+                  }
+                }
+              }
+            ],
+            "connector": "normal",
+            "data": {
+              "type": "tm.Boundary",
+              "name": "TB-02 Routing to handlers",
+              "description": "Logical authorization boundary within a single Express process.",
+              "isTrustBoundary": true,
+              "hasOpenThreats": false
+            },
+            "id": "9e1e12bc-3a1d-5886-8d67-a9de47a5a949",
+            "source": {
+              "x": 530,
+              "y": 0
+            },
+            "target": {
+              "x": 530,
+              "y": 620
+            },
+            "vertices": []
+          },
+          {
+            "shape": "trust-boundary-curve",
+            "attrs": {
+              "line": {
+                "targetMarker": "",
+                "sourceMarker": ""
+              }
+            },
+            "width": 200,
+            "height": 100,
+            "zIndex": 1,
+            "labels": [
+              {
+                "markup": [
+                  {
+                    "tagName": "ellipse",
+                    "selector": "labelBody"
+                  },
+                  {
+                    "tagName": "text",
+                    "selector": "labelText"
+                  }
+                ],
+                "attrs": {
+                  "labelText": {
+                    "text": "TB-03 App to storage",
+                    "textAnchor": "middle",
+                    "textVerticalAnchor": "middle"
+                  },
+                  "labelBody": {
+                    "ref": "labelText",
+                    "refRx": "50%",
+                    "refRy": "60%",
+                    "fill": "#fff",
+                    "strokeWidth": 0
+                  },
+                  "text": {
+                    "text": ""
+                  }
+                },
+                "position": {
+                  "distance": 0.5,
+                  "args": {
+                    "keepGradient": true,
+                    "ensureLegibility": true
+                  }
+                }
+              }
+            ],
+            "connector": "normal",
+            "data": {
+              "type": "tm.Boundary",
+              "name": "TB-03 App to storage",
+              "description": "TB-03 App to storage",
+              "isTrustBoundary": true,
+              "hasOpenThreats": false
+            },
+            "id": "6bb52bd1-a961-53f1-a43d-c243a20ad25b",
+            "source": {
+              "x": 875,
+              "y": 0
+            },
+            "target": {
+              "x": 875,
+              "y": 620
+            },
+            "vertices": []
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "name": "crm-ias-security",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=24 <25"
+  },
+  "scripts": {
+    "start": "node --env-file-if-exists=.env src/server.js",
+    "db:setup": "node --env-file-if-exists=.env scripts/setup-db.js",
+    "test": "node --env-file-if-exists=.env --test --test-concurrency=1 test/*.test.js",
+    "demo:sqli": "node --env-file-if-exists=.env scripts/demo-sqli.js",
+    "demo:secret": "node scripts/demo-secret.js",
+    "check:secrets": "node scripts/scan-secrets.js",
+    "check:static": "node scripts/static-check.js",
+    "backup:verify": "node --env-file-if-exists=.env scripts/backup-restore.js",
+    "hooks:install": "git config core.hooksPath .githooks"
+  },
+  "dependencies": {
+    "express": "^5.1.0",
+    "pg": "^8.16.3",
+    "helmet": "^8.1.0",
+    "express-rate-limit": "^8.1.0"
+  },
+  "devDependencies": {
+    "supertest": "^7.1.4"
+  }
+}

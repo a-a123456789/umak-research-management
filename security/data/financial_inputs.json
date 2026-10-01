@@ -1,0 +1,14 @@
+{
+  "currency": "PHP",
+  "asset": "A-02",
+  "valuation": {
+    "Engineering and reconstruction": 920000,
+    "Operational interruption": 800000,
+    "Response/legal/penalty contingency": 1880000
+  },
+  "ef": 0.4,
+  "aro_prior": 2,
+  "aro_post": 0.05,
+  "acs": 240000,
+  "status": "Illustrative Lab 5 scenario; not audited expenditure or incident frequency"
+}

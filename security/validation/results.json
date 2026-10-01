@@ -1,0 +1,26 @@
+{
+  "status": "PASS",
+  "checks": [
+    "Unique risk/TVA/threat/control/ticket IDs",
+    "All financial totals, cost allocation and DREAD scores",
+    "Official Threat Dragon v2 schema including data.threats objects",
+    "Flow endpoints, protocols, diagram counts and all eleven threat mappings",
+    "Five categories with at least two triples and explicit repudiation scenario"
+  ],
+  "metrics": {
+    "AV": 3600000,
+    "SLE": "1440000.0",
+    "ALE_prior": "2880000.0",
+    "ALE_post": "72000.000",
+    "CBA": "2568000.000",
+    "ACS": 240000,
+    "risks": 11,
+    "threats": 11
+  },
+  "limitations": [
+    "This validator checks documentation only; application results are recorded separately in evidence.",
+    "No live cloud deployment validated; synthetic restore evidence is recorded separately.",
+    "Costs, scoring and effectiveness are scenario assumptions.",
+    "UI import and report visual review are recorded separately in README."
+  ]
+}

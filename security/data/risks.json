@@ -1,0 +1,398 @@
+[
+  {
+    "n": 1,
+    "id": "R-01",
+    "tva": "TVA-01",
+    "threat": "THREAT-01",
+    "title": "SQL injection",
+    "category": "Software attacks",
+    "agent": "External web attacker",
+    "asset": "A-02",
+    "element": "P-03",
+    "stride": "Tampering; Information disclosure",
+    "flaw": "Concatenated user input in research search SQL.",
+    "scenario": "If search concatenates input, a crafted query can bypass record filtering and disclose nonpublic research metadata. Successful SQL injection depends on the actual query and database grants.",
+    "control": "Parameterized SQL, publication filter, least-privilege DB role, regression test.",
+    "acl": "ACL-01",
+    "prior": [
+      4,
+      5
+    ],
+    "post": [
+      1,
+      5
+    ],
+    "dread": [
+      9,
+      9,
+      8,
+      10,
+      8
+    ],
+    "score": 8.8,
+    "cost": 44000,
+    "ticket": "SEC-01",
+    "owner": "Gian",
+    "status": "Open - design scenario; implementation unverified"
+  },
+  {
+    "n": 2,
+    "id": "R-02",
+    "tva": "TVA-02",
+    "threat": "THREAT-02",
+    "title": "Object authorization bypass",
+    "category": "Software attacks",
+    "agent": "Authenticated peer",
+    "asset": "A-02; A-03",
+    "element": "P-03",
+    "stride": "Information disclosure; Elevation of privilege",
+    "flaw": "Record retrieval checks login but not permission on the requested record.",
+    "scenario": "A user changes a record ID and reads another research team\u2019s nonpublic record or service request. Client-hidden links do not enforce authorization.",
+    "control": "Central object permission check using approved collaborator/staff grants; deny by default.",
+    "acl": "ACL-02",
+    "prior": [
+      4,
+      4
+    ],
+    "post": [
+      1,
+      4
+    ],
+    "dread": [
+      8,
+      9,
+      8,
+      7,
+      8
+    ],
+    "score": 8.0,
+    "cost": 25000,
+    "ticket": "SEC-02",
+    "owner": "Gian",
+    "status": "Open - design scenario; implementation unverified"
+  },
+  {
+    "n": 3,
+    "id": "R-03",
+    "tva": "TVA-03",
+    "threat": "THREAT-03",
+    "title": "Public private-data export",
+    "category": "Human error or failure",
+    "agent": "Deployment administrator",
+    "asset": "A-02",
+    "element": "D-03",
+    "stride": "Information disclosure",
+    "flaw": "Private exports or backup objects inherit public-read storage permissions.",
+    "scenario": "An operator accidentally publishes a research export. Anyone with its URL can obtain nonpublic records; encryption at rest does not stop an authorized public read.",
+    "control": "Private storage policy, public-access block, expiring authorized downloads, configuration tests.",
+    "acl": "ACL-03",
+    "prior": [
+      3,
+      4
+    ],
+    "post": [
+      1,
+      4
+    ],
+    "dread": [
+      8,
+      9,
+      7,
+      7,
+      7
+    ],
+    "score": 7.6,
+    "cost": 15000,
+    "ticket": "SEC-03",
+    "owner": "Justin",
+    "status": "Open - design scenario; implementation unverified"
+  },
+  {
+    "n": 4,
+    "id": "R-04",
+    "tva": "TVA-04",
+    "threat": "THREAT-04",
+    "title": "Committed credentials",
+    "category": "Human error or failure",
+    "agent": "Developer mistake then external attacker",
+    "asset": "A-05; A-02",
+    "element": "E-04",
+    "stride": "Spoofing; Information disclosure; Elevation of privilege",
+    "flaw": "Live service credentials or signing secrets are committed to version control.",
+    "scenario": "A repository reader obtains a secret and impersonates a service if network access and credential permissions permit. Removing the file alone does not revoke a leaked secret.",
+    "control": "Secret scan on commits and CI, rotation and revocation, scoped service credentials, required review.",
+    "acl": "ACL-04",
+    "prior": [
+      4,
+      5
+    ],
+    "post": [
+      1,
+      5
+    ],
+    "dread": [
+      10,
+      9,
+      8,
+      10,
+      8
+    ],
+    "score": 9.0,
+    "cost": 35000,
+    "ticket": "SEC-04",
+    "owner": "Gian",
+    "status": "Open - design scenario; implementation unverified"
+  },
+  {
+    "n": 5,
+    "id": "R-05",
+    "tva": "TVA-05",
+    "threat": "THREAT-05",
+    "title": "Missing database isolation",
+    "category": "Espionage or trespass",
+    "agent": "Authenticated peer exploiting another query flaw",
+    "asset": "A-02",
+    "element": "D-01",
+    "stride": "Information disclosure; Elevation of privilege",
+    "flaw": "Broad service role has no row policy or equivalent verified isolation.",
+    "scenario": "A missed application permission check exposes rows across research groups. Missing RLS is a defense gap, not by itself proof that a user can query the database.",
+    "control": "RLS or equivalent tested isolation; transaction-local trusted identity; no owner/superuser/BYPASSRLS runtime.",
+    "acl": "ACL-05",
+    "prior": [
+      3,
+      4
+    ],
+    "post": [
+      1,
+      4
+    ],
+    "dread": [
+      7,
+      7,
+      5,
+      7,
+      5
+    ],
+    "score": 6.2,
+    "cost": 18000,
+    "ticket": "SEC-05",
+    "owner": "Gian",
+    "status": "Open - design scenario; implementation unverified"
+  },
+  {
+    "n": 6,
+    "id": "R-06",
+    "tva": "TVA-06",
+    "threat": "THREAT-06",
+    "title": "Session interception",
+    "category": "Espionage or trespass",
+    "agent": "Network observer or session thief",
+    "asset": "A-01; A-02",
+    "element": "DF-01",
+    "stride": "Spoofing; Information disclosure",
+    "flaw": "An HTTP/session path exposes credentials or cookies.",
+    "scenario": "A victim uses an insecure session path and an observer obtains a usable session. Ordinary Wi-Fi visibility does not decrypt correctly validated HTTPS.",
+    "control": "HTTPS, HSTS after validation, Secure/HttpOnly cookies, suitable SameSite and CSRF protection, rotation on login.",
+    "acl": "ACL-06",
+    "prior": [
+      3,
+      4
+    ],
+    "post": [
+      1,
+      4
+    ],
+    "dread": [
+      7,
+      6,
+      5,
+      6,
+      6
+    ],
+    "score": 6.0,
+    "cost": 8000,
+    "ticket": "SEC-06",
+    "owner": "Justin",
+    "status": "Open - design scenario; implementation unverified"
+  },
+  {
+    "n": 7,
+    "id": "R-07",
+    "tva": "TVA-07",
+    "threat": "THREAT-07",
+    "title": "Unsafe document processing",
+    "category": "Information extortion",
+    "agent": "Ransomware operator",
+    "asset": "A-02",
+    "element": "P-03",
+    "stride": "Tampering; Elevation of privilege",
+    "flaw": "Optional attachment parser is vulnerable or execution is permitted in upload storage.",
+    "scenario": "If uploads are enabled, a malicious file exploits a vulnerable parser or unsafe execution path, giving a runtime foothold. A PDF extension or polyglot alone does not execute code.",
+    "control": "Defer upload route until confirmed; then isolated patched parser, size/type checks, quarantine, no execution.",
+    "acl": "ACL-07",
+    "prior": [
+      3,
+      5
+    ],
+    "post": [
+      1,
+      5
+    ],
+    "dread": [
+      9,
+      7,
+      5,
+      8,
+      6
+    ],
+    "score": 7.0,
+    "cost": 16000,
+    "ticket": "SEC-07",
+    "owner": "Gian",
+    "status": "Open - design scenario; implementation unverified"
+  },
+  {
+    "n": 8,
+    "id": "R-08",
+    "tva": "TVA-08",
+    "threat": "THREAT-08",
+    "title": "Database extortion",
+    "category": "Information extortion",
+    "agent": "Ransomware operator with credentials or DB exploit",
+    "asset": "A-02",
+    "element": "D-01",
+    "stride": "Denial of service; Tampering; Information disclosure",
+    "flaw": "Public DB route plus exploitable authentication or overprivileged credentials.",
+    "scenario": "An attacker reaches the DB, gains sufficient privileges, and corrupts or extracts research records. Permanent loss also requires unavailable or compromised recovery copies.",
+    "control": "Private DB ingress, separate runtime/migration roles, backup credentials isolated, immutable recovery copy and restore tests.",
+    "acl": "ACL-08",
+    "prior": [
+      4,
+      5
+    ],
+    "post": [
+      1,
+      5
+    ],
+    "dread": [
+      10,
+      8,
+      7,
+      10,
+      8
+    ],
+    "score": 8.6,
+    "cost": 48000,
+    "ticket": "SEC-08",
+    "owner": "Justin",
+    "status": "Open - design scenario; implementation unverified"
+  },
+  {
+    "n": 9,
+    "id": "R-09",
+    "tva": "TVA-09",
+    "threat": "THREAT-09",
+    "title": "Resource exhaustion",
+    "category": "Sabotage or vandalism",
+    "agent": "Abusive client",
+    "asset": "A-02; A-04",
+    "element": "P-01",
+    "stride": "Denial of service",
+    "flaw": "Search cost, request rate or body size is unbounded.",
+    "scenario": "Repeated costly queries exhaust worker or database capacity and interrupt record and public-service access.",
+    "control": "Rate and concurrency limits, capped pagination/body size, timeouts and bounded queries.",
+    "acl": "ACL-09",
+    "prior": [
+      4,
+      3
+    ],
+    "post": [
+      2,
+      3
+    ],
+    "dread": [
+      7,
+      9,
+      8,
+      8,
+      6
+    ],
+    "score": 7.6,
+    "cost": 12000,
+    "ticket": "SEC-09",
+    "owner": "Justin",
+    "status": "Open - design scenario; implementation unverified"
+  },
+  {
+    "n": 10,
+    "id": "R-10",
+    "tva": "TVA-10",
+    "threat": "THREAT-10",
+    "title": "Stored browser script",
+    "category": "Sabotage or vandalism",
+    "agent": "Malicious record contributor",
+    "asset": "A-02; A-01",
+    "element": "P-03",
+    "stride": "Tampering; Information disclosure",
+    "flaw": "Untrusted research text reaches an unsafe HTML rendering sink.",
+    "scenario": "Stored content executes when another user views a record. It may perform same-origin actions; HttpOnly cookies cannot be read directly by script.",
+    "control": "Render plain text by default; approved sanitization for necessary rich text; CSP as added protection.",
+    "acl": "ACL-10",
+    "prior": [
+      3,
+      4
+    ],
+    "post": [
+      1,
+      4
+    ],
+    "dread": [
+      7,
+      8,
+      6,
+      6,
+      6
+    ],
+    "score": 6.6,
+    "cost": 12000,
+    "ticket": "SEC-10",
+    "owner": "Gian",
+    "status": "Open - design scenario; implementation unverified"
+  },
+  {
+    "n": 11,
+    "id": "R-11",
+    "tva": "TVA-11",
+    "threat": "THREAT-11",
+    "title": "Unattributable record changes",
+    "category": "Sabotage or vandalism",
+    "agent": "Malicious authorized editor",
+    "asset": "A-07; A-02",
+    "element": "D-02",
+    "stride": "Repudiation; Tampering",
+    "flaw": "Research updates lack an attributable append-only audit record.",
+    "scenario": "An editor changes a research stage then denies doing it; writable or missing logs prevent reliable reconstruction.",
+    "control": "Server-derived actor and event IDs, protected append-only audit path, restricted readers, integrity monitoring.",
+    "acl": "ACL-11",
+    "prior": [
+      3,
+      4
+    ],
+    "post": [
+      1,
+      4
+    ],
+    "dread": [
+      7,
+      7,
+      6,
+      6,
+      6
+    ],
+    "score": 6.4,
+    "cost": 7000,
+    "ticket": "SEC-11",
+    "owner": "Gian",
+    "status": "Open - design scenario; implementation unverified"
+  }
+]

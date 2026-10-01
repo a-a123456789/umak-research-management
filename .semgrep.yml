@@ -1,0 +1,23 @@
+rules:
+  - id: crm-no-concatenated-query
+    languages: [javascript]
+    severity: ERROR
+    message: Bind untrusted values as SQL parameters.
+    patterns:
+      - pattern-either:
+          - pattern: $DB.query($A + $B, ...)
+          - pattern: |
+              const $Q = $A + $B;
+              ...
+              $DB.query($Q, ...)
+    paths:
+      include: [src/]
+  - id: crm-no-dynamic-evaluation
+    languages: [javascript]
+    severity: ERROR
+    message: Do not evaluate untrusted JavaScript.
+    pattern-either:
+      - pattern: eval(...)
+      - pattern: new Function(...)
+    paths:
+      include: [src/]
