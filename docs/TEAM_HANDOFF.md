@@ -25,3 +25,5 @@ Repository: https://github.com/a-a123456789/ias-pbl
 
 ## Ready-to-send team note
 Team, the CRM IAS implementation and review tasks are in the repository. Please update your task and name in the shared Docs, follow your checklist in docs/TEAM_HANDOFF.md, and add your actual test results or corrections through a pull request. Add your section's slides and evidence links to the shared document. Check that assets, controls, risks, and diagrams agree. Complete your work by [internal deadline] and flag missing information early.
+
+GitHub native secret scanning/push protection was unavailable (HTTP 422). Report Gitleaks CI and local hook enforcement accurately. Main branch protection is enabled and requires two genuine reviewers.
