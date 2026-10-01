@@ -1,0 +1,23 @@
+# Measured ALGOCOM benchmark results
+
+Measured (UTC): 2026-10-01T10:42:17.614965+00:00
+
+Environment: Python 3.14.4 (CPython), macOS-26.6.2-arm64-arm-64bit-Mach-O, arm64, 10 logical CPUs; seed=20261001; reps=10; PYTHONHASHSEED=0; 1 untimed warm-up per method/case; timing=time.perf_counter; memory=tracemalloc peak in a separate single run; dependencies=stdlib only
+
+All nine cases passed output-equivalence and requirement-check comparisons before timing.
+
+| workflow | V | E | Q_total | req_checks | ready | blocked | baseline_passes | proposed_median_ms | baseline_median_ms | proposed_min_ms | proposed_max_ms | baseline_min_ms | baseline_max_ms | speedup | proposed_peak_kib | baseline_peak_kib |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| sequence | 10 | 9 | 3 | 3 | 0 | 7 | 5 | 0.0092 | 0.0087 | 0.0089 | 0.0139 | 0.0078 | 0.017 | 0.94 | 7.9 | 7.4 |
+| sequence | 100 | 99 | 9 | 7 | 1 | 69 | 56 | 0.0523 | 0.1983 | 0.0487 | 0.0571 | 0.1948 | 0.2187 | 3.79 | 65.1 | 72.0 |
+| sequence | 1000 | 999 | 129 | 96 | 1 | 699 | 503 | 0.784 | 18.8806 | 0.7536 | 0.9512 | 18.345 | 19.4842 | 24.08 | 617.0 | 648.0 |
+| branch | 10 | 16 | 0 | 0 | 3 | 4 | 4 | 0.0095 | 0.0079 | 0.0081 | 0.0186 | 0.0069 | 0.0084 | 0.84 | 6.9 | 6.4 |
+| branch | 100 | 156 | 17 | 16 | 2 | 68 | 17 | 0.0662 | 0.0906 | 0.057 | 0.0742 | 0.0897 | 0.1139 | 1.37 | 67.6 | 74.0 |
+| branch | 1000 | 1718 | 129 | 93 | 4 | 696 | 142 | 0.9863 | 6.4145 | 0.955 | 1.0468 | 6.1897 | 7.2634 | 6.5 | 646.4 | 676.8 |
+| sequence_reversed | 10 | 9 | 0 | 0 | 1 | 6 | 11 | 0.0078 | 0.0091 | 0.0072 | 0.0177 | 0.0084 | 0.01 | 1.16 | 7.6 | 7.1 |
+| sequence_reversed | 100 | 99 | 12 | 5 | 1 | 69 | 101 | 0.0502 | 0.3049 | 0.0458 | 0.056 | 0.2989 | 0.328 | 6.08 | 64.9 | 71.9 |
+| sequence_reversed | 1000 | 999 | 125 | 88 | 1 | 699 | 1001 | 0.796 | 33.0841 | 0.7713 | 0.8696 | 32.3815 | 33.8353 | 41.56 | 617.3 | 648.3 |
+
+Speedup = baseline median / proposed median. Above 1 favors proposed; below 1 favors baseline.
+
+Synthetic inputs; one input seed, one machine, and fixed method order. These measurements illustrate performance, not a proof of asymptotic complexity. Memory is traced Python allocation peak, not process RSS. See README.md for limitations.
