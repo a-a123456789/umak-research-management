@@ -620,7 +620,7 @@
       {
         "id": 1,
         "title": "Level 1 Implementation and Target Extensions",
-        "description": "Logical components; P-02/P-03/P-04 may share one application deployment. Trust controls are proposed.",
+        "description": "Express logical modules share one process; Python worker and administrative restore are separate processes. Local controls implemented; production extensions explicitly proposed.",
         "diagramType": "STRIDE",
         "version": "2.6.2",
         "thumbnail": "",
@@ -1011,8 +1011,8 @@
                 }
               ],
               "hasOpenThreats": true,
-              "isALog": false,
-              "storesCredentials": true,
+              "isALog": true,
+              "storesCredentials": false,
               "isEncrypted": false,
               "isSigned": false
             }
@@ -2508,7 +2508,7 @@
                 ],
                 "attrs": {
                   "labelText": {
-                    "text": "TB-01 Client to edge",
+                    "text": "TB-04 Child process",
                     "textAnchor": "middle",
                     "textVerticalAnchor": "middle"
                   },

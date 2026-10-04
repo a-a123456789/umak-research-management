@@ -1,37 +1,19 @@
-# Engineering handoff
+# Security implementation and remaining risk
 
-All controls are proposed. The Word report contains complete user stories, implementation steps, assertions and evidence requirements for the top three tickets.
+Local implementation status is separate from human acceptance and proposed production controls. No completed peer review is asserted.
 
-| Priority | Ticket | Owner | Threat | Required result |
-|---|---|---|---|---|
-| 1 | SEC-04 | Gian | THREAT-04 | Required secret scanning blocks synthetic secret fixtures; test credential revocation works. |
-| 2 | SEC-01 | Gian | THREAT-01 | Bound SQL values and permission filters prevent private-sentinel disclosure under malicious search input. |
-| 3 | SEC-08 | Justin with Gian | THREAT-08 | Approved DB access succeeds; unauthorized paths and privileges fail; synthetic backup restoration matches integrity checks. |
-
-Aaliyah reviews evidence. Anjelo owns project risk acceptance. John David reviews privacy/legal handling. All three remain pending implementation because there is no application repository yet.
-
-## Follow-up tickets
-
-| Ticket | Owner | Control and acceptance assertion |
+| Ticket | Owner | Status / acceptance evidence |
 |---|---|---|
-| SEC-02 | Gian | For two synthetic users and distinct research records, cross-user access is denied while explicitly authorized collaborators/staff succeed. |
-| SEC-03 | Justin | A private synthetic export cannot be read anonymously; only the authorized identity can obtain it. |
-| SEC-05 | Gian | Runtime query tests cannot retrieve unrelated rows; identity context resets between pooled requests. |
-| SEC-06 | Justin | Test session cookies carry required flags; protected pages use HTTPS; CSRF and login rotation tests pass. |
-| SEC-07 | Gian | Until uploads are approved, no upload endpoint is exposed. If adopted, oversized/invalid files are rejected and an isolated parser cannot execute arbitrary uploaded content. |
-| SEC-09 | Justin | Requests beyond a documented test limit are throttled; oversized bodies rejected; query limits prevent unbounded retrieval. |
-| SEC-10 | Gian | Stored untrusted text renders without script execution; normal research text remains readable. |
-| SEC-11 | Gian | Updates produce server-attributed audit events; normal runtime cannot alter/delete audit history; unauthorized audit reads fail. |
+| SEC-01 | Gian | Implemented locally; residual assumptions require human review. Parameterized search and publication filtering; synthetic exploit comparison and regression tests pass. |
+| SEC-02 | Gian | Implemented locally; service workflow persistence proposed. Owner-or-staff predicates on records; default denial; cross-user tests pass. Collaborator grants are not implemented. |
+| SEC-03 | Justin | Proposed cloud extension; no public export route. Local temporary backup only. Cloud public-access blocking and expiring download controls remain proposed. |
+| SEC-04 | Gian | Implemented controls; owner-authorized merge exception is not peer review. Pre-commit rejection, Gitleaks CI and protected branches; rotate any real leaked credential. Native private-repo push protection unavailable. |
+| SEC-05 | Gian | Partial defense; missed future query checks remain a risk. Non-owner runtime and tested application predicates; RLS not implemented. |
+| SEC-06 | Justin | Production transport protection pending. Hashed expiring bearer sessions and revocation; local HTTP only. Production HTTPS remains required. No cookie authentication. |
+| SEC-07 | Gian | Avoided in current scope; proposed feature risk. No upload or attachment parsing endpoint; defer until isolated parser security is reviewed. |
+| SEC-08 | Justin | Local controls verified; production recovery pending. Loopback database binding, separate roles and actual synthetic restore test; immutable offsite recovery remains proposed. |
+| SEC-09 | Justin | Local controls tested; distributed/OS resource isolation pending. Rate/body limits; staff-only solver; 5000 steps, 25000 edges, 50000 memberships, 2 MiB body; two Python workers, five-second timeout, 8 MiB output ceiling. No OS memory sandbox. |
+| SEC-10 | Gian | Future frontend sink must be reviewed. JSON-only API with no HTML rendering frontend; safe output rendering required for future UI. |
+| SEC-11 | Gian | Local grant controls verified; immutable external logging proposed. Server-derived audit actors and runtime INSERT/SELECT-only grants; administrator can still alter history. |
 
-## Evidence to request from teammates
-
-- Gian: code paths, actual tech stack, schema, auth model, CI framework and repository permissions.
-- Justin: hosting/network design, service identities and recovery environment.
-- Anjelo: costing evidence and approval of risk treatment assumptions.
-- John David: actual personal-data fields, retention obligations and scope of legal contingency.
-
-Use synthetic data and isolated test environments. Do not treat passing document validation as security implementation evidence.
-
-
-## Implementation handoff
-SEC-01: src/app.js + test/security.test.js + scripts/demo-sqli.js. SEC-04: .githooks/pre-commit, scripts/scan-secrets.js, CI Gitleaks. SEC-08: compose.yaml + scripts/backup-restore.js. Local checks passed; retain review pending until teammates inspect evidence. Production cloud, network, TLS, deletion replay and immutable logging remain open.
+Highest DREAD priorities: SEC-04, SEC-01, SEC-08. Evidence: test/security.test.js, test/algorithm.test.js, scripts/demo-secret.js, scripts/demo-sqli.js and scripts/backup-restore.js. Aaliyah evaluates remaining assumptions; Anjelo records risk acceptance only after actual review.

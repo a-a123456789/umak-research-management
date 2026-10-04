@@ -47,7 +47,7 @@ export function createApp(db) {
   app.post('/api/v1/research/search',async(req,res)=>{
     const keyword=req.body?.keyword;
     if (typeof keyword!=='string' || keyword.length>200) return res.status(400).json({error:'keyword must be a string of at most 200 characters'});
-    const result=await db.query("SELECT id,title,abstract,status FROM research_records WHERE status='Approved' AND title ILIKE $1",[`%${keyword}%`]);
+    const result=await db.query("SELECT id,title,abstract,status FROM research_records WHERE status='Approved' AND title ILIKE $1 ORDER BY id LIMIT 100",[`%${keyword}%`]);
     res.json(result.rows);
   });
   app.get('/api/v1/research/:id',auth,async(req,res)=>{
