@@ -15,7 +15,7 @@ jobs:
         with:
           python-version: '3.12'
       - name: Supplied correctness tests (includes 1000 random comparisons)
-        run: python -m unittest discover -s algocom -p 'test_prototype.py' -v
+        run: python -m unittest discover -s algocom -p 'test_*.py' -v
       - name: Benchmark generator and argument checks (no timing threshold)
         run: |
           PYTHONPATH=algocom python - <<'PY'
@@ -35,3 +35,10 @@ jobs:
                   assert canonical(evaluate_proposed(*args)) == canonical(evaluate_baseline(*args))
           print('All nine benchmark inputs agree; nonpositive repetition counts rejected.')
           PY
+      - name: DAG performance budget (synthetic, warmed p95)
+        run: |
+          PYTHONPATH=algocom PYTHONHASHSEED=0 python - <<'PYCODE'
+          import json
+          from bench_extended import performance_budget
+          print(json.dumps(performance_budget(), indent=2))
+          PYCODE

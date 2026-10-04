@@ -1,0 +1,1 @@
+{"steps":["S4","S5","S6"],"dependencies":[["S4","S5"],["S5","S6"]],"completed_actions":["S4"],"requirements":{"S5":[{"id":"payment_proof","gate":"received"}]},"evidence":[{"id":"payment_proof","state":"received"}],"durations":{"S4":10,"S5":15,"S6":45}}

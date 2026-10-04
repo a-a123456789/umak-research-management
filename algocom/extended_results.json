@@ -1,0 +1,144 @@
+{
+  "measured_utc": "2026-10-04T06:36:50.017316+00:00",
+  "python": "3.14.4",
+  "platform": "macOS-26.6.2-arm64-arm-64bit-Mach-O",
+  "cpus": 10,
+  "seed": "20261001",
+  "hash_seed": "0",
+  "repetitions": 10,
+  "warmups": 1,
+  "semantics": "Readiness and DP end-to-end, including validation. Same input per method. Memory traced separately; inputs excluded. Fixed method order. Synthetic estimates only.",
+  "cases": [
+    {
+      "workflow": "sequence",
+      "V": 10,
+      "E": 9,
+      "proposed_median_ms": 0.0368,
+      "baseline_median_ms": 0.0385,
+      "speedup": 1.05,
+      "proposed_peak_kib": 10.8,
+      "baseline_peak_kib": 10.1,
+      "dp_relaxations": 9,
+      "baseline_dp_passes": 4
+    },
+    {
+      "workflow": "sequence",
+      "V": 100,
+      "E": 99,
+      "proposed_median_ms": 0.2324,
+      "baseline_median_ms": 0.7972,
+      "speedup": 3.43,
+      "proposed_peak_kib": 82.3,
+      "baseline_peak_kib": 84.4,
+      "dp_relaxations": 99,
+      "baseline_dp_passes": 55
+    },
+    {
+      "workflow": "sequence",
+      "V": 1000,
+      "E": 999,
+      "proposed_median_ms": 2.6785,
+      "baseline_median_ms": 63.7561,
+      "speedup": 23.8,
+      "proposed_peak_kib": 779.1,
+      "baseline_peak_kib": 778.4,
+      "dp_relaxations": 999,
+      "baseline_dp_passes": 502
+    },
+    {
+      "workflow": "branch",
+      "V": 10,
+      "E": 16,
+      "proposed_median_ms": 0.0341,
+      "baseline_median_ms": 0.0361,
+      "speedup": 1.06,
+      "proposed_peak_kib": 9.3,
+      "baseline_peak_kib": 8.5,
+      "dp_relaxations": 16,
+      "baseline_dp_passes": 3
+    },
+    {
+      "workflow": "branch",
+      "V": 100,
+      "E": 156,
+      "proposed_median_ms": 0.2953,
+      "baseline_median_ms": 0.4597,
+      "speedup": 1.56,
+      "proposed_peak_kib": 91.6,
+      "baseline_peak_kib": 94.1,
+      "dp_relaxations": 156,
+      "baseline_dp_passes": 16
+    },
+    {
+      "workflow": "branch",
+      "V": 1000,
+      "E": 1718,
+      "proposed_median_ms": 3.5737,
+      "baseline_median_ms": 21.4473,
+      "speedup": 6.0,
+      "proposed_peak_kib": 846.6,
+      "baseline_peak_kib": 845.3,
+      "dp_relaxations": 1718,
+      "baseline_dp_passes": 141
+    },
+    {
+      "workflow": "sequence_reversed",
+      "V": 10,
+      "E": 9,
+      "proposed_median_ms": 0.0297,
+      "baseline_median_ms": 0.0395,
+      "speedup": 1.33,
+      "proposed_peak_kib": 9.6,
+      "baseline_peak_kib": 8.8,
+      "dp_relaxations": 9,
+      "baseline_dp_passes": 10
+    },
+    {
+      "workflow": "sequence_reversed",
+      "V": 100,
+      "E": 99,
+      "proposed_median_ms": 0.225,
+      "baseline_median_ms": 1.2558,
+      "speedup": 5.58,
+      "proposed_peak_kib": 82.6,
+      "baseline_peak_kib": 84.9,
+      "dp_relaxations": 99,
+      "baseline_dp_passes": 100
+    },
+    {
+      "workflow": "sequence_reversed",
+      "V": 1000,
+      "E": 999,
+      "proposed_median_ms": 2.6634,
+      "baseline_median_ms": 113.4524,
+      "speedup": 42.6,
+      "proposed_peak_kib": 776.2,
+      "baseline_peak_kib": 775.5,
+      "dp_relaxations": 999,
+      "baseline_dp_passes": 1000
+    }
+  ],
+  "performance_budget": [
+    {
+      "kind": "sequence",
+      "V": 5000,
+      "p95_ms": 14.8234,
+      "budget_ms": 1000,
+      "reps": 10
+    },
+    {
+      "kind": "branch",
+      "V": 5000,
+      "p95_ms": 19.824,
+      "budget_ms": 1000,
+      "reps": 10
+    },
+    {
+      "kind": "sequence_reversed",
+      "V": 5000,
+      "p95_ms": 14.209,
+      "budget_ms": 1000,
+      "reps": 10
+    }
+  ]
+}

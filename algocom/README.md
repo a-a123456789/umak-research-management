@@ -1,6 +1,6 @@
 # ALGOCOM: CRM service-step benchmark
 
-This standalone Python module compares two ways to validate a service workflow and identify its ready/blocked steps. It has no UI, database, Express dependency, or connection to the IAS API. All benchmark workflows are synthetic.
+This standalone Python module compares two ways to validate a service workflow and identify its ready/blocked steps. It has no UI, database, Express dependency, in its core. The new staff-only API adapter launches a separate Python process. All benchmark workflows are synthetic.
 
 ## Run from the repository root
 
@@ -42,7 +42,7 @@ Only one seed/machine and a fixed proposed-then-baseline timing order are used. 
 
 ## Validation and provenance
 
-The supplied 12 tests cover chains, branches/joins, requirements, completed workflows, cycles, invalid IDs/state, unchanged inputs, counters, and 1,000 randomized agreement checks. CI runs these tests plus equivalence checks for all nine generated benchmark inputs. CI has no timing threshold and does not overwrite the committed local benchmark measurements.
+The supplied 12 tests cover chains, branches/joins, requirements, completed workflows, cycles, invalid IDs/state, unchanged inputs, counters, and 1,000 randomized agreement checks. CI runs these tests plus equivalence checks for all nine generated benchmark inputs. The original baseline has no timing threshold and does not overwrite the committed local benchmark measurements.
 
 Copied code repairs: the pasted `😎` in `randint` was interpreted as `8)`; the test entry-point became `__name__ == '__main__'`; benchmark Markdown escapes and `__file__`/`__name__` were repaired. Algorithm behavior is preserved. Complexity comments were clarified to include Q and hashing assumptions. Added benchmark changes: positive repetition validation, min/max output, timestamp/hash-seed metadata, and explicit failures on unequal results.
 
@@ -51,3 +51,15 @@ Copied code repairs: the pasted `😎` in `randint` was interpreted as `8)`; the
 “We compared our queue-based workflow validation against repeated scanning. We first checked that both produced the same answer, then measured runtime and memory on nine synthetic workflows. Reversed chains make repeated scanning revisit unresolved steps many times. Our measured speedup applies to these inputs and this machine; the complexity explanation comes from the algorithms, not the timing table alone.”
 
 Review `results.md` for actual numbers before presenting. Do not claim the proposed method is always faster or uses less memory unless the measurements support that statement.
+
+## Integrated DAG duration extension
+
+`engine.py` retains `prototype.py` unchanged and adds DAG dynamic programming, input validation, and gate-aware evidence conversion. Run all 19 test groups with `python3 -m unittest discover -s algocom -p 'test_*.py' -v`. The suites include 1,000 original and 500 extended randomized comparisons.
+
+Run `PYTHONHASHSEED=0 python3 algocom/bench_extended.py`. This writes `extended_results.csv/json` without overwriting original `results.csv/md`. It compares equivalent readiness plus duration/certificate outputs on nine cases, using ten warmed repetitions and separate memory profiling. The same runner records a prototype CI budget: nearest-rank p95 below 1,000 ms over ten warmed 5,000-step cases per family; it is a regression guard, not a production SLA.
+
+For each step v, remaining work r(v) is zero if completed, otherwise its estimated duration. F(v)=r(v)+max(F(u):u is a prerequisite), with an empty maximum of zero. The answer is max F(v). Store the maximizing parent to reconstruct a certificate; ties use input order. This is DAG dynamic programming in topological order. It estimates dependency-only duration with unlimited parallel capacity, excluding evidence waits and resource delays.
+
+Expected hashing and bounded IDs give O(V+E+Q+B) end-to-end time and storage, with B evidence records. The repeated-scan upper bound is O(V(V+E)+Q+B). Best ordered scans can be linear; average scan behavior depends on the input-order distribution. Benchmarks illustrate these effects rather than prove asymptotic bounds.
+
+The authenticated adapter and exact engineering limits are in `docs/ALGORITHM_API.md`. It accepts staff planning scenarios only; persistence and institutional verification integrations remain proposed.

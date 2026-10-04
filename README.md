@@ -2,10 +2,10 @@
 
 A small Express/PostgreSQL CRM backend for the III-BCSAD bolanatics IAS milestone. This is a synthetic-data teaching implementation, not the complete university platform or a production deployment.
 
-Repository: https://github.com/a-a123456789/ias-pbl
+Repository: https://github.com/a-a123456789/umak-research-management
 
 ## Start locally
-Requires Node 24, npm, Docker Compose (or an existing PostgreSQL 18 instance), and PostgreSQL 18 client tools for the backup exercise.
+Requires Python 3.12+, Node 24, npm, Docker Compose (or an existing PostgreSQL 18 instance), and PostgreSQL 18 client tools for the backup exercise.
 
 ```sh
 npm ci --ignore-scripts
@@ -66,3 +66,7 @@ Final portfolio: `III-BCSAD_bolanatics_IAS_Capstone_Portfolio.pdf`, including si
 
 ## AI disclosure
 ChatGPT/Codex assisted backend and schema drafting, security tests, isolated demonstrations, CI configuration, document comparison, risk/model integration, and handoff instructions. Actual executed checks are recorded in evidence; team review, institutional verification and final approval remain separate responsibilities.
+
+## ALGOCOM integration
+
+The isolated `algocom/` core now includes DAG duration estimates. Staff can call `POST /api/v1/algorithm/solve`; see [exact contract](docs/ALGORITHM_API.md) and [benchmark method](algocom/README.md). No persistent service-workflow approval is implied.
