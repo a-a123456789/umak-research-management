@@ -1,0 +1,154 @@
+
+> crm-ias-security@1.0.0 db:setup
+> node --env-file-if-exists=.env scripts/setup-db.js
+
+Synthetic schema and three demo accounts prepared; API uses non-owner crm_app.
+
+> crm-ias-security@1.0.0 test
+> node --env-file-if-exists=.env --test --test-concurrency=1 test/*.test.js
+
+✔ worker response validates complete shapes, types and input membership (0.788709ms)
+✔ algorithm API: authentication, staff boundary, schema and standalone agreement (174.228167ms)
+✔ worker failures, timeout, concurrency, cancellation and recovery are bounded (184.772ms)
+✔ worker protocol rejects incomplete objects, nonzero exit and oversized output (95.819333ms)
+✔ malformed worker results return 502 through the authenticated HTTP route (48.83375ms)
+✔ SEC-01 public search returns only approved records; exact SQL injection is neutralized (98.236083ms)
+✔ authentication rejects missing, invalid, expired and revoked tokens (59.305709ms)
+✔ SEC-02 own record succeeds; another student record hidden; staff allowed (5.60875ms)
+✔ record creation binds ownership; blocks privilege fields; logs changes (5.943917ms)
+✔ consent: optional choices can both be false; identity/time cannot be supplied (5.010208ms)
+✔ SEC-11 runtime database role cannot alter schema or modify audit history (11.95625ms)
+✔ deletion requires staff review; cascades personal data and invalidates sessions (16.311834ms)
+✔ unknown routes deny by default; malformed/oversized JSON handled (2.084417ms)
+✔ login throttles repeated attempts with HTTP 429 (111.766042ms)
+✔ SEC-09 public search caps large synthetic result sets at 100 (6.006042ms)
+ℹ tests 15
+ℹ suites 0
+ℹ pass 15
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1126.162708
+
+> crm-ias-security@1.0.0 check:secrets
+> node scripts/scan-secrets.js
+
+Secret-pattern check passed. CI also runs Gitleaks.
+
+> crm-ias-security@1.0.0 check:static
+> node scripts/static-check.js
+
+Application static invariants passed; Semgrep runs separately in CI.
+found 0 vulnerabilities
+test_chain_completed_prefix (test_engine.DynamicProgrammingTests.test_chain_completed_prefix) ... ok
+test_completed_and_zero (test_engine.DynamicProgrammingTests.test_completed_and_zero) ... ok
+test_invalid_and_cycle (test_engine.DynamicProgrammingTests.test_invalid_and_cycle) ... ok
+test_join_disconnected_tie_zero (test_engine.DynamicProgrammingTests.test_join_disconnected_tie_zero) ... ok
+test_limits_and_duplicates (test_engine.DynamicProgrammingTests.test_limits_and_duplicates) ... ok
+test_random_equivalence_certificate_and_immutability (test_engine.DynamicProgrammingTests.test_random_equivalence_certificate_and_immutability) ... ok
+test_receipt_does_not_mean_verified (test_engine.DynamicProgrammingTests.test_receipt_does_not_mean_verified) ... ok
+test_branch_join_needs_both (test_prototype.Cases.test_branch_join_needs_both) ... ok
+test_branching (test_prototype.Cases.test_branching) ... ok
+test_completed_workflow (test_prototype.Cases.test_completed_workflow) ... ok
+test_cycle (test_prototype.Cases.test_cycle) ... ok
+test_inputs_not_mutated (test_prototype.Cases.test_inputs_not_mutated) ... ok
+test_invalid_inputs (test_prototype.Cases.test_invalid_inputs) ... ok
+test_random_agreement (test_prototype.Cases.test_random_agreement) ... ok
+test_requirement_check_counter (test_prototype.Cases.test_requirement_check_counter) ... ok
+test_self_loop_and_cycle_with_entry (test_prototype.Cases.test_self_loop_and_cycle_with_entry) ... ok
+test_sequence (test_prototype.Cases.test_sequence) ... ok
+test_spss_scenario_1_and_2 (test_prototype.Cases.test_spss_scenario_1_and_2) ... ok
+test_unmet_requirement (test_prototype.Cases.test_unmet_requirement) ... ok
+
+----------------------------------------------------------------------
+Ran 19 tests in 0.110s
+
+OK
+{
+  "status": "PASS",
+  "checks": [
+    "Unique risk/TVA/threat/control/ticket IDs",
+    "All financial totals, cost allocation and DREAD scores",
+    "Official Threat Dragon v2 schema including data.threats objects",
+    "Flow endpoints, protocols, diagram counts and all eleven threat mappings",
+    "Five categories with at least two triples and explicit repudiation scenario"
+  ],
+  "metrics": {
+    "AV": 3600000,
+    "SLE": "1440000.0",
+    "ALE_prior": "2880000.0",
+    "ALE_post": "72000.000",
+    "CBA": "2568000.000",
+    "ACS": 240000,
+    "risks": 11,
+    "threats": 11
+  },
+  "limitations": [
+    "This validator checks documentation only; application results are recorded separately in evidence.",
+    "No live cloud deployment validated; synthetic restore evidence is recorded separately.",
+    "Costs, scoring and effectiveness are scenario assumptions.",
+    "UI import and report visual review are recorded separately in README."
+  ]
+}
+Draft 2020-12 request and SUCCESS/COMPLETE/ERROR result contracts verified.
+
+> crm-ias-security@1.0.0 db:setup
+> node --env-file-if-exists=.env scripts/setup-db.js
+
+Synthetic schema and three demo accounts prepared; API uses non-owner crm_app.
+
+> crm-ias-security@1.0.0 demo:sqli
+> node --env-file-if-exists=.env scripts/demo-sqli.js
+
+{
+  "scenario": "Isolated synthetic SQL injection",
+  "payload": {
+    "keyword": "' UNION SELECT id, email, password_hash, role FROM users--"
+  },
+  "before": {
+    "status": 200,
+    "body": [
+      {
+        "id": 99,
+        "title": "synthetic@example.test",
+        "abstract": "FAKE_HASH_NOT_A_CREDENTIAL",
+        "status": "student"
+      },
+      {
+        "id": 1,
+        "title": "Public synthetic record",
+        "abstract": "Public abstract",
+        "status": "Approved"
+      }
+    ]
+  },
+  "after": {
+    "status": 200,
+    "body": []
+  },
+  "result": "PASS"
+}
+
+> crm-ias-security@1.0.0 demo:secret
+> node scripts/demo-secret.js
+
+Possible secret in fake-secret.txt (value redacted)
+PASS: actual pre-commit hook rejected a synthetic secret. No secret was pushed.
+
+> crm-ias-security@1.0.0 backup:verify
+> node --env-file-if-exists=.env scripts/backup-restore.js
+
+{
+  "result": "PASS",
+  "tables_compared": [
+    "users",
+    "research_records",
+    "sessions",
+    "consents",
+    "deletion_requests",
+    "audit_logs"
+  ],
+  "method": "Full ordered row comparison after pg_dump/pg_restore",
+  "limitations": "Quiescent synthetic database; not a production RPO/RTO, encrypted backup, or deletion replay proof."
+}

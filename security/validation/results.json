@@ -5,7 +5,8 @@
     "All financial totals, cost allocation and DREAD scores",
     "Official Threat Dragon v2 schema including data.threats objects",
     "Flow endpoints, protocols, diagram counts and all eleven threat mappings",
-    "Five categories with at least two triples and explicit repudiation scenario"
+    "Five categories with at least two triples and explicit repudiation scenario",
+    "Risk register and traceability values, model threat titles/placement and open flags agree"
   ],
   "metrics": {
     "AV": 3600000,

@@ -6,6 +6,6 @@ Required GitHub Actions contexts are `security` and `algocom`, with strict up-to
 
 ## Authorized integration exception
 
-The repository owner explicitly authorized merging the recovered IAS work and ALGOCOM implementation without waiting for reviewer approval. Only the necessary approval restriction is temporarily relaxed, after both check contexts pass on the exact integration head. All other protection remains. The operation restores normal review settings in a `finally` cleanup even if merging fails, then verifies protection and repository privacy. Add `algocom` to the existing required `security` check without removing security enforcement.
+The repository owner explicitly authorized merging the recovered IAS work and ALGOCOM implementation without waiting for reviewer approval. Only the necessary approval restriction is temporarily relaxed, after both check contexts pass on the exact integration head. All other protection remains. The operation restores normal review settings in a `finally` cleanup even if merging fails, then verifies protection and repository privacy. Both check contexts are already required; preserve them. The owner also authorized the submission-correction merge under the same temporary exception.
 
 This is an owner-authorized integration exception, not peer review. The integration PR's completion record contains the before/after settings, tested head, merge SHA, final-main check links and restoration result. Teammates still independently verify their assigned work. Future PRs follow the normal policy above.

@@ -60,7 +60,7 @@ Read [team handoff](docs/TEAM_HANDOFF.md), [report corrections](docs/REPORT_CORR
 
 Original C-suite roles and writing assignments remain unchanged. Teammates must personally perform their assigned reviews and use their own PRs; initial AI-assisted implementation is not their contribution evidence.
 
-Threat models, financial assumptions and risk data are under `security/`. Threat Dragon UI opening/export remains a separate acceptance check from schema validation. Costs and residual risks remain estimates.
+Threat models, financial assumptions and risk data are under `security/`. Threat Dragon 2.6.2 UI import and diagram export have been checked; schema validation alone is not that evidence. Costs and residual risks remain estimates.
 
 Final portfolio: `III-BCSAD_bolanatics_IAS_Capstone_Portfolio.pdf`, including six sections, citations, cross-traceability, AI disclosure and appended 10–14-slide deck. The repository does not replace that PDF.
 
@@ -74,3 +74,5 @@ The isolated `algocom/` core now includes DAG duration estimates. Staff can call
 ## Course submissions
 
 Final report PDFs, editable Markdown and 14-slide PowerPoint decks: [submissions](submissions/README.md). See [completion and team handoff](docs/COMPLETION_CHECKLIST.md), [current evidence](evidence/STATUS.md), and [algorithm API contract](docs/ALGORITHM_API.md). The shared repository is `a-a123456789/umak-research-management`; `algocom/` remains independent of the IAS database.
+
+Next actions for every member: [concise handoff](docs/NEXT_STEPS.md). Financial evidence remains [external](docs/FINANCIAL_EVIDENCE_WORKSHEET.md).

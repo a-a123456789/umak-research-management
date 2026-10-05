@@ -6,7 +6,7 @@ import { randomBytes } from 'node:crypto';
 import { verifyPassword, hashPassword, tokenHash } from './crypto.js';
 const dummyHash = hashPassword('dummy-unusable-account-password');
 const isId = value => /^[1-9][0-9]*$/.test(String(value)) && Number.isSafeInteger(Number(value)) && Number(value) <= 2147483647;
-export function createApp(db) {
+export function createApp(db, {algorithmRunner=createAlgorithmRunner()}={}) {
   const app = express();
   app.disable('x-powered-by');
   app.use(helmet());
@@ -22,7 +22,7 @@ export function createApp(db) {
     req.user=result.rows[0];next();
   };
   const staff = (req,res,next) => req.user.role==='staff' ? next() : res.status(403).json({error:'Forbidden'});
-  const solve=createAlgorithmRunner();
+  const solve=algorithmRunner;
   app.post('/api/v1/algorithm/solve',auth,staff,express.json({limit:'2mb'}),async(req,res)=>{
     const abort=new AbortController();
     const closed=()=>{if(!res.writableEnded)abort.abort();};

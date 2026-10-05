@@ -1,0 +1,142 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.test/crm/algorithm-response.schema.json",
+  "oneOf": [
+    {
+      "type": "object",
+      "properties": {
+        "status": {
+          "enum": [
+            "SUCCESS",
+            "COMPLETE"
+          ]
+        },
+        "ready_steps": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9_-]{1,64}$"
+          },
+          "uniqueItems": true
+        },
+        "blocked_steps": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "step": {
+                "type": "string",
+                "pattern": "^[A-Za-z0-9_-]{1,64}$"
+              },
+              "reasons": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "minItems": 1
+              }
+            },
+            "required": [
+              "step",
+              "reasons"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "earliest_finish_minutes": {
+          "type": "object",
+          "propertyNames": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9_-]{1,64}$"
+          },
+          "minProperties": 1,
+          "maxProperties": 5000,
+          "additionalProperties": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 2628000000
+          }
+        },
+        "remaining_duration_minutes": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 2628000000
+        },
+        "critical_path": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9_-]{1,64}$"
+          },
+          "uniqueItems": true
+        },
+        "duration_model": {
+          "type": "string",
+          "minLength": 1
+        },
+        "metrics": {
+          "type": "object",
+          "properties": {
+            "worker_elapsed_ms": {
+              "type": "number",
+              "minimum": 0
+            }
+          },
+          "required": [
+            "worker_elapsed_ms"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "status",
+        "ready_steps",
+        "blocked_steps",
+        "earliest_finish_minutes",
+        "remaining_duration_minutes",
+        "critical_path",
+        "duration_model",
+        "metrics"
+      ],
+      "additionalProperties": false
+    },
+    {
+      "type": "object",
+      "properties": {
+        "status": {
+          "const": "ERROR"
+        },
+        "error_type": {
+          "type": "string",
+          "minLength": 1
+        },
+        "message": {
+          "type": "string",
+          "minLength": 1
+        },
+        "metrics": {
+          "type": "object",
+          "properties": {
+            "worker_elapsed_ms": {
+              "type": "number",
+              "minimum": 0
+            }
+          },
+          "required": [
+            "worker_elapsed_ms"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "status",
+        "error_type",
+        "message",
+        "metrics"
+      ],
+      "additionalProperties": false
+    }
+  ],
+  "description": "Python worker result. Express also enforces input/result membership and COMPLETE invariants. HTTP auth/parser/lifecycle errors retain their documented envelopes and are not worker results."
+}

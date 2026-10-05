@@ -736,7 +736,7 @@
                   "severity": "High",
                   "status": "Open",
                   "score": "7.6",
-                  "description": "Authenticated staff floods costly graph-solving scenarios or clients flood search. Unbounded child processes would exhaust host resources. R-09 / TVA-09 / A-02; A-04; A-08 Status: Local controls tested; distributed/OS resource isolation pending",
+                  "description": "Authenticated staff floods costly graph-solving scenarios or clients flood search. Unbounded child processes would exhaust host resources. R-09 / TVA-09 / A-02; A-04; A-08; Mitigated resource scenario; OS/distributed limits remain",
                   "mitigation": "Rate/body limits; staff-only solver; 5000 steps, 25000 edges, 50000 memberships, 2 MiB body; two Python workers, five-second timeout, 8 MiB output ceiling. No OS memory sandbox. ACL-09 / SEC-09"
                 }
               ],
@@ -818,7 +818,7 @@
                   "severity": "High",
                   "status": "Open",
                   "score": "8.8",
-                  "description": "If search concatenates input, a crafted query can bypass record filtering and disclose nonpublic research metadata. Successful SQL injection depends on the actual query and database grants. R-01 / TVA-01 / A-02 Status: Implemented locally; residual assumptions require human review",
+                  "description": "If search concatenates input, a crafted query can bypass record filtering and disclose nonpublic research metadata. Successful SQL injection depends on the actual query and database grants. R-01 / TVA-01 / A-02; Demonstrated in isolated vulnerable example; mitigated in normal application",
                   "mitigation": "Parameterized search and publication filtering; synthetic exploit comparison and regression tests pass. ACL-01 / SEC-01"
                 },
                 {
@@ -831,34 +831,8 @@
                   "severity": "High",
                   "status": "Open",
                   "score": "8.0",
-                  "description": "A user changes a record ID and reads another research team\u2019s nonpublic record or service request. Client-hidden links do not enforce authorization. R-02 / TVA-02 / A-02; A-03 Status: Implemented locally; service workflow persistence proposed",
+                  "description": "A user changes a record ID and reads another research team\u2019s nonpublic record or service request. Client-hidden links do not enforce authorization. R-02 / TVA-02 / A-02; Mitigated scenario; owner/staff checks tested",
                   "mitigation": "Owner-or-staff predicates on records; default denial; cross-user tests pass. Collaborator grants are not implemented. ACL-02 / SEC-02"
-                },
-                {
-                  "id": "ed41e18f-9592-5bfa-b10a-7c84cd367e20",
-                  "threatId": "ed41e18f-9592-5bfa-b10a-7c84cd367e20",
-                  "number": 7,
-                  "title": "THREAT-07 Unsafe document processing",
-                  "type": "Tampering",
-                  "modelType": "STRIDE",
-                  "severity": "High",
-                  "status": "Open",
-                  "score": "7.0",
-                  "description": "If uploads are enabled, a malicious file exploits a vulnerable parser or unsafe execution path, giving a runtime foothold. A PDF extension or polyglot alone does not execute code. R-07 / TVA-07 / A-02 Status: Avoided in current scope; proposed feature risk",
-                  "mitigation": "No upload or attachment parsing endpoint; defer until isolated parser security is reviewed. ACL-07 / SEC-07"
-                },
-                {
-                  "id": "70bd2788-f177-5f0b-9194-b7ac376016b5",
-                  "threatId": "70bd2788-f177-5f0b-9194-b7ac376016b5",
-                  "number": 10,
-                  "title": "THREAT-10 Stored browser script",
-                  "type": "Tampering",
-                  "modelType": "STRIDE",
-                  "severity": "Medium",
-                  "status": "Open",
-                  "score": "6.6",
-                  "description": "Stored content executes when another user views a record. It may perform same-origin actions; HttpOnly cookies cannot be read directly by script. R-10 / TVA-10 / A-02; A-01 Status: Future frontend sink must be reviewed",
-                  "mitigation": "JSON-only API with no HTML rendering frontend; safe output rendering required for future UI. ACL-10 / SEC-10"
                 }
               ],
               "hasOpenThreats": true
@@ -940,7 +914,7 @@
                   "severity": "Medium",
                   "status": "Open",
                   "score": "6.2",
-                  "description": "A missed application permission check exposes rows across research groups. Missing RLS is a defense gap, not by itself proof that a user can query the database. R-05 / TVA-05 / A-02 Status: Partial defense; missed future query checks remain a risk",
+                  "description": "A missed application permission check exposes rows across research groups. Missing RLS is a defense gap, not by itself proof that a user can query the database. R-05 / TVA-05 / A-02; Current residual risk; runtime role is not row-isolated",
                   "mitigation": "Non-owner runtime and tested application predicates; RLS not implemented. ACL-05 / SEC-05"
                 },
                 {
@@ -953,8 +927,8 @@
                   "severity": "High",
                   "status": "Open",
                   "score": "8.6",
-                  "description": "An attacker reaches the DB, gains sufficient privileges, and corrupts or extracts research records. Permanent loss also requires unavailable or compromised recovery copies. R-08 / TVA-08 / A-02 Status: Local controls verified; production recovery pending",
-                  "mitigation": "Loopback database binding, separate roles and actual synthetic restore test; immutable offsite recovery remains proposed. ACL-08 / SEC-08"
+                  "description": "After developer-host compromise, an attacker reuses available administrator credentials against the local database and encrypts or destroys A-02. R-08 / TVA-08 / A-02; Current privileged-account threat scenario; compromise not demonstrated",
+                  "mitigation": "Separate non-owner runtime, loopback DB and tested restore; protect setup credentials and add independent immutable backups before production. ACL-08 / SEC-08"
                 }
               ],
               "hasOpenThreats": true,
@@ -1006,8 +980,8 @@
                   "severity": "Medium",
                   "status": "Open",
                   "score": "6.4",
-                  "description": "An editor changes a research stage then denies doing it; writable or missing logs prevent reliable reconstruction. R-11 / TVA-11 / A-07; A-02 Status: Local grant controls verified; immutable external logging proposed",
-                  "mitigation": "Server-derived audit actors and runtime INSERT/SELECT-only grants; administrator can still alter history. ACL-11 / SEC-11"
+                  "description": "A privileged administrator changes database state and erases local audit traces. No nonexistent research-update API is assumed. R-11 / TVA-11 / A-07; A-02; Current residual risk; administrator can alter audit history",
+                  "mitigation": "Runtime INSERT/SELECT-only audit grants tested; external tamper-resistant audit storage and administrator oversight remain proposed. ACL-11 / SEC-11"
                 }
               ],
               "hasOpenThreats": true,
@@ -1050,17 +1024,30 @@
               "reasonOutOfScope": "",
               "threats": [
                 {
+                  "id": "ed41e18f-9592-5bfa-b10a-7c84cd367e20",
+                  "threatId": "ed41e18f-9592-5bfa-b10a-7c84cd367e20",
+                  "number": 7,
+                  "title": "THREAT-07 Loss of recovery copies under extortion",
+                  "type": "Tampering",
+                  "modelType": "STRIDE",
+                  "severity": "High",
+                  "status": "Open",
+                  "score": "7.0",
+                  "description": "An extortionist who already controls the operator host removes or encrypts reachable recovery copies; no upload or parser feature is assumed. R-07 / TVA-07 / A-02; Current recovery design gap; extortion is a hypothetical scenario",
+                  "mitigation": "Verified local restore is a prerequisite, not offsite resilience. Proposed immutable independent recovery, segregated credentials and rehearsed incident recovery. ACL-07 / SEC-07"
+                },
+                {
                   "id": "51e70560-0c95-5e2a-9836-74e143ce7f22",
                   "threatId": "51e70560-0c95-5e2a-9836-74e143ce7f22",
                   "number": 3,
-                  "title": "THREAT-03 Public private-data export",
+                  "title": "THREAT-03 Backup confidentiality exposure",
                   "type": "Information disclosure",
                   "modelType": "STRIDE",
                   "severity": "High",
                   "status": "Open",
                   "score": "7.6",
-                  "description": "An operator accidentally publishes a research export. Anyone with its URL can obtain nonpublic records; encryption at rest does not stop an authorized public read. R-03 / TVA-03 / A-02 Status: Proposed cloud extension; no public export route",
-                  "mitigation": "Local temporary backup only. Cloud public-access blocking and expiring download controls remain proposed. ACL-03 / SEC-03"
+                  "description": "An operator mishandles a local recovery copy or exposes it through filesystem permissions; no cloud bucket or public export endpoint is assumed. R-03 / TVA-03 / A-02; Current residual risk; no application-level dump encryption",
+                  "mitigation": "Temporary-directory cleanup and controlled operator access; application backup encryption and custody evidence remain proposed. ACL-03 / SEC-03"
                 }
               ],
               "hasOpenThreats": true,
@@ -1146,7 +1133,7 @@
                   "severity": "High",
                   "status": "Open",
                   "score": "9.0",
-                  "description": "A repository reader obtains a secret and impersonates a service if network access and credential permissions permit. Removing the file alone does not revoke a leaked secret. R-04 / TVA-04 / A-05; A-02 Status: Implemented controls; owner-authorized merge exception is not peer review",
+                  "description": "A repository reader obtains a secret and impersonates a service if network access and credential permissions permit. Removing the file alone does not revoke a leaked secret. R-04 / TVA-04 / A-05; A-02; Mitigated scenario; fake-secret rejection and CI verified",
                   "mitigation": "Pre-commit rejection, Gitleaks CI and protected branches; rotate any real leaked credential. Native private-repo push protection unavailable. ACL-04 / SEC-04"
                 }
               ],
@@ -1258,7 +1245,7 @@
                   "severity": "Medium",
                   "status": "Open",
                   "score": "6.0",
-                  "description": "A victim uses an insecure session path and an observer obtains a usable session. Ordinary Wi-Fi visibility does not decrypt correctly validated HTTPS. R-06 / TVA-06 / A-01; A-02 Status: Production transport protection pending",
+                  "description": "A victim uses an insecure session path and an observer obtains a usable session. Ordinary Wi-Fi visibility does not decrypt correctly validated HTTPS. R-06 / TVA-06 / A-01; A-02; Current transport limitation; local HTTP only",
                   "mitigation": "Hashed expiring bearer sessions and revocation; local HTTP only. Production HTTPS remains required. No cookie authentication. ACL-06 / SEC-06"
                 }
               ],
@@ -2399,8 +2386,22 @@
               "isTrustBoundary": false,
               "outOfScope": false,
               "reasonOutOfScope": "",
-              "threats": [],
-              "hasOpenThreats": false
+              "threats": [
+                {
+                  "id": "70bd2788-f177-5f0b-9194-b7ac376016b5",
+                  "threatId": "70bd2788-f177-5f0b-9194-b7ac376016b5",
+                  "number": 10,
+                  "title": "THREAT-10 Malformed worker certificate",
+                  "type": "Tampering",
+                  "modelType": "STRIDE",
+                  "severity": "Medium",
+                  "status": "Open",
+                  "score": "6.6",
+                  "description": "A faulty or compromised Python worker sends a superficially successful but malformed certificate. Express must reject it before presenting a result. R-10 / TVA-10 / A-08; Demonstrated boundary defect; corrected and regression tested",
+                  "mitigation": "Full structural/type/membership validation; malformed object yields WORKER_PROTOCOL/502; worker process is bounded. ACL-10 / SEC-10"
+                }
+              ],
+              "hasOpenThreats": true
             }
           },
           {

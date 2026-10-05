@@ -1,7 +1,7 @@
 # CRM Application Security Architecture
 ## PBL Milestone: Application Security Architecture and Software Engineering Integration
 
-III-BCSAD • bolanatics • 4 October 2026
+III-BCSAD • bolanatics • 5 October 2026
 
 Center for Research Management (CRM) Research Services and Information Management Platform
 
@@ -37,20 +37,44 @@ CEO owns priorities and risk acceptance; CIO owns environment, backups and archi
 
 ### Asset inventory and classification
 
-The following are stable project IDs, not an inventory of real university data. Confidentiality classes apply to intended data; current records are synthetic.
+The following are stable IDs for actual prototype components and explicitly proposed persistence, not an inventory of real university records. Confidentiality classes apply to intended data; current records are synthetic.
 
 | ID / asset | Custodian / location | Classification | Security priorities |
 |---|---|---|---|
 | A-01 identities, sessions, consent | Gian / PostgreSQL | Restricted | Confidentiality, authenticity, privacy; prevent impersonation |
-| A-02 research records and backups | Justin / operational DB and temporary dump | Confidential; approved metadata public | Confidentiality, integrity, availability, possession/control |
+| A-02 research records and backups | Justin / operational DB and temporary dump | Confidential; approved metadata public | Confidentiality, integrity, availability, Safety (avoid harmful disclosure or loss) |
 | A-03 service-workflow records | John David / proposed persistence adapter | Confidential, proposed | Integrity, privacy, authentic evidence gates |
 | A-04 public research information | Justin / approved search response | Public | Integrity and availability; public does not mean writable |
-| A-05 credentials | Gian / ignored local environment, ephemeral CI | Restricted | Confidentiality and possession/control |
+| A-05 credentials | Gian / ignored local environment, ephemeral CI | Restricted | Confidentiality and Safety (avoid harmful disclosure or loss) |
 | A-06 source, CI and models | Gian / private Git repository | Internal | Integrity, authenticity and availability |
 | A-07 audit events | Aaliyah / logical audit store in PostgreSQL | Confidential | Integrity, accountability and controlled retention |
 | A-08 workflow scenarios/results | Gian / bounded worker memory and response | Internal synthetic; future confidential | Integrity, availability and honest estimate interpretation |
 
-CIANA-PS interpretation: confidentiality restricts private records; integrity preserves states and gates; availability enables service; nonrepudiation is supported only partly by attributable logs, not proven by them; authenticity binds the session; privacy minimizes personal fields; possession/control restricts copies and credentials. Audit administrators can still change logs. These objectives must be balanced: deletion and accountability require defined retention, while availability limits must not imply unrestricted data access [2], [4].
+CIANA-PS follows the milestone definitions: Confidentiality, Integrity, Availability, Non-Repudiation, Authenticity, Privacy and Safety. Safety means reducing foreseeable harm to researchers from disclosure, corrupted decisions or unavailable services; this prototype is not a safety-critical certified system. Attributable logs support accountability but do not establish cryptographic non-repudiation [2], [4].
+
+| Student / reports to | Routine governance duty | CIANA-PS contribution |
+|---|---|---|
+| Anjelo, CEO / team and institutional sponsor | Set scope, fund controls, record release decisions | Availability and Safety; authorize residual risk only after review |
+| Justin, CIO / CEO | Operate database, backup and recovery | Availability and Integrity |
+| Aaliyah, CISO / CEO directly | Assess threats, challenge exceptions, monitor evidence | Confidentiality, Integrity and Non-Repudiation |
+| Gian, Lead Engineer / CIO for operations; CEO for delivery | Implement access rules, tests and CI | Authenticity, Integrity and Availability |
+| John David, DPO / CEO; independent escalation to institution | Review consent, erasure and incident simulation | Privacy and Confidentiality; Safety of data subjects |
+
+The business data owner decides permitted use and retention; the custodian implements storage and approved access. The student CEO models the owner's project decisions and the CIO models custody, without claiming university appointment. Direct CISO-to-CEO reporting lets unresolved security issues reach the decision maker without being filtered by delivery management [2], [3].
+
+Conflict example: Gian requests a release while a severe authorization defect remains. Aaliyah presents the affected asset and failed test; John David assesses privacy harm; Justin estimates recovery impact; Anjelo records a defer-or-accept decision. Proposed team tolerance: no release with failing mandatory checks, exposed credentials or demonstrated unauthorized disclosure. Financial acceptance thresholds require institutional confirmation. The earlier review-count exception did not waive security checks and did not constitute peer review.
+
+### Governance acknowledgment — unsigned
+
+These are classroom allocations. Each member must read their obligations before signing; blank fields are intentional external actions.
+
+| Member | Acknowledgment signature | Actual date |
+|---|---|---|
+| Anjelo Benedict Arnaez | ____________________ | __________ |
+| Justin Andrew Ducay | ____________________ | __________ |
+| Aaliyah Marie Balocating | ____________________ | __________ |
+| Gian Brent Maligaya | ____________________ | __________ |
+| John David Bomediano | ____________________ | __________ |
 
 ## II. Attack surface, Kill Chain and code remediation
 
@@ -71,29 +95,62 @@ Vulnerability classifications: SQL injection is CWE-89; missing authorization is
 
 ### Seven-phase Kill Chain with ATT&CK mapping
 
-This is a conditional, proposed upload-parser intrusion scenario, retained to correct the team's original chain. It is not the demonstrated SQLi result. Uploads are not implemented; a malicious file alone does not execute JavaScript or establish a foothold. Kill Chain stages and ATT&CK techniques are complementary models rather than one-to-one taxonomies [7], [8].
+This seven-stage tabletop targets the existing developer workstation, ignored credentials and PostgreSQL research collection. It assumes a malware operator gains the workstation user's execution rights through a malicious file outside the CRM app. No upload feature, observed intrusion or executed malware is claimed. The sequence is a hypothesis for defense planning; the executed SQLi experiment below is separate. Kill Chain phases and ATT&CK tactics are related but are not interchangeable taxonomies [7], [8].
 
-| Phase | Conditional action / ATT&CK ID | Defense and present status |
+| Phase | Hypothetical action / ATT&CK ID | Control or limit |
 |---|---|---|
-| Reconnaissance | Scan for exposed routes / T1595.002 Vulnerability Scanning | Minimal routes and throttling; external attack simulation not run |
-| Weaponization | Develop an exploit for an actual parser flaw / T1587.004 Exploits | Defer parser; dependency checks on implemented stack |
-| Delivery | Send exploit to a future public upload service / T1190 Exploit Public-Facing Application | No upload endpoint exposed |
-| Exploitation | Trigger the vulnerable server parser / T1190 | Requires a specific exploitable flaw, not merely accepting a PDF |
-| Installation | Install a web shell after sufficient execution/write access / T1505.003 Web Shell | No runtime upload execution path; future isolation review |
-| Command and control | Use web protocols from compromised host / T1071.001 Web Protocols | Production egress policy proposed, not tested |
-| Actions on objectives | Encrypt accessible data for impact / T1486 Data Encrypted for Impact | Least privilege and synthetic restore verified; immutable recovery proposed |
+| Reconnaissance | Discover exposed routes when the local service is reachable / T1595.002 | Minimal routes; no external reconnaissance performed |
+| Weaponization | Prepare a credential-stealing executable / T1587.001 | No malware built; trusted developer tooling is an operational requirement |
+| Delivery | Send that file to the developer as a phishing attachment / T1566.001 | Outside CRM ingestion; awareness training proposed |
+| Exploitation | Developer executes the malicious file / T1204.002 | Requires user execution, not an imaginary upload/parser flaw |
+| Installation | Persist as a user cron job on the Unix host / T1053.003 | OS hardening/monitoring proposed; no persistence installed |
+| Command and control | Contact an attacker web service / T1071.001 | Egress monitoring proposed; no connection executed |
+| Actions on objectives | Use stolen local admin credentials to encrypt reachable research/backup data / T1486 | Runtime least privilege and synthetic recovery tested; workstation isolation/offsite recovery remain gaps |
 
 ### Actual vulnerable and patched proof
 
 The demonstration creates temporary synthetic tables and runs the same UNION payload against the isolated concatenating example and the normal parameterized search. It then removes its temporary schema. The vulnerable result contains a fake credential sentinel; the patched result is HTTP 200 with an empty array. Successful prevention need not return 401 because search itself is public.
 
+Repository vulnerable example (`demo/vulnerable-app.js`, isolated synthetic demonstration):
+
+```javascript
+// INTENTIONALLY VULNERABLE: loaded only by scripts/demo-sqli.js in an isolated schema.
+import express from 'express';
+export function vulnerableApp(db) {
+ const app=express();app.use(express.json());
+ app.post('/api/v1/research/search',async(req,res)=>{
+   const query="SELECT id,title,abstract,status FROM research_records WHERE status='Approved' AND title LIKE '%" + req.body.keyword + "%'";
+   const r=await db.query(query);res.json(r.rows);
+ });
+ return app;
+}
 ```
-Vulnerable principle: SQL text embeds the supplied keyword directly.
-Patched query:
-SELECT id,title,abstract,status FROM research_records
-WHERE status='Approved' AND title ILIKE $1 ORDER BY id LIMIT 100
-Bound value: '%' + keyword + '%'
-Payload: ' UNION SELECT id, email, password_hash, role FROM users--
+
+Normal endpoint query (`src/app.js`):
+
+```javascript
+const r=await db.query(
+ "SELECT id,title,abstract,status FROM research_records WHERE status='Approved' AND title ILIKE $1 ORDER BY id LIMIT 100",
+ ['%'+keyword+'%']);
+res.json(r.rows);
+```
+
+Same malicious request in both tests:
+
+```http
+POST /api/v1/research/search
+Content-Type: application/json
+
+{"keyword":"' UNION SELECT id, email, password_hash, role FROM users--"}
+```
+
+Recorded server responses from the local synthetic run at commit `655114e`:
+
+```json
+{"before":{"status":200,"body":[
+ {"id":99,"title":"synthetic@example.test","abstract":"FAKE_HASH_NOT_A_CREDENTIAL","status":"student"},
+ {"id":1,"title":"Public synthetic record","abstract":"Public abstract","status":"Approved"}]},
+ "after":{"status":200,"body":[]},"result":"PASS"}
 ```
 
 Actual command: `npm run demo:sqli`. The before/after JSON and PASS assertion are recorded in `evidence/integration/local-checks.txt`. Tests separately check approved-only normal results, cross-user denial, valid staff access and malformed input. The demo proves a specific query control on synthetic data; it does not prove every route or database grant is secure.
@@ -134,6 +191,18 @@ A student sends `{}` to `POST /api/v1/users/deletion-requests`; HTTP 202 returns
 
 Soft deletion only hides records. Hard deletion removes operational rows but does not erase historical backups. Proposed production procedure: confirm authority/holds; erase eligible data; maintain a restricted deletion ledger outside backups; expire recovery copies on an approved retention schedule; replay deletion events after restoration before opening traffic; review audit retention and minimize retained identifiers. Cryptographic shredding requires per-subject encryption keys and verified destruction of all recoverable copies; no KMS or shredding implementation is claimed.
 
+### Proposed production erasure design — not implemented
+
+| Method | Live data | Historical backups | Decision / verification |
+|---|---|---|---|
+| Soft deletion | Hidden, recoverable rows | Unchanged | Useful for review/holds; not erasure |
+| Hard deletion | Operational rows removed | Old copies remain readable | Current prototype behavior; restore must replay authorized deletions |
+| Cryptographic erasure | Encrypted personal fields unreadable after key destruction | Effective only if every recoverable subject key is destroyed | Proposed architecture; not claimed for current plaintext fields |
+
+Proposed sequence: (1) authenticate the requester and record the lawful decision and any required hold; (2) locate subject data across tables, exports, caches and backups; (3) remove eligible live rows and minimize retained audit identifiers; (4) record a restricted deletion event outside routine backup snapshots; (5) quarantine each restore and replay those events before reopening access; (6) expire backup generations on an institution-approved schedule and document verification. No arbitrary retention period is asserted [9], [17].
+
+For a future encryption design, encrypt each subject's fields with a distinct data-encryption key and keep recoverable subject keys in a separately governed key service, not inside the database dump. Destroy all key versions, replicas, escrow and recoverable backups for an approved subject deletion; verify that restored ciphertext cannot be decrypted. Shared keys cannot selectively erase one person's records. Cryptographic erasure does not remove plaintext exports, logs or prior copies: those need separate sanitization and evidence. This design needs implementation, key inventory and recovery tests before a permanent-erasure claim [16]. Required financial/audit retention must be established by the institution; retain only necessary records under that authority, not a blanket exception [17].
+
 ### Six-stage incident response — academic simulation
 
 Scenario: a synthetic alert suggests unauthorized research disclosure. No actual university incident, affected-person count, containment action or notification is asserted. The six stages below are a rehearsal playbook; production timing and responsibility must be adopted by the real institution [11], [12].
@@ -157,11 +226,11 @@ To: National Privacy Commission (submission channel to be verified by actual ins
 
 ### Five-part Enterprise Information Security Policy charter
 
-1. Purpose and authority: protect CRM research, identities and service availability; this is a proposed classroom charter under CEO coordination, subject to university authority before real adoption.
-2. Scope and objectives: cover team devices, source repository, synthetic API, database, worker, backups and documentation; preserve confidentiality, integrity, availability, authenticity, privacy and accountability.
-3. Responsibilities: apply the governance roles in Section I; separate runtime/database administration, implementation/risk acceptance, and privacy/legal review. Student titles do not confer institutional power.
-4. Mandatory practices: default deny, least privilege, parameterized access, secret exclusion, bounded inputs/workers, approved changes, protected audit access, tested recovery and prompt incident escalation. Use synthetic data in demonstrations.
-5. Compliance and review: record exceptions with owner, reason, expiration and compensating checks; review per milestone and after incidents or architecture changes. Violations are handled through course/university procedures, never invented penalties or unilateral access to real records.
+1. Executive Philosophy: protect research participants, trustworthy records and service continuity. Proposed risk tolerance prohibits release with failing mandatory checks, exposed credentials or demonstrated unauthorized disclosure; institutional risk acceptance is separate.
+2. Scope of Application: cover team devices, source, CI, the synthetic Express/PostgreSQL service, Python worker, local backups and submitted documentation. University production adoption is not asserted.
+3. Roles and Responsibilities: CEO records decisions; CIO operates infrastructure; CISO evaluates threats and exceptions; Lead Engineer implements and tests; DPO reviews privacy. Follow the reporting table in Section I.
+4. Statutory Directives: assess RA 10173 and RA 10175 obligations using the mappings in Section III [9], [10]; use ISO/IEC 27001:2022 for a proposed governance roadmap, not a certification claim [3]. Default deny, least privilege, secret exclusion and tested recovery are team requirements.
+5. Administrative Review Cadence: review at each milestone, after material architecture changes and after incidents. Record exception owner, reason, expiry and compensating checks. Monthly access review is proposed; no completed meeting or invented disciplinary sanction is asserted.
 
 ### Managerial policy
 
@@ -217,19 +286,21 @@ Retained Lab 5 scenario AV=PHP 3,600,000: engineering/reconstruction 920,000; op
 
 Each row is an explicit threat-agent / vulnerability / asset combination. Five categories have at least two triples; the eleventh adds audit repudiation. Controls are updated to the actual prototype or clearly proposed scope.
 
-| TVA / category | Agent | Vulnerability | Asset |
+| TVA / category | Agent | Vulnerability / status | Asset |
 |---|---|---|---|
-| TVA-01 / Software attacks | External web attacker | Concatenated user input in research search SQL. | A-02 |
-| TVA-02 / Software attacks | Authenticated peer | Record retrieval checks login but not permission on the requested record. | A-02; A-03 |
-| TVA-03 / Human error or failure | Deployment administrator | Private exports or backup objects inherit public-read storage permissions. | A-02 |
-| TVA-04 / Human error or failure | Developer mistake then external attacker | Live service credentials or signing secrets are committed to version control. | A-05; A-02 |
-| TVA-05 / Espionage or trespass | Authenticated peer exploiting another query flaw | Broad service role has no row policy or equivalent verified isolation. | A-02 |
-| TVA-06 / Espionage or trespass | Network observer or session thief | An HTTP/session path exposes credentials or cookies. | A-01; A-02 |
-| TVA-07 / Information extortion | Ransomware operator | Optional attachment parser is vulnerable or execution is permitted in upload storage. | A-02 |
-| TVA-08 / Information extortion | Ransomware operator with credentials or DB exploit | Public DB route plus exploitable authentication or overprivileged credentials. | A-02 |
-| TVA-09 / Sabotage or vandalism | Abusive client | Search cost, request rate or body size is unbounded. | A-02; A-04; A-08 |
-| TVA-10 / Sabotage or vandalism | Malicious record contributor | Untrusted research text reaches an unsafe HTML rendering sink. | A-02; A-01 |
-| TVA-11 / Sabotage or vandalism | Malicious authorized editor | Research updates lack an attributable append-only audit record. | A-07; A-02 |
+| TVA-01 / Software attacks | External web attacker | The isolated demonstration concatenates SQL; the normal route uses bound parameters. Demonstrated in isolated vulnerable example; mitigated in normal application. | A-02 |
+| TVA-02 / Software attacks | Authenticated peer | Omitting per-record authorization would expose another user record; current predicates reject that access. Mitigated scenario; owner/staff checks tested. | A-02 |
+| TVA-03 / Human error or failure | Deployment administrator | Temporary pg_dump copies are not encrypted by the application; a local user able to read them can recover records. Current residual risk; no application-level dump encryption. | A-02 |
+| TVA-04 / Human error or failure | Developer mistake then external attacker | Accidental committed credentials can be copied from Git history; hooks can be bypassed, so CI is independently required. Mitigated scenario; fake-secret rejection and CI verified. | A-05; A-02 |
+| TVA-05 / Espionage or trespass | Authenticated peer exploiting another query flaw | Runtime role can select multiple users rows; application predicates are the isolation boundary and a future missed query could bypass it. Current residual risk; runtime role is not row-isolated. | A-02 |
+| TVA-06 / Espionage or trespass | Network observer or session thief | Local HTTP carries bearer credentials without TLS; deployment on an untrusted network would expose them. Current transport limitation; local HTTP only. | A-01; A-02 |
+| TVA-07 / Information extortion | Ransomware operator | Backup exercise has no independent immutable recovery generation; compromise of the same operator host may destroy both data and reachable copies. Current recovery design gap; extortion is a hypothetical scenario. | A-02 |
+| TVA-08 / Information extortion | Ransomware operator with credentials or DB exploit | A stolen administrator credential can alter research data; runtime restriction does not constrain the separately privileged setup identity. Current privileged-account threat scenario; compromise not demonstrated. | A-02 |
+| TVA-09 / Sabotage or vandalism | Abusive client | Without bounds, search and graph processing can exhaust resources; current route caps and worker lifecycle limits mitigate that case. Mitigated resource scenario; OS/distributed limits remain. | A-02; A-04; A-08 |
+| TVA-10 / Sabotage or vandalism | Compromised or faulty worker process | Status-only worker validation accepted incomplete SUCCESS objects before correction. Demonstrated boundary defect; corrected and regression tested. | A-08 |
+| TVA-11 / Sabotage or vandalism | Malicious database administrator | Runtime audit grants prevent modification, but the database owner can still alter or delete audit events. Current residual risk; administrator can alter audit history. | A-07; A-02 |
+
+These are eleven assessed scenarios across five categories, not eleven currently exploitable defects. The before-fix worker boundary and isolated SQLi have executable reproductions; other rows are mitigated scenarios or explicitly described residual risks. Future uploads, HTML rendering and cloud buckets are excluded from this count. DREAD and financial allocations remain analyst estimates and require team review.
 
 ### SLE, ALE, safeguard cost and CBA
 
@@ -249,19 +320,21 @@ Break-even ARO reduction at the base SLE is 240,000/1,440,000=0.1667 events/year
 
 Likelihood and impact use ordinal 1–5 project scales; product is a prioritization score, not a probability. Target residual scores are planning assumptions, not validated post-deployment rates. DREAD uses a separate 1–10 scale in Section VI. Risk acceptance remains with the designated project owner after actual review.
 
-| ID | Asset | Agent | Flaw | Prior | Treatment | Control | PHP/yr | Target |
+| Risk ID | Asset | Agent | Root cause | Score | Treatment | Countermeasure | PHP/year | Target |
 |---|---|---|---|---|---|---|---|---|
-| R-01 | A-02 | External web attacker | SQL injection | 20 | Mitigate | ACL-01 / SEC-01: Parameterized search and publication filtering; synthetic exploit comparison and regression tests pass. | 44,000 | 5 |
-| R-02 | A-02; A-03 | Authenticated peer | Object authorization bypass | 16 | Mitigate | ACL-02 / SEC-02: Owner-or-staff predicates on records; default denial; cross-user tests pass. Collaborator grants are not implemented. | 25,000 | 4 |
-| R-03 | A-02 | Deployment administrator | Public private-data export | 12 | Mitigate | ACL-03 / SEC-03: Local temporary backup only. Cloud public-access blocking and expiring download controls remain proposed. | 15,000 | 4 |
-| R-04 | A-05; A-02 | Developer mistake then external attacker | Committed credentials | 20 | Mitigate | ACL-04 / SEC-04: Pre-commit rejection, Gitleaks CI and protected branches; rotate any real leaked credential. Native private-repo push protection unavailable. | 35,000 | 5 |
-| R-05 | A-02 | Authenticated peer exploiting another query flaw | Missing database isolation | 12 | Mitigate | ACL-05 / SEC-05: Non-owner runtime and tested application predicates; RLS not implemented. | 18,000 | 4 |
-| R-06 | A-01; A-02 | Network observer or session thief | Session interception | 12 | Mitigate | ACL-06 / SEC-06: Hashed expiring bearer sessions and revocation; local HTTP only. Production HTTPS remains required. No cookie authentication. | 8,000 | 4 |
-| R-07 | A-02 | Ransomware operator | Unsafe document processing | 15 | Avoid | ACL-07 / SEC-07: No upload or attachment parsing endpoint; defer until isolated parser security is reviewed. | 16,000 | 5 |
-| R-08 | A-02 | Ransomware operator with credentials or DB exploit | Database extortion | 20 | Mitigate | ACL-08 / SEC-08: Loopback database binding, separate roles and actual synthetic restore test; immutable offsite recovery remains proposed. | 48,000 | 5 |
-| R-09 | A-02; A-04; A-08 | Abusive client | Resource exhaustion | 12 | Mitigate | ACL-09 / SEC-09: Rate/body limits; staff-only solver; 5000 steps, 25000 edges, 50000 memberships, 2 MiB body; two Python workers, five-second timeout, 8 MiB output ceiling. No OS memory sandbox. | 12,000 | 6 |
-| R-10 | A-02; A-01 | Malicious record contributor | Stored browser script | 12 | Avoid | ACL-10 / SEC-10: JSON-only API with no HTML rendering frontend; safe output rendering required for future UI. | 12,000 | 4 |
-| R-11 | A-07; A-02 | Malicious authorized editor | Unattributable record changes | 12 | Mitigate | ACL-11 / SEC-11: Server-derived audit actors and runtime INSERT/SELECT-only grants; administrator can still alter history. | 7,000 | 4 |
+| R-01 | A-02 | External web attacker | The isolated demonstration concatenates SQL; the normal route uses bound parameters. | 20 | Mitigate | Parameterized search and publication filtering; synthetic exploit comparison and regression tests pass. | 44,000 | 5 |
+| R-02 | A-02 | Authenticated peer | Omitting per-record authorization would expose another user record; current predicates reject that access. | 16 | Mitigate | Owner-or-staff predicates on records; default denial; cross-user tests pass. Collaborator grants are not implemented. | 25,000 | 4 |
+| R-03 | A-02 | Deployment administrator | Temporary pg_dump copies are not encrypted by the application; a local user able to read them can recover records. | 12 | Mitigate | Temporary-directory cleanup and controlled operator access; application backup encryption and custody evidence remain proposed. | 15,000 | 4 |
+| R-04 | A-05; A-02 | Developer mistake then external attacker | Accidental committed credentials can be copied from Git history; hooks can be bypassed, so CI is independently required. | 20 | Mitigate | Pre-commit rejection, Gitleaks CI and protected branches; rotate any real leaked credential. Native private-repo push protection unavailable. | 35,000 | 5 |
+| R-05 | A-02 | Authenticated peer exploiting another query flaw | Runtime role can select multiple users rows; application predicates are the isolation boundary and a future missed query could bypass it. | 12 | Mitigate | Non-owner runtime and tested application predicates; RLS not implemented. | 18,000 | 4 |
+| R-06 | A-01; A-02 | Network observer or session thief | Local HTTP carries bearer credentials without TLS; deployment on an untrusted network would expose them. | 12 | Mitigate | Hashed expiring bearer sessions and revocation; local HTTP only. Production HTTPS remains required. No cookie authentication. | 8,000 | 4 |
+| R-07 | A-02 | Ransomware operator | Backup exercise has no independent immutable recovery generation; compromise of the same operator host may destroy both data and reachable copies. | 15 | Mitigate | Verified local restore is a prerequisite, not offsite resilience. Proposed immutable independent recovery, segregated credentials and rehearsed incident recovery. | 16,000 | 5 |
+| R-08 | A-02 | Ransomware operator with credentials or DB exploit | A stolen administrator credential can alter research data; runtime restriction does not constrain the separately privileged setup identity. | 20 | Mitigate | Separate non-owner runtime, loopback DB and tested restore; protect setup credentials and add independent immutable backups before production. | 48,000 | 5 |
+| R-09 | A-02; A-04; A-08 | Abusive client | Without bounds, search and graph processing can exhaust resources; current route caps and worker lifecycle limits mitigate that case. | 12 | Mitigate | Rate/body limits; staff-only solver; 5000 steps, 25000 edges, 50000 memberships, 2 MiB body; two Python workers, five-second timeout, 8 MiB output ceiling. No OS memory sandbox. | 12,000 | 6 |
+| R-10 | A-08 | Compromised or faulty worker process | Status-only worker validation accepted incomplete SUCCESS objects before correction. | 12 | Mitigate | Full structural/type/membership validation; malformed object yields WORKER_PROTOCOL/502; worker process is bounded. | 12,000 | 4 |
+| R-11 | A-07; A-02 | Malicious database administrator | Runtime audit grants prevent modification, but the database owner can still alter or delete audit events. | 12 | Mitigate | Runtime INSERT/SELECT-only audit grants tested; external tamper-resistant audit storage and administrator oversight remain proposed. | 7,000 | 4 |
+
+Residual scores are targets, not measured post-control frequencies.
 
 ## VI. Threat Dragon, STRIDE/DREAD and mitigation tickets
 
@@ -281,29 +354,27 @@ The model passes structural/schema and eleven-threat mapping checks. Current mod
 
 STRIDE guides threat discovery across spoofing, tampering, repudiation, information disclosure, denial of service and elevation of privilege [14]. DREAD is a classroom heuristic: Damage, Reproducibility, Exploitability, Affected users, Discoverability are each scored 1–10 and averaged. Ratings are analyst assumptions, not measured attack probabilities or a standardized risk certification. High is at least 7, medium is 4–6.9, low is below 4 for this project.
 
-| Threat / element | STRIDE | D/R/E/A/D | Mean | Assessment rationale |
+| Threat / element | STRIDE | D,R,E,A,D | Mean | Assessment |
 |---|---|---|---|---|
-| THREAT-01 / P-03 | Tampering; Information disclosure | 9/9/8/10/8 | 8.8 | Implemented locally; residual assumptions require human review |
-| THREAT-02 / P-03 | Information disclosure; Elevation of privilege | 8/9/8/7/8 | 8.0 | Implemented locally; service workflow persistence proposed |
-| THREAT-03 / D-03 | Information disclosure | 8/9/7/7/7 | 7.6 | Proposed cloud extension; no public export route |
-| THREAT-04 / E-04 | Spoofing; Information disclosure; Elevation of privilege | 10/9/8/10/8 | 9.0 | Implemented controls; owner-authorized merge exception is not peer review |
-| THREAT-05 / D-01 | Information disclosure; Elevation of privilege | 7/7/5/7/5 | 6.2 | Partial defense; missed future query checks remain a risk |
-| THREAT-06 / DF-01 | Spoofing; Information disclosure | 7/6/5/6/6 | 6.0 | Production transport protection pending |
-| THREAT-07 / P-03 | Tampering; Elevation of privilege | 9/7/5/8/6 | 7.0 | Avoided in current scope; proposed feature risk |
-| THREAT-08 / D-01 | Denial of service; Tampering; Information disclosure | 10/8/7/10/8 | 8.6 | Local controls verified; production recovery pending |
-| THREAT-09 / P-01 | Denial of service | 7/9/8/8/6 | 7.6 | Local controls tested; distributed/OS resource isolation pending |
-| THREAT-10 / P-03 | Tampering; Information disclosure | 7/8/6/6/6 | 6.6 | Future frontend sink must be reviewed |
-| THREAT-11 / D-02 | Repudiation; Tampering | 7/7/6/6/6 | 6.4 | Local grant controls verified; immutable external logging proposed |
+| THREAT-01 SQL injection / P-03 | Tampering; Information disclosure | 9,9,8,10,8 | 8.8 | Demonstrated in isolated vulnerable example; mitigated in normal application |
+| THREAT-02 Object authorization bypass / P-03 | Information disclosure; Elevation of privilege | 8,9,8,7,8 | 8.0 | Mitigated scenario; owner/staff checks tested |
+| THREAT-03 Backup confidentiality exposure / D-03 | Information disclosure | 8,9,7,7,7 | 7.6 | Current residual risk; no application-level dump encryption |
+| THREAT-04 Committed credentials / E-04 | Spoofing; Information disclosure; Elevation of privilege | 10,9,8,10,8 | 9.0 | Mitigated scenario; fake-secret rejection and CI verified |
+| THREAT-05 Missing database isolation / D-01 | Information disclosure; Elevation of privilege | 7,7,5,7,5 | 6.2 | Current residual risk; runtime role is not row-isolated |
+| THREAT-06 Session interception / DF-01 | Spoofing; Information disclosure | 7,6,5,6,6 | 6.0 | Current transport limitation; local HTTP only |
+| THREAT-07 Loss of recovery copies under extortion / D-03 | Tampering; Elevation of privilege | 9,7,5,8,6 | 7.0 | Current recovery design gap; extortion is a hypothetical scenario |
+| THREAT-08 Database extortion / D-01 | Denial of service; Tampering; Information disclosure | 10,8,7,10,8 | 8.6 | Current privileged-account threat scenario; compromise not demonstrated |
+| THREAT-09 Resource exhaustion / P-01 | Denial of service | 7,9,8,8,6 | 7.6 | Mitigated resource scenario; OS/distributed limits remain |
+| THREAT-10 Malformed worker certificate / P-07 | Tampering | 7,8,6,6,6 | 6.6 | Demonstrated boundary defect; corrected and regression tested |
+| THREAT-11 Unattributable record changes / D-02 | Repudiation; Tampering | 7,7,6,6,6 | 6.4 | Current residual risk; administrator can alter audit history |
 
-Scores prioritize THREAT-04 (9.0), THREAT-01 (8.8) and THREAT-08 (8.6). Resource exhaustion includes the new solver. SQLi and object access have working local controls; transport, cloud recovery and future rendering/parser threats retain explicit limitations. Threats remain open for residual-risk review even where an automated control passes.
+Scores retained as planning assumptions; changed scenario wording requires human reassessment before risk acceptance. Highest priorities remain THREAT-04 (9.0), THREAT-01 (8.8), THREAT-08 (8.6).
 
-### AND/OR attack tree
+![AND/OR disclosure attack tree](figures/Attack_Tree_Current.png)
 
-![Disclosure attack tree](figures/Attack_Tree_Current.png)
+Root: disclose confidential research records. OR branches: SQL injection; credential abuse; local backup disclosure. SQLi is an AND of a vulnerable concatenated query and sufficient query/table privileges. Credential abuse is an AND of obtaining a usable credential, reaching its service and having sufficient permissions. Local backup disclosure is an AND of an exported private copy and unintended local read access. These are alternative prerequisite paths, not claims that every branch is currently exploitable [15].
 
-Root: disclose confidential research records. OR branches: SQL injection; credential abuse; published backup. SQLi is an AND of a vulnerable concatenated query and sufficient query/table privileges. Credential abuse is an AND of obtaining a usable credential, reaching its service and having sufficient permissions. Published backup is an AND of an exported private copy and unintended public access. These are alternative prerequisite paths, not claims that every branch is currently exploitable [15].
-
-Leaf metrics are scenario estimates: query flaw DREAD 8.8; usable credential exposure 9.0; public backup exposure 7.6; reachability/privilege prerequisites assessed jointly, not independently multiplied. “AND” requires all child conditions; “OR” needs any complete branch. The patch removes the demonstrated concatenation condition; secret scanning reduces accidental exposure but cannot prove all credentials safe; no public backup route is implemented. The editable tree source and image accompany the model.
+Leaf metrics are scenario estimates: query flaw DREAD 8.8; usable credential exposure 9.0; local backup exposure 7.6; reachability/privilege prerequisites assessed jointly, not independently multiplied. “AND” requires all child conditions; “OR” needs any complete branch. The patch removes the demonstrated concatenation condition; secret scanning reduces accidental exposure but cannot prove all credentials safe; no public backup route is implemented; local dump confidentiality still needs operational controls. The editable tree source and image accompany the model.
 
 ### Top three agile mitigation tickets
 
@@ -314,6 +385,39 @@ Leaf metrics are scenario estimates: query flaw DREAD 8.8; usable credential exp
 | SEC-08 / Justin | As service owner, recover synthetic records without runtime admin privilege. Separate roles, bind DB locally, restore to disposable DB. | pg_dump/pg_restore compares full ordered rows in six tables; runtime audit alteration/drop returns 42501. | Offsite immutable/encrypted backup, deletion replay and production RPO/RTO not validated |
 
 Traceability is maintained from asset → TVA → threat → risk → control → ticket → source/test/evidence. `security/data/traceability.csv` and the completion checklist provide exact artifact paths. SEC-09 links A-08/THREAT-09 to worker limits and algorithm tests. Three implementation tickets can be locally tested without pretending the real institution accepted residual risk.
+
+## Cross-traceability appendix
+
+Control IDs below identify enforceable rules or explicitly proposed safeguards, not invented ACL implementations.
+
+| Asset → TVA → risk → threat | Rule / SysSP control | Ticket → source/test | Status |
+|---|---|---|---|
+| A-02 → TVA-01 → R-01 → THREAT-01 | ACL-01: Public search: bound parameter + Approved + LIMIT 100 | SEC-01: scripts/demo-sqli.js; test/security.test.js | Demonstrated in isolated vulnerable example; mitigated in normal application |
+| A-02 → TVA-02 → R-02 → THREAT-02 | ACL-02: Record GET: owner or staff; default deny | SEC-02: src/app.js; test/security.test.js | Mitigated scenario; owner/staff checks tested |
+| A-02 → TVA-03 → R-03 → THREAT-03 | ACL-03: Backup operator: local only; encryption proposed | SEC-03: scripts/backup-restore.js; docs/PRIVACY.md | Current residual risk; no application-level dump encryption |
+| A-05; A-02 → TVA-04 → R-04 → THREAT-04 | ACL-04: Git contributor: hook + required security CI | SEC-04: .githooks/pre-commit; .github/workflows/security-gate.yml | Mitigated scenario; fake-secret rejection and CI verified |
+| A-02 → TVA-05 → R-05 → THREAT-05 | ACL-05: Runtime DB: no owner/DDL; RLS proposed | SEC-05: db/schema.sql; test/security.test.js | Current residual risk; runtime role is not row-isolated |
+| A-01; A-02 → TVA-06 → R-06 → THREAT-06 | ACL-06: Authenticated API: expiring bearer; TLS proposed | SEC-06: src/crypto.js; src/app.js; docs/CONTROLS.md | Current transport limitation; local HTTP only |
+| A-02 → TVA-07 → R-07 → THREAT-07 | ACL-07: Recovery operator: independent immutable copy proposed | SEC-07: scripts/backup-restore.js; proposed offsite design only | Current recovery design gap; extortion is a hypothetical scenario |
+| A-02 → TVA-08 → R-08 → THREAT-08 | ACL-08: Runtime DB deny DDL; admin privilege separate | SEC-08: compose.yaml; db/schema.sql; scripts/backup-restore.js | Current privileged-account threat scenario; compromise not demonstrated |
+| A-02; A-04; A-08 → TVA-09 → R-09 → THREAT-09 | ACL-09: Staff solve: 2 MiB/2 jobs/5 sec; graph caps | SEC-09: src/algorithm.js; algocom/engine.py; test/algorithm.test.js | Mitigated resource scenario; OS/distributed limits remain |
+| A-08 → TVA-10 → R-10 → THREAT-10 | ACL-10: Worker output: complete certificate validation | SEC-10: src/algorithm-result.js; test/algorithm-result.test.js; test/algorithm.test.js | Demonstrated boundary defect; corrected and regression tested |
+| A-07; A-02 → TVA-11 → R-11 → THREAT-11 | ACL-11: Audit runtime: INSERT/SELECT; deny UPDATE/DELETE | SEC-11: db/schema.sql; test/security.test.js | Current residual risk; administrator can alter audit history |
+
+## Financial evidence worksheet — external action required
+
+No actual cost records or instructor approval of estimates have been supplied. Aaliyah owns completion; the proposed figures above must not be described as empirical institutional valuation.
+
+| Input | Required source | Actual value / evidence | Reviewer / date |
+|---|---|---|---|
+| Replacement effort | Logged work hours and supported labor rate | Not supplied | Unsigned |
+| Service interruption | Documented affected volume and measured downtime | Not supplied | Unsigned |
+| Response and privacy cost | Quote, invoice or approved cost basis | Not supplied | Unsigned |
+| Safeguard annual cost | Tool quote and staff-maintenance estimate basis | Not supplied | Unsigned |
+| Exposure and event frequency | Incident data or explicitly approved scenario assumptions | Not supplied | Unsigned |
+| Estimate exception | Instructor decision with date and permitted scope | Not supplied | Unsigned |
+
+Use `docs/FINANCIAL_EVIDENCE_WORKSHEET.md` to record sources and the draft clarification. An instructor decision cannot be assumed and would not turn estimates into observed costs.
 
 ## Demonstration, verification and remaining decisions
 
@@ -343,7 +447,7 @@ ChatGPT/Codex assisted source reconciliation, substantial backend/worker and tes
 
 [7] Lockheed Martin, Cyber Kill Chain, foundational model introduced 2011; official current overview, accessed Oct. 4, 2026. https://www.lockheedmartin.com/en-us/capabilities/cyber/cyber-kill-chain.html
 
-[8] MITRE, ATT&CK Enterprise techniques T1595.002, T1587.004, T1190, T1505.003, T1071.001 and T1486, current entries, accessed Oct. 4, 2026. https://attack.mitre.org/
+[8] MITRE, ATT&CK Enterprise techniques T1595.002, T1587.001, T1566.001, T1204.002, T1053.003, T1071.001 and T1486, current entries, accessed Oct. 4, 2026. https://attack.mitre.org/
 
 [9] Republic of the Philippines, Republic Act No. 10173, Data Privacy Act of 2012, 2012. Official NPC text: https://privacy.gov.ph/data-privacy-act-/
 
@@ -359,4 +463,8 @@ ChatGPT/Codex assisted source reconciliation, substantial backend/worker and tes
 
 [15] B. Schneier, “Attack Trees,” Dr. Dobb's Journal, Dec. 1999. https://www.schneier.com/academic/archives/1999/12/attack_trees.html
 
-Recent standards are favored. Required older statutes, NPC circular and foundational works retain their real dates; an access date is not a publication date. The 14-slide executive deck follows these references.
+[16] NIST, Guidelines for Media Sanitization, SP 800-88 Rev. 2, Sep. 2025. https://csrc.nist.gov/pubs/sp/800/88/r2/final
+
+[17] National Privacy Commission, Advisory 2021-01, Data Subject Rights, sec. 10, 2021. https://privacy.gov.ph/wp-content/uploads/2021/02/NPC-Advisory-2021-01-FINAL.pdf
+
+Recent standards are favored. Required older statutes, NPC circular and foundational works retain their real dates; an access date is not a publication date. The 14-slide executive deck follows these references. Empirical valuation, genuine signatures and institutional acceptance remain external requirements.

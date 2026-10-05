@@ -1,7 +1,7 @@
 # CRM Workflow Readiness and Critical-Path Estimation
 ## PBL Milestone 1: Algorithm Architecture Specification and Software Engineering Proposal
 
-III-BCSAD • bolanatics • 4 October 2026
+III-BCSAD • bolanatics • 5 October 2026
 
 Center for Research Management (CRM) Research Services and Information Management Platform
 
@@ -24,6 +24,9 @@ CRM service processing involves prerequisites, document evidence, and distinct r
 The deliverable is a synthetic-data prototype and technical proposal. It does not implement a complete CRM frontend, persist service workflows, assign scarce staff, or predict calendar completion dates. Domain sequences must be confirmed against current university procedures before operational use. The research manual supplies business context rather than measured workloads [1].
 
 ## I. Problem modeling
+
+The supplied UMak manual defines the local service context [1]; task-graph scheduling literature supports modeling dependencies and explicitly warns that uncertain durations and execution conditions affect real performance [7]. Applying a DAG to CRM approval steps is this team's proposed model, not an empirical validation by the university. The cited study concerns distributed computational workflows; we borrow its dependency-model rationale, not its workload or measured results.
+
 
 ### Domain interpretation
 
@@ -144,6 +147,8 @@ The child uses no shell and receives only PATH, locale and hash-seed environment
 
 ### Exact public request
 
+Machine-readable JSON Schema Draft 2020-12 contracts are supplied under `algocom/schemas/` [8]. Structural schemas supplement, rather than replace, Python checks for graph references, cycles, aggregate memberships and completed-state consistency. Express validates the full worker response, including types, input membership and COMPLETE invariants, before returning it. Malformed results produce 502 WORKER_PROTOCOL; valid existing payloads retain their behavior.
+
 `POST /api/v1/algorithm/solve`, JSON body, staff bearer authorization. Exactly six fields are required; no additional top-level fields are accepted. `steps` and `completed_actions` are ID arrays. `dependencies` is an array of two-ID arrays. `requirements` maps step IDs to arrays of exactly `{id,gate}`. `evidence` is an array of exactly `{id,state}`. `durations` maps every step to its integer estimate. Section I states all bounds.
 
 ```
@@ -179,31 +184,41 @@ HTTP errors: 400 invalid JSON/schema/cycle/state, 401 unauthenticated, 403 non-s
 
 Run `python3 -m unittest discover -s algocom -p 'test_*.py' -v`, then `PYTHONHASHSEED=0 python3 algocom/bench_extended.py`. The extended runner fails on inequivalent results or a missed budget. GitHub runs correctness and a separate warmed performance guard; committed local result files are not silently replaced by CI measurements. Review workload conditions before changing a budget; never remove correctness assertions to make a benchmark pass.
 
+### Engineering implementation tickets
+
+| Ticket / module / algorithm | Numbered engineering steps | Edge cases and executable acceptance |
+|---|---|---|
+| ALG-01 / engine.py + prototype.py / readiness | 1. Validate graph and state. 2. Normalize received/verified gates. 3. Evaluate unchanged readiness core. | Empty/cyclic graphs, unknown IDs, duplicate evidence and incomplete prerequisites; `python3 -m unittest discover -s algocom -p 'test_*.py' -v` |
+| ALG-02 / engine.py / DAG dynamic programming | 1. Build adjacency/indegree. 2. Relax longest prerequisite finish. 3. Reconstruct maximizing parent certificate. | Chain, fork/join, ties, completed and zero durations; test_engine.py asserts known results and 500 baseline comparisons |
+| ALG-03 / src/algorithm.js + algorithm-result.js / bounded orchestration | 1. Authenticate staff. 2. Bound input and children. 3. Validate output. 4. Kill failed/timed-out jobs and release slots. | Malformed output, wrong types, nonzero exit, 8 MiB output, cancellation and timeout; `npm test` requires 401/403/413/502 and valid-result agreement |
+| ALG-04 / bench_extended.py / comparative profiling | 1. Generate fixed-seed inputs. 2. Assert equality. 3. Time ten warmed runs. 4. Profile memory separately. | Nine cases; `performance_budget()` asserts each family p95 <1,000 ms at V=5,000; performance excludes memory profiling |
+| ALG-05 / report + team review / domain validation | 1. Confirm requirement gates and durations with CRM. 2. Rehearse certificate and errors. 3. Record genuine review. | External human acceptance; no automated assertion can prove understanding or institutional approval |
+
 ## VI. Academic defense answers
 
 ### 1. Why decouple heavy computation from the host framework and ORM?
 
-A pure function can be tested against explicit inputs without a web request or database. A child process keeps CPU-heavy Python work outside the Node event loop, allows timeouts, and avoids passing database credentials into the solver. It adds process-start/serialization overhead, which is acceptable for this bounded prototype but should be measured before scaling. Decoupling alone does not stop resource exhaustion; concurrency limits are also necessary.
+A pure function can be tested against explicit inputs without a web request or database. A child process keeps CPU-heavy Python work outside the Node event loop, allows timeouts, and avoids passing database credentials into the solver. It adds process-start/serialization overhead, which is acceptable for this bounded prototype but should be measured before scaling. Decoupling alone does not stop resource exhaustion; concurrency limits are also necessary. [3], [6].
 
 ### 2. How would you mitigate exponential worst-case behavior?
 
-This DAG longest-path formulation is polynomial, so exponential path enumeration is unnecessary. If a future problem adds scarce resources or combinatorial assignment constraints, identify that new problem's hardness, cap input size, impose time budgets, use branch-and-bound or approximation where justified, and report incomplete/approximate results honestly. Do not transfer the current linear proof to a harder scheduling problem.
+This DAG longest-path formulation is polynomial, so exponential path enumeration is unnecessary. If a future problem adds scarce resources or combinatorial assignment constraints, identify that new problem's hardness, cap input size, impose time budgets, use branch-and-bound or approximation where justified, and report incomplete/approximate results honestly. Do not transfer the current linear proof to a harder scheduling problem. [3].
 
 ### 3. Why exact computation rather than a heuristic?
 
-The constrained DAG objective has an efficient exact recurrence. A heuristic could miss the true bottleneck without providing a benefit at these limits. The answer is exact relative to supplied durations and edges, while the durations themselves remain estimates. Exact algorithmic computation is not accurate calendar prediction.
+The constrained DAG objective has an efficient exact recurrence. A heuristic could miss the true bottleneck without providing a benefit at these limits. The answer is exact relative to supplied durations and edges, while the durations themselves remain estimates. Exact algorithmic computation is not accurate calendar prediction. [3].
 
 ### 4. Why use empirical benchmarks as well as asymptotic analysis?
 
-The proof predicts growth independent of one machine. Measurements expose constant factors, Python allocation, input-order effects and operational regressions. A speedup greater than one favors the proposed method in that row only. Neither a fast run nor nine cases proves correctness or a universal speed advantage. Equivalent outputs must be established before timing.
+The proof predicts growth independent of one machine. Measurements expose constant factors, Python allocation, input-order effects and operational regressions. A speedup greater than one favors the proposed method in that row only. Neither a fast run nor nine cases proves correctness or a universal speed advantage. Equivalent outputs must be established before timing. [3]–[5], [7].
 
 ### 5. How do you handle ML cold start or sparse data?
 
-No ML model or recommendation engine is implemented, so cold start is not a current solver issue. The prototype uses explicitly provided duration estimates. If future learning estimates durations, start with transparent staff-reviewed defaults, display uncertainty, distinguish missing data from zero duration, and evaluate on held-out historical requests without leakage. Keep the dependency solver deterministic and separate from prediction.
+No ML model or recommendation engine is implemented, so cold start is not a current solver issue. The prototype uses explicitly provided duration estimates. If future learning estimates durations, start with transparent staff-reviewed defaults, display uncertainty, distinguish missing data from zero duration, and evaluate on held-out historical requests without leakage. Keep the dependency solver deterministic and separate from prediction. [7].
 
 ### 6. How do you prevent edge cases from crashing the host?
 
-Reject malformed fields and resource-limit violations; detect cycles and inconsistent completed states; compute iteratively to avoid recursion depth failures; return structured errors; constrain child concurrency and lifetime; handle startup failure, bad JSON output and disconnect cancellation. Tests exercise those paths and confirm the host can process subsequent work. OS-level memory isolation and distributed admission control remain production follow-ups.
+Reject malformed fields and resource-limit violations; detect cycles and inconsistent completed states; compute iteratively to avoid recursion depth failures; return structured errors; constrain child concurrency and lifetime; handle startup failure, bad JSON output and disconnect cancellation. Tests exercise those paths and confirm the host can process subsequent work. OS-level memory isolation and distributed admission control remain production follow-ups. [3], [6], [8].
 
 ## Verification, provenance and handoff
 
@@ -224,5 +239,9 @@ The supplied completed Tasks I–IV and original prototype/tests were retained a
 [5] Python Software Foundation, “tracemalloc — Trace memory allocations,” Python 3.12 documentation, accessed Oct. 4, 2026. https://docs.python.org/3.12/library/tracemalloc.html
 
 [6] OpenJS Foundation, “Child process,” Node.js v24 documentation, accessed Oct. 4, 2026. https://nodejs.org/docs/latest-v24.x/api/child_process.html
+
+[7] J. Beránek, S. Böhm, and V. Cima, “Analysis of Workflow Schedulers in Simulated Distributed Environments,” arXiv:2204.07211, 2022. https://doi.org/10.48550/arXiv.2204.07211
+
+[8] A. Wright et al., JSON Schema Validation: A Vocabulary for Structural Validation of JSON, Draft 2020-12, 2022 revision. https://json-schema.org/draft/2020-12/json-schema-validation
 
 The presentation deck follows these references and contains exactly 14 slides. Documentation access dates do not replace publication dates; original foundational concepts are attributed to the 2022 textbook edition.

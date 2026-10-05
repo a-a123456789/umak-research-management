@@ -30,3 +30,17 @@ test('worker failures, timeout, concurrency, cancellation and recovery are bound
  await assert.rejects(run(sample),{code:'WORKER_TIMEOUT'});
  const controller=new AbortController();const cancelled=assert.rejects(createAlgorithmRunner({workerScript:path('slow-worker.py')})(sample,controller.signal),{code:'REQUEST_CANCELLED'});controller.abort();await cancelled;
 });
+
+test('worker protocol rejects incomplete objects, nonzero exit and oversized output',async()=>{
+ const path=n=>fileURLToPath(new URL(`./fixtures/${n}`,import.meta.url));
+ for(const [file,code] of [['incomplete-worker.py','WORKER_PROTOCOL'],['exit-worker.py','WORKER_FAILED'],['large-worker.py','WORKER_OUTPUT_LIMIT']]) await assert.rejects(createAlgorithmRunner({workerScript:path(file)})(sample),{code});
+ const good=await createAlgorithmRunner()(sample);assert.equal(good.status,'SUCCESS');
+});
+
+test('malformed worker results return 502 through the authenticated HTTP route',async()=>{
+ const path=fileURLToPath(new URL('./fixtures/incomplete-worker.py',import.meta.url));
+ const broken=createApp(db,{algorithmRunner:createAlgorithmRunner({workerScript:path})});
+ const staff=(await request(broken).post('/api/v1/auth/login').send({email:'staff@example.test',password:process.env.DEMO_PASSWORD})).body.access_token;
+ const response=await request(broken).post('/api/v1/algorithm/solve').set('Authorization',`Bearer ${staff}`).send(sample).expect(502);
+ assert.equal(response.body.error_type,'WORKER_PROTOCOL');
+});
