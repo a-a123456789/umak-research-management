@@ -25,7 +25,7 @@ Updated 5 October 2026. **Pass** means the artifact exists and the specified aut
 |---|---|---|---|
 | I: governance/reporting lines, C-suite duties, ≥4 classified assets and CIANA-PS | Gian | submissions/IAS_Report.md I | Pass: 8 stable IDs, classroom/student roles separate from institutional offices |
 | II: actual stack/attack surface, seven Kill Chain phases + MITRE IDs | Justin | Report II; docs/CONTROLS.md | Pass: hypothetical upload chain clearly separate from implemented SQLi demonstration |
-| Vulnerable code, payload, patch and actual repeat result | Justin / Gian | demos/; scripts/demo-sqli.js; src/app.js; evidence/integration/local-checks.txt | Pass on synthetic data; vulnerable example isolated from normal startup |
+| Vulnerable code, payload, patch and actual repeat result | Justin / Gian | demo/; scripts/demo-sqli.js; src/app.js; evidence/integration/local-checks.txt | Pass on synthetic data; vulnerable example isolated from normal startup |
 | III: five provisions each RA 10173/10175, consent JSON/API, deletion/backup treatment | John David | Report III; src/app.js; test/security.test.js | Pass for mapping and local behavior; institutional lawful basis/retention and backup erasure remain |
 | Six-stage IR and draft NPC notification | John David | Report III | Complete academic simulation; no incident, signature or submission asserted |
 | IV: five-part EISP, managerial policy, five-column default-deny ACL | Anjelo | Report IV; db/schema.sql; src/app.js | Pass; production adoption remains external |

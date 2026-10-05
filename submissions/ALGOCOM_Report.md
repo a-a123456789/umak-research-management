@@ -138,7 +138,7 @@ Express -> PostgreSQL: identities, sessions, research and privacy records
 Python worker -- no database dependency or database credentials
 ```
 
-{{ARCH_IMAGE}}
+![Algorithm component architecture](figures/Algorithm_Architecture.png)
 
 The child uses no shell and receives only PATH, locale and hash-seed environment settings. Admission is capped at two concurrent children per API process. Timeout is five seconds; disconnect kills the child; output over 8 MiB fails. These are admission and lifecycle controls, not a container/OS memory sandbox. No asynchronous queue, Redis or production service deployment is claimed.
 

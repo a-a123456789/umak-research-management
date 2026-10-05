@@ -273,7 +273,9 @@ TB-01 crosses client to API; TB-02 is the authorization boundary inside Express,
 
 The model passes structural/schema and eleven-threat mapping checks. Current model-derived SVG diagrams accompany this report; both diagrams opened in Threat Dragon 2.6.2. The rendered SVG assets were exported from the browser; raw copies and page-sized copies accompany the model. These are distinct from schema validation and the separately generated report review drawings.
 
-{{DFD_IMAGES}}
+![Threat Dragon Level 0](figures/ThreatDragon_Level_0.png)
+
+![Threat Dragon Level 1](figures/ThreatDragon_Level_1.png)
 
 ### STRIDE and DREAD
 
@@ -297,7 +299,7 @@ Scores prioritize THREAT-04 (9.0), THREAT-01 (8.8) and THREAT-08 (8.6). Resource
 
 ### AND/OR attack tree
 
-{{ATTACK_IMAGE}}
+![Disclosure attack tree](figures/Attack_Tree_Current.png)
 
 Root: disclose confidential research records. OR branches: SQL injection; credential abuse; published backup. SQLi is an AND of a vulnerable concatenated query and sufficient query/table privileges. Credential abuse is an AND of obtaining a usable credential, reaching its service and having sufficient permissions. Published backup is an AND of an exported private copy and unintended public access. These are alternative prerequisite paths, not claims that every branch is currently exploitable [15].
 

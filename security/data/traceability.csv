@@ -4,7 +4,7 @@ A-02; A-03,TVA-02,R-02,THREAT-02,P-03,ACL-02,SEC-02,src/app.js; test/security.te
 A-02,TVA-03,R-03,THREAT-03,D-03,ACL-03,SEC-03,scripts/backup-restore.js,See evidence/STATUS.md and security/BACKLOG.md for tested controls and residual gaps
 A-05; A-02,TVA-04,R-04,THREAT-04,E-04,ACL-04,SEC-04,.githooks/pre-commit; .github/workflows/security-gate.yml; scripts/demo-secret.js,See evidence/STATUS.md and security/BACKLOG.md for tested controls and residual gaps
 A-02,TVA-05,R-05,THREAT-05,D-01,ACL-05,SEC-05,db/schema.sql; test/security.test.js,See evidence/STATUS.md and security/BACKLOG.md for tested controls and residual gaps
-A-01; A-02,TVA-06,R-06,THREAT-06,DF-01,ACL-06,SEC-06,src/auth.js; test/security.test.js,See evidence/STATUS.md and security/BACKLOG.md for tested controls and residual gaps
+A-01; A-02,TVA-06,R-06,THREAT-06,DF-01,ACL-06,SEC-06,src/app.js; src/crypto.js; test/security.test.js,See evidence/STATUS.md and security/BACKLOG.md for tested controls and residual gaps
 A-02,TVA-07,R-07,THREAT-07,P-03,ACL-07,SEC-07,No upload endpoint,See evidence/STATUS.md and security/BACKLOG.md for tested controls and residual gaps
 A-02,TVA-08,R-08,THREAT-08,D-01,ACL-08,SEC-08,compose.yaml; scripts/backup-restore.js; test/security.test.js,See evidence/STATUS.md and security/BACKLOG.md for tested controls and residual gaps
 A-02; A-04; A-08,TVA-09,R-09,THREAT-09,P-01; P-07,ACL-09,SEC-09,src/algorithm.js; algocom/engine.py; test/algorithm.test.js,See evidence/STATUS.md and security/BACKLOG.md for tested controls and residual gaps
