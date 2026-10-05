@@ -13,4 +13,4 @@ Native GitHub secret scanning/push protection returned HTTP 422 unavailable for 
 
 ## Submission correction status
 
-Prior integration PR #3 merged as `bbe0a73`; both main checks passed and normal protection was restored. See https://github.com/a-a123456789/umak-research-management/pull/3 . The current correction adds full worker-output validation, schemas and report/deck coverage. Its commit-specific checks and merge outcome are recorded in the correction PR; earlier checks do not validate later edits.
+Prior integration PR #3 merged as `bbe0a73`; both main checks passed and normal protection was restored. See https://github.com/a-a123456789/umak-research-management/pull/3 . The current correction adds full worker-output validation, schemas and report/deck coverage. See [correction PR #4](https://github.com/a-a123456789/umak-research-management/pull/4) and [correction evidence](corrections/README.md) for commit-specific checks and the merge/protection completion record; earlier checks do not validate later edits.
