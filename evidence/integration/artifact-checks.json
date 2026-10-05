@@ -1,0 +1,18 @@
+{
+  "ALGOCOM": {
+    "pdf_pages": 22,
+    "report_pages": 8,
+    "appended_slides": 14,
+    "editable_slides": 14,
+    "member_ids_and_repository": "pass",
+    "visual_review": "all report and slide pages inspected"
+  },
+  "IAS": {
+    "pdf_pages": 28,
+    "report_pages": 14,
+    "appended_slides": 14,
+    "editable_slides": 14,
+    "member_ids_and_repository": "pass",
+    "visual_review": "all report and slide pages inspected"
+  }
+}

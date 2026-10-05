@@ -12,7 +12,7 @@
     "stride": "Tampering; Information disclosure",
     "flaw": "Concatenated user input in research search SQL.",
     "scenario": "If search concatenates input, a crafted query can bypass record filtering and disclose nonpublic research metadata. Successful SQL injection depends on the actual query and database grants.",
-    "control": "Parameterized SQL, publication filter, least-privilege DB role, regression test.",
+    "control": "Parameterized search and publication filtering; synthetic exploit comparison and regression tests pass.",
     "acl": "ACL-01",
     "prior": [
       4,
@@ -33,7 +33,7 @@
     "cost": 44000,
     "ticket": "SEC-01",
     "owner": "Gian",
-    "status": "Open - design scenario; implementation unverified"
+    "status": "Implemented locally; residual assumptions require human review"
   },
   {
     "n": 2,
@@ -48,7 +48,7 @@
     "stride": "Information disclosure; Elevation of privilege",
     "flaw": "Record retrieval checks login but not permission on the requested record.",
     "scenario": "A user changes a record ID and reads another research team\u2019s nonpublic record or service request. Client-hidden links do not enforce authorization.",
-    "control": "Central object permission check using approved collaborator/staff grants; deny by default.",
+    "control": "Owner-or-staff predicates on records; default denial; cross-user tests pass. Collaborator grants are not implemented.",
     "acl": "ACL-02",
     "prior": [
       4,
@@ -69,7 +69,7 @@
     "cost": 25000,
     "ticket": "SEC-02",
     "owner": "Gian",
-    "status": "Open - design scenario; implementation unverified"
+    "status": "Implemented locally; service workflow persistence proposed"
   },
   {
     "n": 3,
@@ -84,7 +84,7 @@
     "stride": "Information disclosure",
     "flaw": "Private exports or backup objects inherit public-read storage permissions.",
     "scenario": "An operator accidentally publishes a research export. Anyone with its URL can obtain nonpublic records; encryption at rest does not stop an authorized public read.",
-    "control": "Private storage policy, public-access block, expiring authorized downloads, configuration tests.",
+    "control": "Local temporary backup only. Cloud public-access blocking and expiring download controls remain proposed.",
     "acl": "ACL-03",
     "prior": [
       3,
@@ -105,7 +105,7 @@
     "cost": 15000,
     "ticket": "SEC-03",
     "owner": "Justin",
-    "status": "Open - design scenario; implementation unverified"
+    "status": "Proposed cloud extension; no public export route"
   },
   {
     "n": 4,
@@ -120,7 +120,7 @@
     "stride": "Spoofing; Information disclosure; Elevation of privilege",
     "flaw": "Live service credentials or signing secrets are committed to version control.",
     "scenario": "A repository reader obtains a secret and impersonates a service if network access and credential permissions permit. Removing the file alone does not revoke a leaked secret.",
-    "control": "Secret scan on commits and CI, rotation and revocation, scoped service credentials, required review.",
+    "control": "Pre-commit rejection, Gitleaks CI and protected branches; rotate any real leaked credential. Native private-repo push protection unavailable.",
     "acl": "ACL-04",
     "prior": [
       4,
@@ -141,7 +141,7 @@
     "cost": 35000,
     "ticket": "SEC-04",
     "owner": "Gian",
-    "status": "Open - design scenario; implementation unverified"
+    "status": "Implemented controls; owner-authorized merge exception is not peer review"
   },
   {
     "n": 5,
@@ -156,7 +156,7 @@
     "stride": "Information disclosure; Elevation of privilege",
     "flaw": "Broad service role has no row policy or equivalent verified isolation.",
     "scenario": "A missed application permission check exposes rows across research groups. Missing RLS is a defense gap, not by itself proof that a user can query the database.",
-    "control": "RLS or equivalent tested isolation; transaction-local trusted identity; no owner/superuser/BYPASSRLS runtime.",
+    "control": "Non-owner runtime and tested application predicates; RLS not implemented.",
     "acl": "ACL-05",
     "prior": [
       3,
@@ -177,7 +177,7 @@
     "cost": 18000,
     "ticket": "SEC-05",
     "owner": "Gian",
-    "status": "Open - design scenario; implementation unverified"
+    "status": "Partial defense; missed future query checks remain a risk"
   },
   {
     "n": 6,
@@ -192,7 +192,7 @@
     "stride": "Spoofing; Information disclosure",
     "flaw": "An HTTP/session path exposes credentials or cookies.",
     "scenario": "A victim uses an insecure session path and an observer obtains a usable session. Ordinary Wi-Fi visibility does not decrypt correctly validated HTTPS.",
-    "control": "HTTPS, HSTS after validation, Secure/HttpOnly cookies, suitable SameSite and CSRF protection, rotation on login.",
+    "control": "Hashed expiring bearer sessions and revocation; local HTTP only. Production HTTPS remains required. No cookie authentication.",
     "acl": "ACL-06",
     "prior": [
       3,
@@ -213,7 +213,7 @@
     "cost": 8000,
     "ticket": "SEC-06",
     "owner": "Justin",
-    "status": "Open - design scenario; implementation unverified"
+    "status": "Production transport protection pending"
   },
   {
     "n": 7,
@@ -228,7 +228,7 @@
     "stride": "Tampering; Elevation of privilege",
     "flaw": "Optional attachment parser is vulnerable or execution is permitted in upload storage.",
     "scenario": "If uploads are enabled, a malicious file exploits a vulnerable parser or unsafe execution path, giving a runtime foothold. A PDF extension or polyglot alone does not execute code.",
-    "control": "Defer upload route until confirmed; then isolated patched parser, size/type checks, quarantine, no execution.",
+    "control": "No upload or attachment parsing endpoint; defer until isolated parser security is reviewed.",
     "acl": "ACL-07",
     "prior": [
       3,
@@ -249,7 +249,7 @@
     "cost": 16000,
     "ticket": "SEC-07",
     "owner": "Gian",
-    "status": "Open - design scenario; implementation unverified"
+    "status": "Avoided in current scope; proposed feature risk"
   },
   {
     "n": 8,
@@ -264,7 +264,7 @@
     "stride": "Denial of service; Tampering; Information disclosure",
     "flaw": "Public DB route plus exploitable authentication or overprivileged credentials.",
     "scenario": "An attacker reaches the DB, gains sufficient privileges, and corrupts or extracts research records. Permanent loss also requires unavailable or compromised recovery copies.",
-    "control": "Private DB ingress, separate runtime/migration roles, backup credentials isolated, immutable recovery copy and restore tests.",
+    "control": "Loopback database binding, separate roles and actual synthetic restore test; immutable offsite recovery remains proposed.",
     "acl": "ACL-08",
     "prior": [
       4,
@@ -285,7 +285,7 @@
     "cost": 48000,
     "ticket": "SEC-08",
     "owner": "Justin",
-    "status": "Open - design scenario; implementation unverified"
+    "status": "Local controls verified; production recovery pending"
   },
   {
     "n": 9,
@@ -295,12 +295,12 @@
     "title": "Resource exhaustion",
     "category": "Sabotage or vandalism",
     "agent": "Abusive client",
-    "asset": "A-02; A-04",
+    "asset": "A-02; A-04; A-08",
     "element": "P-01",
     "stride": "Denial of service",
     "flaw": "Search cost, request rate or body size is unbounded.",
-    "scenario": "Repeated costly queries exhaust worker or database capacity and interrupt record and public-service access.",
-    "control": "Rate and concurrency limits, capped pagination/body size, timeouts and bounded queries.",
+    "scenario": "Authenticated staff floods costly graph-solving scenarios or clients flood search. Unbounded child processes would exhaust host resources.",
+    "control": "Rate/body limits; staff-only solver; 5000 steps, 25000 edges, 50000 memberships, 2 MiB body; two Python workers, five-second timeout, 8 MiB output ceiling. No OS memory sandbox.",
     "acl": "ACL-09",
     "prior": [
       4,
@@ -321,7 +321,7 @@
     "cost": 12000,
     "ticket": "SEC-09",
     "owner": "Justin",
-    "status": "Open - design scenario; implementation unverified"
+    "status": "Local controls tested; distributed/OS resource isolation pending"
   },
   {
     "n": 10,
@@ -336,7 +336,7 @@
     "stride": "Tampering; Information disclosure",
     "flaw": "Untrusted research text reaches an unsafe HTML rendering sink.",
     "scenario": "Stored content executes when another user views a record. It may perform same-origin actions; HttpOnly cookies cannot be read directly by script.",
-    "control": "Render plain text by default; approved sanitization for necessary rich text; CSP as added protection.",
+    "control": "JSON-only API with no HTML rendering frontend; safe output rendering required for future UI.",
     "acl": "ACL-10",
     "prior": [
       3,
@@ -357,7 +357,7 @@
     "cost": 12000,
     "ticket": "SEC-10",
     "owner": "Gian",
-    "status": "Open - design scenario; implementation unverified"
+    "status": "Future frontend sink must be reviewed"
   },
   {
     "n": 11,
@@ -372,7 +372,7 @@
     "stride": "Repudiation; Tampering",
     "flaw": "Research updates lack an attributable append-only audit record.",
     "scenario": "An editor changes a research stage then denies doing it; writable or missing logs prevent reliable reconstruction.",
-    "control": "Server-derived actor and event IDs, protected append-only audit path, restricted readers, integrity monitoring.",
+    "control": "Server-derived audit actors and runtime INSERT/SELECT-only grants; administrator can still alter history.",
     "acl": "ACL-11",
     "prior": [
       3,
@@ -393,6 +393,6 @@
     "cost": 7000,
     "ticket": "SEC-11",
     "owner": "Gian",
-    "status": "Open - design scenario; implementation unverified"
+    "status": "Local grant controls verified; immutable external logging proposed"
   }
 ]

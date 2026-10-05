@@ -75,3 +75,9 @@ test('login throttles repeated attempts with HTTP 429',async()=>{
  let r;for(let i=0;i<11;i++) r=await request(app).post('/api/v1/auth/login').send({email:'nobody@example.test',password:'incorrect'});
  assert.equal(r.status,429);
 });
+
+test('SEC-09 public search caps large synthetic result sets at 100',async()=>{
+ const inserted=await admin.query("INSERT INTO research_records(author_id,title,abstract,status) SELECT 1,'cap-fixture-'||i,'Synthetic','Approved' FROM generate_series(1,105) i RETURNING id");
+ try {const r=await request(app).post('/api/v1/research/search').send({keyword:'cap-fixture-'}).expect(200);assert.equal(r.body.length,100);assert.ok(r.body.every(x=>x.status==='Approved'));}
+ finally {await admin.query('DELETE FROM research_records WHERE id=ANY($1::int[])',[inserted.rows.map(x=>x.id)]);}
+});

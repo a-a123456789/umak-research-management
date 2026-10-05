@@ -1,3 +1,4 @@
+import {createAlgorithmRunner} from './algorithm.js';
 import express from 'express';
 import helmet from 'helmet';
 import rateLimit from 'express-rate-limit';
@@ -9,7 +10,8 @@ export function createApp(db) {
   const app = express();
   app.disable('x-powered-by');
   app.use(helmet());
-  app.use(express.json({limit:'16kb'}));
+  const smallBody=express.json({limit:'16kb'});
+  app.use((req,res,next)=>req.path==='/api/v1/algorithm/solve'?next():smallBody(req,res,next));
   app.use(rateLimit({windowMs:60_000,limit:100,standardHeaders:'draft-8',legacyHeaders:false}));
   app.get('/health', (_req,res) => res.json({status:'ok'}));
   const auth = async (req,res,next) => {
@@ -20,6 +22,15 @@ export function createApp(db) {
     req.user=result.rows[0];next();
   };
   const staff = (req,res,next) => req.user.role==='staff' ? next() : res.status(403).json({error:'Forbidden'});
+  const solve=createAlgorithmRunner();
+  app.post('/api/v1/algorithm/solve',auth,staff,express.json({limit:'2mb'}),async(req,res)=>{
+    const abort=new AbortController();
+    const closed=()=>{if(!res.writableEnded)abort.abort();};
+    res.on('close',closed);
+    try {const result=await solve(req.body??{},abort.signal);res.status(result.status==='ERROR'?400:200).json(result);}
+    catch(e){if(!res.destroyed)res.status(e.httpStatus||500).json({status:'ERROR',error_type:e.code||'WORKER_FAILED',message:'Algorithm job could not complete'});}
+    finally {res.removeListener('close',closed);}
+  });
   app.post('/api/v1/auth/login',rateLimit({windowMs:60_000,limit:10,standardHeaders:'draft-8',legacyHeaders:false}),async(req,res)=>{
     const {email,password} = req.body ?? {};
     if (typeof email!=='string' || email.length>254 || typeof password!=='string' || password.length>128) return res.status(400).json({error:'Invalid credentials format'});
@@ -36,7 +47,7 @@ export function createApp(db) {
   app.post('/api/v1/research/search',async(req,res)=>{
     const keyword=req.body?.keyword;
     if (typeof keyword!=='string' || keyword.length>200) return res.status(400).json({error:'keyword must be a string of at most 200 characters'});
-    const result=await db.query("SELECT id,title,abstract,status FROM research_records WHERE status='Approved' AND title ILIKE $1",[`%${keyword}%`]);
+    const result=await db.query("SELECT id,title,abstract,status FROM research_records WHERE status='Approved' AND title ILIKE $1 ORDER BY id LIMIT 100",[`%${keyword}%`]);
     res.json(result.rows);
   });
   app.get('/api/v1/research/:id',auth,async(req,res)=>{

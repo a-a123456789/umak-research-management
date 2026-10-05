@@ -1,0 +1,10 @@
+workflow,V,E,proposed_median_ms,baseline_median_ms,speedup,proposed_peak_kib,baseline_peak_kib,dp_relaxations,baseline_dp_passes
+sequence,10,9,0.0368,0.0385,1.05,10.8,10.1,9,4
+sequence,100,99,0.2324,0.7972,3.43,82.3,84.4,99,55
+sequence,1000,999,2.6785,63.7561,23.8,779.1,778.4,999,502
+branch,10,16,0.0341,0.0361,1.06,9.3,8.5,16,3
+branch,100,156,0.2953,0.4597,1.56,91.6,94.1,156,16
+branch,1000,1718,3.5737,21.4473,6.0,846.6,845.3,1718,141
+sequence_reversed,10,9,0.0297,0.0395,1.33,9.6,8.8,9,10
+sequence_reversed,100,99,0.225,1.2558,5.58,82.6,84.9,99,100
+sequence_reversed,1000,999,2.6634,113.4524,42.6,776.2,775.5,999,1000

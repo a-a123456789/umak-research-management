@@ -253,7 +253,7 @@
               "reasonOutOfScope": "",
               "hasOpenThreats": false,
               "isBidirectional": true,
-              "isEncrypted": true,
+              "isEncrypted": false,
               "isPublicNetwork": false,
               "protocol": "HTTP local; HTTPS required for production",
               "threats": [],
@@ -324,7 +324,7 @@
               "reasonOutOfScope": "",
               "hasOpenThreats": false,
               "isBidirectional": true,
-              "isEncrypted": true,
+              "isEncrypted": false,
               "isPublicNetwork": false,
               "protocol": "HTTP local; HTTPS required for production",
               "threats": [],
@@ -371,7 +371,7 @@
                 ],
                 "attrs": {
                   "labelText": {
-                    "text": "C-03 HTTPS / OIDC",
+                    "text": "C-03 OIDC proposed",
                     "textAnchor": "middle",
                     "textVerticalAnchor": "middle"
                   },
@@ -389,13 +389,13 @@
             "connector": "normal",
             "data": {
               "type": "tm.Flow",
-              "name": "C-03 HTTPS / OIDC",
+              "name": "C-03 OIDC proposed",
               "description": "Authentication messages if adopted",
               "outOfScope": false,
               "reasonOutOfScope": "",
               "hasOpenThreats": false,
               "isBidirectional": true,
-              "isEncrypted": true,
+              "isEncrypted": false,
               "isPublicNetwork": false,
               "protocol": "HTTPS / OIDC",
               "threats": [],
@@ -440,7 +440,7 @@
                 ],
                 "attrs": {
                   "labelText": {
-                    "text": "C-04 HTTPS / TLS",
+                    "text": "C-04 Release proposed",
                     "textAnchor": "middle",
                     "textVerticalAnchor": "middle"
                   },
@@ -458,13 +458,13 @@
             "connector": "normal",
             "data": {
               "type": "tm.Flow",
-              "name": "C-04 HTTPS / TLS",
-              "description": "Approved application releases",
+              "name": "C-04 Release proposed",
+              "description": "Future reviewed release; deployment automation not implemented.",
               "outOfScope": false,
               "reasonOutOfScope": "",
               "hasOpenThreats": false,
               "isBidirectional": false,
-              "isEncrypted": true,
+              "isEncrypted": false,
               "isPublicNetwork": false,
               "protocol": "HTTPS / TLS",
               "threats": [],
@@ -520,7 +520,7 @@
                   }
                 },
                 "position": {
-                  "distance": 0.5,
+                  "distance": 0.08,
                   "args": {
                     "keepGradient": true,
                     "ensureLegibility": true
@@ -588,7 +588,7 @@
                   }
                 },
                 "position": {
-                  "distance": 0.5,
+                  "distance": 0.08,
                   "args": {
                     "keepGradient": true,
                     "ensureLegibility": true
@@ -620,7 +620,7 @@
       {
         "id": 1,
         "title": "Level 1 Implementation and Target Extensions",
-        "description": "Logical components; P-02/P-03/P-04 may share one application deployment. Trust controls are proposed.",
+        "description": "Express logical modules share one process; Python worker and administrative restore are separate processes. Local controls implemented; production extensions explicitly proposed.",
         "diagramType": "STRIDE",
         "version": "2.6.2",
         "thumbnail": "",
@@ -706,7 +706,7 @@
             },
             "attrs": {
               "text": {
-                "text": "P-01 Express routing"
+                "text": "P-01 Express\nrouting"
               },
               "body": {
                 "stroke": "#233442",
@@ -736,8 +736,8 @@
                   "severity": "High",
                   "status": "Open",
                   "score": "7.6",
-                  "description": "Repeated costly queries exhaust worker or database capacity and interrupt record and public-service access.\nR-09 / TVA-09 / A-02; A-04\nSecondary STRIDE: Denial of service",
-                  "mitigation": "Rate and concurrency limits, capped pagination/body size, timeouts and bounded queries. ACL-09 / SEC-09"
+                  "description": "Authenticated staff floods costly graph-solving scenarios or clients flood search. Unbounded child processes would exhaust host resources. R-09 / TVA-09 / A-02; A-04; A-08 Status: Local controls tested; distributed/OS resource isolation pending",
+                  "mitigation": "Rate/body limits; staff-only solver; 5000 steps, 25000 edges, 50000 memberships, 2 MiB body; two Python workers, five-second timeout, 8 MiB output ceiling. No OS memory sandbox. ACL-09 / SEC-09"
                 }
               ],
               "hasOpenThreats": true
@@ -754,7 +754,7 @@
             },
             "attrs": {
               "text": {
-                "text": "P-02 Auth and\npermissions"
+                "text": "P-02 Auth\npermissions"
               },
               "body": {
                 "stroke": "#233442",
@@ -788,7 +788,7 @@
             },
             "attrs": {
               "text": {
-                "text": "P-03 Research and\nprivacy API"
+                "text": "P-03 Research\nprivacy API"
               },
               "body": {
                 "stroke": "#233442",
@@ -818,8 +818,8 @@
                   "severity": "High",
                   "status": "Open",
                   "score": "8.8",
-                  "description": "If search concatenates input, a crafted query can bypass record filtering and disclose nonpublic research metadata. Successful SQL injection depends on the actual query and database grants.\nR-01 / TVA-01 / A-02\nSecondary STRIDE: Tampering; Information disclosure",
-                  "mitigation": "Parameterized SQL, publication filter, least-privilege DB role, regression test. ACL-01 / SEC-01"
+                  "description": "If search concatenates input, a crafted query can bypass record filtering and disclose nonpublic research metadata. Successful SQL injection depends on the actual query and database grants. R-01 / TVA-01 / A-02 Status: Implemented locally; residual assumptions require human review",
+                  "mitigation": "Parameterized search and publication filtering; synthetic exploit comparison and regression tests pass. ACL-01 / SEC-01"
                 },
                 {
                   "id": "b765e2a6-f696-5afc-8553-20c6fc8d8c7f",
@@ -831,8 +831,8 @@
                   "severity": "High",
                   "status": "Open",
                   "score": "8.0",
-                  "description": "A user changes a record ID and reads another research team\u2019s nonpublic record or service request. Client-hidden links do not enforce authorization.\nR-02 / TVA-02 / A-02; A-03\nSecondary STRIDE: Information disclosure; Elevation of privilege",
-                  "mitigation": "Central object permission check using approved collaborator/staff grants; deny by default. ACL-02 / SEC-02"
+                  "description": "A user changes a record ID and reads another research team\u2019s nonpublic record or service request. Client-hidden links do not enforce authorization. R-02 / TVA-02 / A-02; A-03 Status: Implemented locally; service workflow persistence proposed",
+                  "mitigation": "Owner-or-staff predicates on records; default denial; cross-user tests pass. Collaborator grants are not implemented. ACL-02 / SEC-02"
                 },
                 {
                   "id": "ed41e18f-9592-5bfa-b10a-7c84cd367e20",
@@ -844,8 +844,8 @@
                   "severity": "High",
                   "status": "Open",
                   "score": "7.0",
-                  "description": "If uploads are enabled, a malicious file exploits a vulnerable parser or unsafe execution path, giving a runtime foothold. A PDF extension or polyglot alone does not execute code.\nR-07 / TVA-07 / A-02\nSecondary STRIDE: Tampering; Elevation of privilege",
-                  "mitigation": "Defer upload route until confirmed; then isolated patched parser, size/type checks, quarantine, no execution. ACL-07 / SEC-07"
+                  "description": "If uploads are enabled, a malicious file exploits a vulnerable parser or unsafe execution path, giving a runtime foothold. A PDF extension or polyglot alone does not execute code. R-07 / TVA-07 / A-02 Status: Avoided in current scope; proposed feature risk",
+                  "mitigation": "No upload or attachment parsing endpoint; defer until isolated parser security is reviewed. ACL-07 / SEC-07"
                 },
                 {
                   "id": "70bd2788-f177-5f0b-9194-b7ac376016b5",
@@ -857,8 +857,8 @@
                   "severity": "Medium",
                   "status": "Open",
                   "score": "6.6",
-                  "description": "Stored content executes when another user views a record. It may perform same-origin actions; HttpOnly cookies cannot be read directly by script.\nR-10 / TVA-10 / A-02; A-01\nSecondary STRIDE: Tampering; Information disclosure",
-                  "mitigation": "Render plain text by default; approved sanitization for necessary rich text; CSP as added protection. ACL-10 / SEC-10"
+                  "description": "Stored content executes when another user views a record. It may perform same-origin actions; HttpOnly cookies cannot be read directly by script. R-10 / TVA-10 / A-02; A-01 Status: Future frontend sink must be reviewed",
+                  "mitigation": "JSON-only API with no HTML rendering frontend; safe output rendering required for future UI. ACL-10 / SEC-10"
                 }
               ],
               "hasOpenThreats": true
@@ -875,7 +875,7 @@
             },
             "attrs": {
               "text": {
-                "text": "P-04 Audit writer"
+                "text": "P-04 Audit\nwriter"
               },
               "body": {
                 "stroke": "#233442",
@@ -924,7 +924,7 @@
             "id": "bae78aed-1a55-5d7c-a93e-cba267363afd",
             "data": {
               "name": "D-01 PostgreSQL\nA-01 A-02",
-              "description": "users, sessions, research_records, consents, deletion_requests. A-03 service workflow and A-04 public information remain proposed.",
+              "description": "users, sessions, research_records, consents, deletion_requests. A-03 service workflow persistence remains proposed. A-04 approved public metadata is exposed through bounded parameterized search.",
               "type": "tm.Store",
               "isTrustBoundary": false,
               "outOfScope": false,
@@ -940,8 +940,8 @@
                   "severity": "Medium",
                   "status": "Open",
                   "score": "6.2",
-                  "description": "A missed application permission check exposes rows across research groups. Missing RLS is a defense gap, not by itself proof that a user can query the database.\nR-05 / TVA-05 / A-02\nSecondary STRIDE: Information disclosure; Elevation of privilege",
-                  "mitigation": "RLS or equivalent tested isolation; transaction-local trusted identity; no owner/superuser/BYPASSRLS runtime. ACL-05 / SEC-05"
+                  "description": "A missed application permission check exposes rows across research groups. Missing RLS is a defense gap, not by itself proof that a user can query the database. R-05 / TVA-05 / A-02 Status: Partial defense; missed future query checks remain a risk",
+                  "mitigation": "Non-owner runtime and tested application predicates; RLS not implemented. ACL-05 / SEC-05"
                 },
                 {
                   "id": "cf4a3698-9ea4-5330-84c7-6e9c343c284d",
@@ -953,8 +953,8 @@
                   "severity": "High",
                   "status": "Open",
                   "score": "8.6",
-                  "description": "An attacker reaches the DB, gains sufficient privileges, and corrupts or extracts research records. Permanent loss also requires unavailable or compromised recovery copies.\nR-08 / TVA-08 / A-02\nSecondary STRIDE: Denial of service; Tampering; Information disclosure",
-                  "mitigation": "Private DB ingress, separate runtime/migration roles, backup credentials isolated, immutable recovery copy and restore tests. ACL-08 / SEC-08"
+                  "description": "An attacker reaches the DB, gains sufficient privileges, and corrupts or extracts research records. Permanent loss also requires unavailable or compromised recovery copies. R-08 / TVA-08 / A-02 Status: Local controls verified; production recovery pending",
+                  "mitigation": "Loopback database binding, separate roles and actual synthetic restore test; immutable offsite recovery remains proposed. ACL-08 / SEC-08"
                 }
               ],
               "hasOpenThreats": true,
@@ -1006,20 +1006,20 @@
                   "severity": "Medium",
                   "status": "Open",
                   "score": "6.4",
-                  "description": "An editor changes a research stage then denies doing it; writable or missing logs prevent reliable reconstruction.\nR-11 / TVA-11 / A-07; A-02\nSecondary STRIDE: Repudiation; Tampering",
-                  "mitigation": "Server-derived actor and event IDs, protected append-only audit path, restricted readers, integrity monitoring. ACL-11 / SEC-11"
+                  "description": "An editor changes a research stage then denies doing it; writable or missing logs prevent reliable reconstruction. R-11 / TVA-11 / A-07; A-02 Status: Local grant controls verified; immutable external logging proposed",
+                  "mitigation": "Server-derived audit actors and runtime INSERT/SELECT-only grants; administrator can still alter history. ACL-11 / SEC-11"
                 }
               ],
               "hasOpenThreats": true,
-              "isALog": false,
-              "storesCredentials": true,
+              "isALog": true,
+              "storesCredentials": false,
               "isEncrypted": false,
               "isSigned": false
             }
           },
           {
             "position": {
-              "x": 950,
+              "x": 1240,
               "y": 290
             },
             "size": {
@@ -1059,8 +1059,8 @@
                   "severity": "High",
                   "status": "Open",
                   "score": "7.6",
-                  "description": "An operator accidentally publishes a research export. Anyone with its URL can obtain nonpublic records; encryption at rest does not stop an authorized public read.\nR-03 / TVA-03 / A-02\nSecondary STRIDE: Information disclosure",
-                  "mitigation": "Private storage policy, public-access block, expiring authorized downloads, configuration tests. ACL-03 / SEC-03"
+                  "description": "An operator accidentally publishes a research export. Anyone with its URL can obtain nonpublic records; encryption at rest does not stop an authorized public read. R-03 / TVA-03 / A-02 Status: Proposed cloud extension; no public export route",
+                  "mitigation": "Local temporary backup only. Cloud public-access blocking and expiring download controls remain proposed. ACL-03 / SEC-03"
                 }
               ],
               "hasOpenThreats": true,
@@ -1146,8 +1146,8 @@
                   "severity": "High",
                   "status": "Open",
                   "score": "9.0",
-                  "description": "A repository reader obtains a secret and impersonates a service if network access and credential permissions permit. Removing the file alone does not revoke a leaked secret.\nR-04 / TVA-04 / A-05; A-02\nSecondary STRIDE: Spoofing; Information disclosure; Elevation of privilege",
-                  "mitigation": "Secret scan on commits and CI, rotation and revocation, scoped service credentials, required review. ACL-04 / SEC-04"
+                  "description": "A repository reader obtains a secret and impersonates a service if network access and credential permissions permit. Removing the file alone does not revoke a leaked secret. R-04 / TVA-04 / A-05; A-02 Status: Implemented controls; owner-authorized merge exception is not peer review",
+                  "mitigation": "Pre-commit rejection, Gitleaks CI and protected branches; rotate any real leaked credential. Native private-repo push protection unavailable. ACL-04 / SEC-04"
                 }
               ],
               "hasOpenThreats": true,
@@ -1165,7 +1165,7 @@
             },
             "attrs": {
               "text": {
-                "text": "P-05 GitHub Actions\nand repository A-06"
+                "text": "P-05 GitHub\nCI / A-06"
               },
               "body": {
                 "stroke": "#233442",
@@ -1244,7 +1244,7 @@
               "reasonOutOfScope": "",
               "hasOpenThreats": true,
               "isBidirectional": true,
-              "isEncrypted": true,
+              "isEncrypted": false,
               "isPublicNetwork": false,
               "protocol": "HTTP local; HTTPS required for production",
               "threats": [
@@ -1258,8 +1258,8 @@
                   "severity": "Medium",
                   "status": "Open",
                   "score": "6.0",
-                  "description": "A victim uses an insecure session path and an observer obtains a usable session. Ordinary Wi-Fi visibility does not decrypt correctly validated HTTPS.\nR-06 / TVA-06 / A-01; A-02\nSecondary STRIDE: Spoofing; Information disclosure",
-                  "mitigation": "HTTPS, HSTS after validation, Secure/HttpOnly cookies, suitable SameSite and CSRF protection, rotation on login. ACL-06 / SEC-06"
+                  "description": "A victim uses an insecure session path and an observer obtains a usable session. Ordinary Wi-Fi visibility does not decrypt correctly validated HTTPS. R-06 / TVA-06 / A-01; A-02 Status: Production transport protection pending",
+                  "mitigation": "Hashed expiring bearer sessions and revocation; local HTTP only. Production HTTPS remains required. No cookie authentication. ACL-06 / SEC-06"
                 }
               ],
               "isTrustBoundary": false
@@ -1329,7 +1329,7 @@
               "reasonOutOfScope": "",
               "hasOpenThreats": false,
               "isBidirectional": true,
-              "isEncrypted": true,
+              "isEncrypted": false,
               "isPublicNetwork": false,
               "protocol": "HTTP local; HTTPS required for production",
               "threats": [],
@@ -1400,7 +1400,7 @@
               "reasonOutOfScope": "",
               "hasOpenThreats": false,
               "isBidirectional": true,
-              "isEncrypted": true,
+              "isEncrypted": false,
               "isPublicNetwork": false,
               "protocol": "In-process middleware",
               "threats": [],
@@ -1542,7 +1542,7 @@
               "reasonOutOfScope": "",
               "hasOpenThreats": false,
               "isBidirectional": true,
-              "isEncrypted": true,
+              "isEncrypted": false,
               "isPublicNetwork": false,
               "protocol": "PostgreSQL local TCP; production TLS proposed",
               "threats": [],
@@ -1613,7 +1613,7 @@
               "reasonOutOfScope": "",
               "hasOpenThreats": false,
               "isBidirectional": true,
-              "isEncrypted": true,
+              "isEncrypted": false,
               "isPublicNetwork": false,
               "protocol": "PostgreSQL local TCP; production TLS proposed",
               "threats": [],
@@ -1751,7 +1751,7 @@
               "reasonOutOfScope": "",
               "hasOpenThreats": false,
               "isBidirectional": false,
-              "isEncrypted": true,
+              "isEncrypted": false,
               "isPublicNetwork": false,
               "protocol": "PostgreSQL local TCP; production TLS proposed",
               "threats": [],
@@ -1815,23 +1815,23 @@
             "data": {
               "type": "tm.Flow",
               "name": "DF-09 pg_dump",
-              "description": "Administrative pg_dump/restore script; not an API export route.",
+              "description": "Admin backup script reads database using a separate administrative identity.",
               "outOfScope": false,
               "reasonOutOfScope": "",
               "hasOpenThreats": false,
               "isBidirectional": false,
-              "isEncrypted": true,
+              "isEncrypted": false,
               "isPublicNetwork": false,
-              "protocol": "Local PostgreSQL protocol / filesystem",
+              "protocol": "PostgreSQL local TCP",
               "threats": [],
               "isTrustBoundary": false
             },
             "id": "56c8d3dd-6175-5328-bf97-87de81cd0436",
             "source": {
-              "cell": "05c689ae-defc-5093-8e55-0756ecf93788"
+              "cell": "bae78aed-1a55-5d7c-a93e-cba267363afd"
             },
             "target": {
-              "cell": "241e49d6-a382-514f-8f06-17e5edfbe21e"
+              "cell": "de614621-b0ab-4adf-8fc6-59d2f49cdc26"
             },
             "vertices": []
           },
@@ -1867,7 +1867,7 @@
                 ],
                 "attrs": {
                   "labelText": {
-                    "text": "DF-10 HTTPS / OIDC",
+                    "text": "DF-10 OIDC proposed",
                     "textAnchor": "middle",
                     "textVerticalAnchor": "middle"
                   },
@@ -1885,13 +1885,13 @@
             "connector": "normal",
             "data": {
               "type": "tm.Flow",
-              "name": "DF-10 HTTPS / OIDC",
+              "name": "DF-10 OIDC proposed",
               "description": "Federated identity if adopted",
               "outOfScope": false,
               "reasonOutOfScope": "",
               "hasOpenThreats": false,
               "isBidirectional": true,
-              "isEncrypted": true,
+              "isEncrypted": false,
               "isPublicNetwork": false,
               "protocol": "HTTPS / OIDC",
               "threats": [],
@@ -2014,7 +2014,7 @@
                 ],
                 "attrs": {
                   "labelText": {
-                    "text": "DF-12 Release proposed",
+                    "text": "DF-12 Release plan",
                     "textAnchor": "middle",
                     "textVerticalAnchor": "middle"
                   },
@@ -2032,13 +2032,13 @@
             "connector": "normal",
             "data": {
               "type": "tm.Flow",
-              "name": "DF-12 Release proposed",
+              "name": "DF-12 Release plan",
               "description": "Future reviewed deployment; CI currently tests only.",
               "outOfScope": false,
               "reasonOutOfScope": "",
               "hasOpenThreats": false,
               "isBidirectional": false,
-              "isEncrypted": true,
+              "isEncrypted": false,
               "isPublicNetwork": false,
               "protocol": "HTTPS / TLS",
               "threats": [],
@@ -2103,7 +2103,7 @@
                   }
                 },
                 "position": {
-                  "distance": 0.5,
+                  "distance": 0.08,
                   "args": {
                     "keepGradient": true,
                     "ensureLegibility": true
@@ -2171,7 +2171,7 @@
                   }
                 },
                 "position": {
-                  "distance": 0.5,
+                  "distance": 0.08,
                   "args": {
                     "keepGradient": true,
                     "ensureLegibility": true
@@ -2239,7 +2239,7 @@
                   }
                 },
                 "position": {
-                  "distance": 0.5,
+                  "distance": 0.08,
                   "args": {
                     "keepGradient": true,
                     "ensureLegibility": true
@@ -2265,6 +2265,296 @@
               "y": 620
             },
             "vertices": []
+          },
+          {
+            "position": {
+              "x": 950,
+              "y": 310
+            },
+            "size": {
+              "width": 180,
+              "height": 100
+            },
+            "attrs": {
+              "text": {
+                "text": "P-06 Backup\nrestore script"
+              },
+              "body": {
+                "stroke": "#233442",
+                "strokeWidth": 1,
+                "strokeDasharray": null
+              }
+            },
+            "visible": true,
+            "shape": "process",
+            "zIndex": 5,
+            "id": "de614621-b0ab-4adf-8fc6-59d2f49cdc26",
+            "data": {
+              "name": "P-06 Admin backup\nrestore script",
+              "description": "scripts/backup-restore.js; separate administrative process, not a research API endpoint.",
+              "type": "tm.Process",
+              "isTrustBoundary": false,
+              "outOfScope": false,
+              "reasonOutOfScope": "",
+              "threats": [],
+              "hasOpenThreats": false
+            }
+          },
+          {
+            "shape": "flow",
+            "attrs": {
+              "line": {
+                "stroke": "#526879",
+                "strokeWidth": 1.3,
+                "targetMarker": {
+                  "name": "block"
+                },
+                "sourceMarker": "",
+                "strokeDasharray": null
+              }
+            },
+            "width": 200,
+            "height": 100,
+            "zIndex": 3,
+            "labels": [
+              {
+                "markup": [
+                  {
+                    "tagName": "ellipse",
+                    "selector": "labelBody"
+                  },
+                  {
+                    "tagName": "text",
+                    "selector": "labelText"
+                  }
+                ],
+                "attrs": {
+                  "labelText": {
+                    "text": "DF-13 Backup file",
+                    "textAnchor": "middle",
+                    "textVerticalAnchor": "middle"
+                  },
+                  "labelBody": {
+                    "ref": "labelText",
+                    "refRx": "50%",
+                    "refRy": "60%",
+                    "fill": "#fff",
+                    "strokeWidth": 0
+                  }
+                },
+                "position": 0.5
+              }
+            ],
+            "connector": "normal",
+            "data": {
+              "type": "tm.Flow",
+              "name": "DF-13 Backup file",
+              "description": "Temporary synthetic backup file; removed after restore comparison.",
+              "outOfScope": false,
+              "reasonOutOfScope": "",
+              "hasOpenThreats": false,
+              "isBidirectional": false,
+              "isEncrypted": false,
+              "isPublicNetwork": false,
+              "protocol": "Local filesystem",
+              "threats": [],
+              "isTrustBoundary": false
+            },
+            "id": "bdd9fccf-aaf3-47f2-96e2-1bfe89456975",
+            "source": {
+              "cell": "de614621-b0ab-4adf-8fc6-59d2f49cdc26"
+            },
+            "target": {
+              "cell": "241e49d6-a382-514f-8f06-17e5edfbe21e"
+            },
+            "vertices": []
+          },
+          {
+            "position": {
+              "x": 950,
+              "y": 720
+            },
+            "size": {
+              "width": 205,
+              "height": 110
+            },
+            "attrs": {
+              "text": {
+                "text": "P-07 Python\nDAG / A-08"
+              },
+              "body": {
+                "stroke": "#233442",
+                "strokeWidth": 1,
+                "strokeDasharray": null
+              }
+            },
+            "visible": true,
+            "shape": "process",
+            "zIndex": 5,
+            "id": "dede1ac1-331c-506e-baae-55d92b480f40",
+            "data": {
+              "name": "P-07 Python DAG worker\nA-08",
+              "description": "algocom/worker.py: fixed child process, no DB credentials; JSON stdin/stdout; bounds and timeout. Not an OS sandbox.",
+              "type": "tm.Process",
+              "isTrustBoundary": false,
+              "outOfScope": false,
+              "reasonOutOfScope": "",
+              "threats": [],
+              "hasOpenThreats": false
+            }
+          },
+          {
+            "shape": "flow",
+            "attrs": {
+              "line": {
+                "stroke": "#526879",
+                "strokeWidth": 1.3,
+                "targetMarker": {
+                  "name": "block"
+                },
+                "sourceMarker": {
+                  "name": "block"
+                },
+                "strokeDasharray": null
+              }
+            },
+            "width": 200,
+            "height": 100,
+            "zIndex": 3,
+            "labels": [
+              {
+                "markup": [
+                  {
+                    "tagName": "ellipse",
+                    "selector": "labelBody"
+                  },
+                  {
+                    "tagName": "text",
+                    "selector": "labelText"
+                  }
+                ],
+                "attrs": {
+                  "labelText": {
+                    "text": "DF-14 JSON stdin/stdout",
+                    "textAnchor": "middle",
+                    "textVerticalAnchor": "middle"
+                  },
+                  "labelBody": {
+                    "ref": "labelText",
+                    "refRx": "50%",
+                    "refRy": "60%",
+                    "fill": "#fff",
+                    "strokeWidth": 0
+                  }
+                },
+                "position": 0.5
+              }
+            ],
+            "connector": "normal",
+            "data": {
+              "type": "tm.Flow",
+              "name": "DF-14 JSON stdin/stdout",
+              "description": "Staff scenario only; graph validation, timeout, cancellation and structured result. No database access.",
+              "outOfScope": false,
+              "reasonOutOfScope": "",
+              "hasOpenThreats": false,
+              "isBidirectional": true,
+              "isEncrypted": false,
+              "isPublicNetwork": false,
+              "protocol": "Local process pipes",
+              "threats": [],
+              "isTrustBoundary": false
+            },
+            "id": "5b9b8460-f45a-569f-9c66-1951a6fac65d",
+            "source": {
+              "cell": "6d04aaa6-2e73-56b5-a829-9a1e0fcf4fe6"
+            },
+            "target": {
+              "cell": "dede1ac1-331c-506e-baae-55d92b480f40"
+            },
+            "vertices": [
+              {
+                "x": 490,
+                "y": 860
+              },
+              {
+                "x": 1050,
+                "y": 860
+              }
+            ]
+          },
+          {
+            "shape": "trust-boundary-curve",
+            "attrs": {
+              "line": {
+                "targetMarker": "",
+                "sourceMarker": ""
+              }
+            },
+            "width": 200,
+            "height": 100,
+            "zIndex": 1,
+            "labels": [
+              {
+                "markup": [
+                  {
+                    "tagName": "ellipse",
+                    "selector": "labelBody"
+                  },
+                  {
+                    "tagName": "text",
+                    "selector": "labelText"
+                  }
+                ],
+                "attrs": {
+                  "labelText": {
+                    "text": "TB-04 Child process",
+                    "textAnchor": "middle",
+                    "textVerticalAnchor": "middle"
+                  },
+                  "labelBody": {
+                    "ref": "labelText",
+                    "refRx": "50%",
+                    "refRy": "60%",
+                    "fill": "#fff",
+                    "strokeWidth": 0
+                  },
+                  "text": {
+                    "text": ""
+                  }
+                },
+                "position": {
+                  "distance": 0.08,
+                  "args": {
+                    "keepGradient": true,
+                    "ensureLegibility": true
+                  }
+                }
+              }
+            ],
+            "connector": "normal",
+            "data": {
+              "type": "tm.Boundary",
+              "name": "TB-04 Child process",
+              "description": "OS process boundary; same host account, not a sandbox",
+              "isTrustBoundary": true,
+              "hasOpenThreats": false
+            },
+            "id": "9fe9a442-a69f-51d3-9aca-795c0473ec22",
+            "source": {
+              "x": 900,
+              "y": 680
+            },
+            "target": {
+              "x": 1190,
+              "y": 860
+            },
+            "vertices": [
+              {
+                "x": 900,
+                "y": 860
+              }
+            ]
           }
         ]
       }

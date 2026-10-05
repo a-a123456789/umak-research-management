@@ -1,0 +1,32 @@
+import {test,after} from 'node:test';
+import assert from 'node:assert/strict';
+import {fileURLToPath} from 'node:url';
+import pg from 'pg';
+import request from 'supertest';
+import {createApp} from '../src/app.js';
+import {createAlgorithmRunner} from '../src/algorithm.js';
+const db=new pg.Pool({connectionString:process.env.DATABASE_URL});const app=createApp(db);
+after(()=>db.end());
+const sample={steps:['a','b'],dependencies:[['a','b']],completed_actions:[],requirements:{b:[{id:'proof',gate:'received'}]},evidence:[],durations:{a:5,b:7}};
+test('algorithm API: authentication, staff boundary, schema and standalone agreement',async()=>{
+ await request(app).post('/api/v1/algorithm/solve').send(sample).expect(401);
+ const login=async email=>(await request(app).post('/api/v1/auth/login').send({email,password:process.env.DEMO_PASSWORD})).body.access_token;
+ const student=await login('student1@example.test'),staff=await login('staff@example.test');
+ await request(app).post('/api/v1/algorithm/solve').set('Authorization',`Bearer ${student}`).send(sample).expect(403);
+ const api=await request(app).post('/api/v1/algorithm/solve').set('Authorization',`Bearer ${staff}`).send(sample).expect(200);
+ const direct=await createAlgorithmRunner()(sample);delete direct.metrics;delete api.body.metrics;assert.deepEqual(api.body,direct);assert.equal(direct.remaining_duration_minutes,12);
+ await request(app).post('/api/v1/algorithm/solve').set('Authorization',`Bearer ${staff}`).send({}).expect(400);
+ await request(app).post('/api/v1/algorithm/solve').set('Authorization',`Bearer ${staff}`).send({...sample,durations:{a:-1,b:7}}).expect(400);
+ await request(app).post('/api/v1/algorithm/solve').set('Authorization',`Bearer ${staff}`).send({padding:'x'.repeat(2*1024*1024)}).expect(413);
+ await request(app).post('/api/v1/algorithm/solve').set('Authorization',`Bearer ${staff}`).set('Content-Type','application/json').send('{bad').expect(400);
+});
+test('worker failures, timeout, concurrency, cancellation and recovery are bounded',async()=>{
+ const path=n=>fileURLToPath(new URL(`./fixtures/${n}`,import.meta.url));
+ await assert.rejects(createAlgorithmRunner({python:'/nonexistent/python'})(sample),{code:'WORKER_UNAVAILABLE'});
+ await assert.rejects(createAlgorithmRunner({workerScript:path('bad-worker.py')})(sample),{code:'WORKER_PROTOCOL'});
+ const run=createAlgorithmRunner({workerScript:path('slow-worker.py'),timeoutMs:80,maxConcurrent:1});
+ const pending=assert.rejects(run(sample),{code:'WORKER_TIMEOUT'});
+ await assert.rejects(run(sample),{code:'WORKER_BUSY'});await pending;
+ await assert.rejects(run(sample),{code:'WORKER_TIMEOUT'});
+ const controller=new AbortController();const cancelled=assert.rejects(createAlgorithmRunner({workerScript:path('slow-worker.py')})(sample,controller.signal),{code:'REQUEST_CANCELLED'});controller.abort();await cancelled;
+});

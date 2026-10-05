@@ -1,0 +1,289 @@
+{
+  "ALGOCOM": [
+    {
+      "title": "Which action is ready\u2014and what is the bottleneck?",
+      "points": [
+        "CRM workflow readiness + DAG critical-path estimates",
+        "ALGOCOM Milestone 1 \u00b7 III-BCSAD \u00b7 bolanatics",
+        "Synthetic prototype | 4 October 2026"
+      ],
+      "ref": "[1]\u2013[3]",
+      "kind": "text"
+    },
+    {
+      "title": "Five engineering responsibilities",
+      "points": [
+        "Aaliyah Marie Balocating \u00b7 A12448769 | Requirements / technical lead",
+        "Gian Brent Maligaya \u00b7 A12448912 | Algorithm designer",
+        "Anjelo Benedict Arnaez \u00b7 K12254175 | Complexity / benchmarking",
+        "John David Bomediano \u00b7 A12448927 | Architecture / repository",
+        "Justin Andrew Ducay \u00b7 A12448793 | Backlog / presentation"
+      ],
+      "ref": "Assigned roles; individual review and defense remain required.",
+      "kind": "team"
+    },
+    {
+      "title": "Receipt is not verification",
+      "points": [
+        "A received payment proof can enable staff verification.",
+        "It does not complete that action or satisfy a verified gate.",
+        "Service workflows are distinct from stored research records."
+      ],
+      "ref": "[1], [2]",
+      "kind": "text"
+    },
+    {
+      "title": "A precise graph model",
+      "points": [
+        "Inputs: DAG G=(V,E), completed C, requirements R, evidence B, durations d.",
+        "Ready(v): every prerequisite completed AND every evidence gate satisfied.",
+        "Output: readiness reasons, earliest finishes, longest duration and path."
+      ],
+      "ref": "[3]",
+      "kind": "text"
+    },
+    {
+      "title": "The objective is structural duration",
+      "points": [
+        "r(v)=0 for completed steps; otherwise r(v)=d(v).",
+        "F(v)=r(v)+max predecessor F; an empty maximum is zero.",
+        "T=max F(v): unlimited parallel capacity; staffing and evidence waits excluded."
+      ],
+      "ref": "[3]",
+      "kind": "text"
+    },
+    {
+      "title": "Why dynamic programming fits",
+      "points": [
+        "Evaluate shared prerequisite subproblems once in topological order.",
+        "Joins take the maximum finish, not the sum of parallel branches.",
+        "Keep one maximizing parent to recover a path certificate."
+      ],
+      "ref": "[3]",
+      "kind": "text"
+    },
+    {
+      "title": "Walk through the certificate",
+      "points": [
+        "S4 completed \u2192 S5 verification (15 min) \u2192 S6 processing (45 min).",
+        "Received proof makes S5 ready; S6 is blocked until S5 completes.",
+        "F={0,15,60}; critical path [S5,S6]; estimate 60 min."
+      ],
+      "ref": "Repository example.json",
+      "kind": "text"
+    },
+    {
+      "title": "Correctness depends on invariants",
+      "points": [
+        "Queue indegree equals the count of unprocessed prerequisites.",
+        "Induction: every predecessor finish is final before a step is evaluated.",
+        "Backtracking actual maximizing edges certifies the reported longest path."
+      ],
+      "ref": "[3]",
+      "kind": "text"
+    },
+    {
+      "title": "Growth is linear in the full input",
+      "points": [
+        "Proposed: O(V+E+Q+B) under expected constant-time hashing.",
+        "Repeated scans: O(V(V+E)+Q+B) upper bound; ordered cases can be linear.",
+        "Storage includes graph, normalized evidence and output\u2014not just the queue."
+      ],
+      "ref": "[3]",
+      "kind": "text"
+    },
+    {
+      "title": "Measured comparison: 1,000-step cases",
+      "points": [
+        "Median milliseconds; ten warmed repetitions; same synthetic input per pair.",
+        "Timing and memory were measured separately. Speedups are machine/input dependent."
+      ],
+      "ref": "[4], [5]; extended_results.json",
+      "kind": "chart"
+    },
+    {
+      "title": "Keep the computation outside the web thread",
+      "points": [
+        "Staff client \u2192 Express auth / bounded admission \u2192 Python child \u2192 pure solver",
+        "Express \u2192 PostgreSQL identities and records; Python receives no DB credentials.",
+        "2 workers | 5 s timeout | 2 MiB body | 5,000 steps | 25,000 edges"
+      ],
+      "ref": "[6]",
+      "kind": "diagram"
+    },
+    {
+      "title": "Tickets make the claims testable",
+      "points": [
+        "US-A1 / ALG-01: explain ready and blocked steps; receipt/verification tests.",
+        "US-A2 / ALG-02: prove hand-computed durations and valid certificates.",
+        "ALG-03/04: API failure tests; 5,000-step warmed p95 budget <1,000 ms."
+      ],
+      "ref": "Tests and CI; Q cap 50,000 memberships",
+      "kind": "text"
+    },
+    {
+      "title": "Defense: exact model, estimated inputs",
+      "points": [
+        "Why decouple? Testability, bounded lifecycle and event-loop isolation.",
+        "Why exact? This DAG objective is polynomial; harder resource scheduling is different.",
+        "Benchmarks complement proof; ML cold start is not a current feature."
+      ],
+      "ref": "Full six answers in report VI; review edge-case handling",
+      "kind": "text"
+    },
+    {
+      "title": "Evidence and references",
+      "points": [
+        "19 Python tests; 1,500 randomized comparisons across two suites.",
+        "Local p95: 14.82 / 19.82 / 14.21 ms for the three 5,000-step families.",
+        "[3] CLRS, 4th ed., 2022 \u00b7 [4\u20135] Python docs \u00b7 [6] Node child-process docs."
+      ],
+      "ref": "AI: ChatGPT/Codex; supplied Claude assistance. Human review remains separate.",
+      "kind": "text"
+    }
+  ],
+  "IAS": [
+    {
+      "title": "Protect the research\u2014and show the evidence",
+      "points": [
+        "CRM application security architecture",
+        "IAS Milestone \u00b7 III-BCSAD \u00b7 bolanatics",
+        "Synthetic implementation with explicit production gaps"
+      ],
+      "ref": "[1]",
+      "kind": "text"
+    },
+    {
+      "title": "Classroom governance, clear accountability",
+      "points": [
+        "Anjelo Benedict Arnaez \u00b7 K12254175 | CEO / executive sponsor",
+        "Justin Andrew Ducay \u00b7 A12448793 | CIO / infrastructure lead",
+        "Aaliyah Marie Balocating \u00b7 A12448769 | CISO / risk lead",
+        "Gian Brent Maligaya \u00b7 A12448912 | Lead Engineer / DevSecOps",
+        "John David Bomediano \u00b7 A12448927 | DPO / compliance specialist"
+      ],
+      "ref": "Writing: Gian I; Justin II; John David III; Anjelo IV; Aaliyah V\u2013VI.",
+      "kind": "team"
+    },
+    {
+      "title": "Protect the assets that actually exist",
+      "points": [
+        "A-01 identities | A-02 research | A-05 credentials | A-06 source",
+        "A-07 audit | A-08 solver scenarios; A-03 workflow persistence proposed",
+        "Approved metadata is public; private records and credentials are restricted."
+      ],
+      "ref": "[2]\u2013[4]",
+      "kind": "text"
+    },
+    {
+      "title": "An implementation with defined boundaries",
+      "points": [
+        "Express / Node 24 \u2192 PostgreSQL 18; separate Python worker.",
+        "Owner/staff access checks; hashed expiring bearer sessions; minimal audit.",
+        "No frontend, cloud, SSO, Redis, uploads or Turnitin implementation."
+      ],
+      "ref": "Repository source and model",
+      "kind": "diagram"
+    },
+    {
+      "title": "The same injection payload, two outcomes",
+      "points": [
+        "Isolated vulnerable example: synthetic credential sentinel disclosed.",
+        "Parameterized normal search: HTTP 200 and an empty array.",
+        "Public search also filters Approved records and caps output at 100."
+      ],
+      "ref": "[5], [6]; actual demo:sqli evidence",
+      "kind": "text"
+    },
+    {
+      "title": "The Kill Chain is a conditional scenario",
+      "points": [
+        "Recon \u2192 weaponize \u2192 deliver \u2192 exploit \u2192 install \u2192 command \u2192 impact.",
+        "Proposed upload chain requires a real parser/execution flaw.",
+        "No upload route exists; the chain is not the demonstrated SQLi result."
+      ],
+      "ref": "[7], [8]; seven MITRE-mapped phases in report II",
+      "kind": "text"
+    },
+    {
+      "title": "Privacy controls with honest limits",
+      "points": [
+        "Consent: server identity/time; versioned optional booleans may both be false.",
+        "Deletion: student request, staff review, transactional live-row erasure.",
+        "Old backups remain; retention/replay and cryptographic shredding are proposed."
+      ],
+      "ref": "[9]\u2013[11]",
+      "kind": "text"
+    },
+    {
+      "title": "Rehearse response without inventing an incident",
+      "points": [
+        "Identify \u2192 Contain \u2192 Analyze \u2192 Eradicate \u2192 Recover \u2192 Lessons learned.",
+        "NPC notice is an academic simulation, not submitted or signed.",
+        "Assess notification conditions; apply the 72-hour rule when legally triggered."
+      ],
+      "ref": "[11], [12]",
+      "kind": "text"
+    },
+    {
+      "title": "Policy must match configuration",
+      "points": [
+        "Default-deny ACL: owner/staff predicates and restricted DB grants.",
+        "Normal Git policy: 2 approvals + security/algocom checks.",
+        "Owner-authorized merge exception is recorded; protections must be restored."
+      ],
+      "ref": "[2], [3], [13]; no claim of completed peer review",
+      "kind": "text"
+    },
+    {
+      "title": "Risk math is conditional\u2014not observed loss",
+      "points": [
+        "AV PHP 3.6m \u00d7 EF .40 = SLE PHP 1.44m.",
+        "ALE 2.88m \u2192 72k; annual safeguards 240k; CBA PHP 2.568m.",
+        "Lower-loss sensitivity gives CBA \u2212204k: assumptions change the decision."
+      ],
+      "ref": "[4]; illustrative estimates, not university invoices or incident rates",
+      "kind": "text"
+    },
+    {
+      "title": "Eleven threats across five categories",
+      "points": [
+        "STRIDE spans actors, processes, flows and stores.",
+        "DREAD top priorities: credentials 9.0; SQL injection 8.8; extortion 8.6.",
+        "Resource-exhaustion threat includes bounded Python workers."
+      ],
+      "ref": "[14]; analyst scores, not empirical probabilities",
+      "kind": "text"
+    },
+    {
+      "title": "Trace each mitigation to a test",
+      "points": [
+        "SEC-04: A-05 \u2192 THREAT-04 \u2192 fake-secret commit rejection + CI scan.",
+        "SEC-01: A-02 \u2192 THREAT-01 \u2192 isolated before/after injection evidence.",
+        "SEC-08: A-02 \u2192 THREAT-08 \u2192 full six-table synthetic restore comparison."
+      ],
+      "ref": "[15]; AND/OR prerequisites and residual risks in model",
+      "kind": "text"
+    },
+    {
+      "title": "A 60-second control demonstration",
+      "points": [
+        "Replay evidence/integration/secret-demo.html or the .cast recording.",
+        "Show the actual fake-secret rejection; connect asset, threat and SEC-04.",
+        "Hooks can be bypassed; CI and actual human review are separate controls."
+      ],
+      "ref": "Actual timed terminal capture; not a recording of team-member narration",
+      "kind": "text"
+    },
+    {
+      "title": "What the team must still own",
+      "points": [
+        "Confirm institutional procedures, retention, costs and production decisions.",
+        "Understand and defend each assigned section; instructor acceptance is external.",
+        "References: NIST 2024/2025; ISO 2022; OWASP 2025; laws 2012; NPC 2016."
+      ],
+      "ref": "AI: ChatGPT/Codex and disclosed Claude. No manufactured reviews/signatures.",
+      "kind": "text"
+    }
+  ]
+}

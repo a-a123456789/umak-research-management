@@ -1,32 +1,30 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1140" height="750" viewBox="0 0 1140 750"><defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#526879"/></marker></defs><rect width="100%" height="100%" fill="white"/>
-<text x="20" y="28" text-anchor="start" font-family="Arial,sans-serif" font-size="21" fill="#172f41">CRM Level 0 Context</text>
-<polyline points="330,135 330,655" fill="none" stroke="#b25935" stroke-width="1.6" stroke-dasharray="7 5"/>
-<text x="335" y="62" text-anchor="start" font-family="Arial,sans-serif" font-size="12" fill="#8a4025">CRM system boundary</text>
-<polyline points="740,135 740,655" fill="none" stroke="#b25935" stroke-width="1.6" stroke-dasharray="7 5"/>
-<text x="745" y="62" text-anchor="start" font-family="Arial,sans-serif" font-size="12" fill="#8a4025">CRM system boundary</text>
-<polyline points="205.0,232.5 400.0,380.0" fill="none" stroke="#526879" stroke-width="1.6" marker-end="url(#arrow)" marker-start="url(#arrow)"/>
-<text x="302.5" y="298.25" text-anchor="middle" font-family="Arial,sans-serif" font-size="12" fill="#172f41">C-01</text>
-<text x="302.5" y="313.25" text-anchor="middle" font-family="Arial,sans-serif" font-size="12" fill="#172f41">HTTPS</text>
-<polyline points="205.0,502.5 400.0,380.0" fill="none" stroke="#526879" stroke-width="1.6" marker-end="url(#arrow)" marker-start="url(#arrow)"/>
-<text x="302.5" y="433.25" text-anchor="middle" font-family="Arial,sans-serif" font-size="12" fill="#172f41">C-02</text>
-<text x="302.5" y="448.25" text-anchor="middle" font-family="Arial,sans-serif" font-size="12" fill="#172f41">HTTPS</text>
-<polyline points="630.0,380.0 850.0,232.5" fill="none" stroke="#526879" stroke-width="1.6" marker-end="url(#arrow)" marker-start="url(#arrow)"/>
-<text x="740.0" y="298.25" text-anchor="middle" font-family="Arial,sans-serif" font-size="12" fill="#172f41">C-03</text>
-<text x="740.0" y="313.25" text-anchor="middle" font-family="Arial,sans-serif" font-size="12" fill="#172f41">HTTPS / OIDC</text>
-<polyline points="850.0,532.5 630.0,380.0" fill="none" stroke="#526879" stroke-width="1.6" marker-end="url(#arrow)"/>
-<text x="740.0" y="448.25" text-anchor="middle" font-family="Arial,sans-serif" font-size="12" fill="#172f41">C-04</text>
-<text x="740.0" y="463.25" text-anchor="middle" font-family="Arial,sans-serif" font-size="12" fill="#172f41">HTTPS / TLS</text>
-<rect x="30" y="195" width="175" height="75" fill="#f7f9fb" stroke="#233442" stroke-width="1.5"/>
-<text x="117.5" y="237.5" text-anchor="middle" font-family="Arial,sans-serif" font-size="14" fill="#172f41">Researchers</text>
-<rect x="30" y="465" width="175" height="75" fill="#f7f9fb" stroke="#233442" stroke-width="1.5"/>
-<text x="117.5" y="507.5" text-anchor="middle" font-family="Arial,sans-serif" font-size="14" fill="#172f41">CRM staff and admin</text>
-<ellipse cx="515.0" cy="380.0" rx="115.0" ry="75.0" fill="#e8eff5" stroke="#233442" stroke-width="1.5"/>
-<text x="515.0" y="385.0" text-anchor="middle" font-family="Arial,sans-serif" font-size="14" fill="#172f41">P-0 CRM platform</text>
-<rect x="850" y="195" width="240" height="75" fill="#f7f9fb" stroke="#233442" stroke-width="1.5"/>
-<text x="970.0" y="229.5" text-anchor="middle" font-family="Arial,sans-serif" font-size="14" fill="#172f41">Identity provider</text>
-<text x="970.0" y="246.5" text-anchor="middle" font-family="Arial,sans-serif" font-size="14" fill="#172f41">optional external API</text>
-<rect x="850" y="495" width="240" height="75" fill="#f7f9fb" stroke="#233442" stroke-width="1.5"/>
-<text x="970.0" y="529.5" text-anchor="middle" font-family="Arial,sans-serif" font-size="14" fill="#172f41">Development team</text>
-<text x="970.0" y="546.5" text-anchor="middle" font-family="Arial,sans-serif" font-size="14" fill="#172f41">and release pipeline</text>
-<text x="20" y="734" text-anchor="start" font-family="Arial,sans-serif" font-size="12" fill="#172f41">Proposed logical architecture | flow protocols are detailed in the adjacent inventory and editable model</text>
+<svg xmlns="http://www.w3.org/2000/svg" width="1140" height="605" viewBox="0 -70 1140 605">
+<rect x="0" y="-70" width="100%" height="100%" fill="white"/>
+<defs><marker id="arrow" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6" fill="#527184"/></marker></defs>
+<text x="20" y="-40" font-family="Arial" font-size="22" font-weight="bold">Level 0 Context</text>
+<text x="20" y="-17" font-family="Arial" font-size="12">Local implementation + labelled target extensions. Review rendering from model; browser SVG exports are supplied separately.</text>
+<line x1="330" y1="60" x2="330" y2="580" stroke="#b65236" stroke-width="2" stroke-dasharray="8 5"/>
+<text x="330.0" y="75" text-anchor="middle" font-family="Arial" font-size="11" fill="#172f42">CRM system boundary</text>
+<line x1="740" y1="60" x2="740" y2="580" stroke="#b65236" stroke-width="2" stroke-dasharray="8 5"/>
+<text x="740.0" y="75" text-anchor="middle" font-family="Arial" font-size="11" fill="#172f42">CRM system boundary</text>
+<polyline points="205.0,189.9685534591195 400.0,262.32704402515725" fill="none" stroke="#527184" stroke-width="1.5" marker-end="url(#arrow)"/>
+<text x="302.5" y="220.14779874213838" text-anchor="middle" font-family="Arial" font-size="10" fill="#172f42">C-01 HTTP local</text>
+<polyline points="205.0,400.5345911949685 400.0,340.44025157232704" fill="none" stroke="#527184" stroke-width="1.5" marker-end="url(#arrow)"/>
+<text x="302.5" y="364.48742138364776" text-anchor="middle" font-family="Arial" font-size="10" fill="#172f42">C-02 HTTP local</text>
+<polyline points="630.0,267.7197802197802 854.3220338983051,195.0" fill="none" stroke="#527184" stroke-width="1.5" marker-end="url(#arrow)"/>
+<text x="742.1610169491526" y="225.3598901098901" text-anchor="middle" font-family="Arial" font-size="10" fill="#172f42">C-03 OIDC proposed</text>
+<polyline points="858.1147540983607,420.0 630.0,343.54395604395603" fill="none" stroke="#527184" stroke-width="1.5" marker-end="url(#arrow)"/>
+<text x="744.0573770491803" y="375.77197802197804" text-anchor="middle" font-family="Arial" font-size="10" fill="#172f42">C-04 Release proposed</text>
+<rect x="30" y="120" width="175" height="75" rx="4" fill="#eef2f6" stroke="#233442"/>
+<text x="117.5" y="157.5" text-anchor="middle" font-family="Arial" font-size="12" fill="#172f42">Researchers</text>
+<rect x="30" y="390" width="175" height="75" rx="4" fill="#eef2f6" stroke="#233442"/>
+<text x="117.5" y="427.5" text-anchor="middle" font-family="Arial" font-size="12" fill="#172f42">CRM staff and admin</text>
+<rect x="400" y="230" width="230" height="150" rx="24" fill="#e4f5f2" stroke="#233442"/>
+<text x="515.0" y="305.0" text-anchor="middle" font-family="Arial" font-size="12" fill="#172f42">P-0 CRM platform</text>
+<rect x="850" y="120" width="240" height="75" rx="4" fill="#eef2f6" stroke="#233442"/>
+<text x="970.0" y="149.5" text-anchor="middle" font-family="Arial" font-size="12" fill="#172f42">Identity provider</text>
+<text x="970.0" y="165.5" text-anchor="middle" font-family="Arial" font-size="12" fill="#172f42">optional external API</text>
+<rect x="850" y="420" width="240" height="75" rx="4" fill="#eef2f6" stroke="#233442"/>
+<text x="970.0" y="449.5" text-anchor="middle" font-family="Arial" font-size="12" fill="#172f42">Development team</text>
+<text x="970.0" y="465.5" text-anchor="middle" font-family="Arial" font-size="12" fill="#172f42">and release pipeline</text>
 </svg>
