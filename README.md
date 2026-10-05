@@ -70,3 +70,7 @@ ChatGPT/Codex assisted backend and schema drafting, security tests, isolated dem
 ## ALGOCOM integration
 
 The isolated `algocom/` core now includes DAG duration estimates. Staff can call `POST /api/v1/algorithm/solve`; see [exact contract](docs/ALGORITHM_API.md) and [benchmark method](algocom/README.md). No persistent service-workflow approval is implied.
+
+## Course submissions
+
+Final report PDFs, editable Markdown and 14-slide PowerPoint decks: [submissions](submissions/README.md). See [completion and team handoff](docs/COMPLETION_CHECKLIST.md), [current evidence](evidence/STATUS.md), and [algorithm API contract](docs/ALGORITHM_API.md). The shared repository is `a-a123456789/umak-research-management`; `algocom/` remains independent of the IAS database.

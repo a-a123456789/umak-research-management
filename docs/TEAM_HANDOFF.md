@@ -21,9 +21,11 @@ No minimum commit count is required by the supplied milestone. Meaningful work a
 
 Internal deadline: confirm updated deadline in shared Docs. Submission date in supplied guide: October 3, 2026 (confirm in course portal).
 Final filename: `III-BCSAD_bolanatics_IAS_Capstone_Portfolio.pdf`.
-Repository: https://github.com/a-a123456789/ias-pbl
+Repository: https://github.com/a-a123456789/umak-research-management
 
 ## Ready-to-send team note
 Team, the CRM IAS implementation and review tasks are in the repository. Please update your task and name in the shared Docs, follow your checklist in docs/TEAM_HANDOFF.md, and add your actual test results or corrections through a pull request. Add your section's slides and evidence links to the shared document. Check that assets, controls, risks, and diagrams agree. Complete your work by [internal deadline] and flag missing information early.
 
 GitHub native secret scanning/push protection was unavailable (HTTP 422). Report Gitleaks CI and local hook enforcement accurately. Main branch protection is enabled and requires two genuine reviewers.
+
+Final reports and 14-slide editable decks are now in `submissions/`. Use `docs/COMPLETION_CHECKLIST.md` for the combined IAS/ALGOCOM handoff; the earlier task table remains a guide to independent review, not a claim that those members performed it.

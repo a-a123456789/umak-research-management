@@ -2,7 +2,7 @@
 <rect x="0" y="-70" width="100%" height="100%" fill="white"/>
 <defs><marker id="arrow" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6" fill="#527184"/></marker></defs>
 <text x="20" y="-40" font-family="Arial" font-size="22" font-weight="bold">Level 1 Implementation and Target Extensions</text>
-<text x="20" y="-17" font-family="Arial" font-size="12">Local implementation + labelled target extensions. Review rendering from model; UI export pending.</text>
+<text x="20" y="-17" font-family="Arial" font-size="12">Local implementation + labelled target extensions. Review rendering from model; browser SVG exports are supplied separately.</text>
 <line x1="250" y1="0" x2="250" y2="620" stroke="#b65236" stroke-width="2" stroke-dasharray="8 5"/>
 <text x="250.0" y="15" text-anchor="middle" font-family="Arial" font-size="11" fill="#172f42">TB-01 Client to edge</text>
 <line x1="530" y1="0" x2="530" y2="620" stroke="#b65236" stroke-width="2" stroke-dasharray="8 5"/>

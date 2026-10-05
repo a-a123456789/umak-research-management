@@ -1,15 +1,12 @@
-# Evidence status — October 1, 2026
+# Evidence status — 5 October 2026
 
-## Passed
-- Tested implementation commit: `284455a1443ffe4788dae282b113709953007276`.
-- Native macOS: Node 24.3.0 / PostgreSQL 18.3. Nine application test groups passed; isolated SQLi before/after, actual pre-commit rejection, and full six-table backup/restore comparison passed. See local-checks.txt and local-checks.json.
-- GitHub Actions: [successful run 36835247039](https://github.com/a-a123456789/ias-pbl/actions/runs/36835247039). Gitleaks, Semgrep, dependency audit, model/risk validation, API tests, SQLi demonstration, hook demonstration and restore exercise all passed.
-- Main branch protection API confirmed: two approving reviews, dismissal of stale approvals, last-push approval, required `security` check, strict up-to-date checks, admin enforcement, conversation resolution, linear history, no force push or deletion.
-- Updated model: schema and eleven-threat/risk mapping checks pass. Both generated DFD review images were visually inspected. These are model-derived renderings, not Threat Dragon UI exports.
+- Integrated implementation: `655114e0f4edf16697b6d4a9ebc9979573af91e0`; actual local command/result logs in `integration/local-checks.*`. All listed checks passed: 19 Python tests, 11 backend groups at that commit, SQLi comparison, fake-secret rejection, six-table restore, static/secret checks and dependency audit.
+- Public-search cap revision `46bee21` adds a twelfth backend test group; the complete 12-group suite passed locally. Final branch/main CI are recorded separately in the integration pull request completion record when merged.
+- GitHub integration checks passed at 655114e: [security/algorithm runs](https://github.com/a-a123456789/umak-research-management/actions/runs/37184676703) and [companion run](https://github.com/a-a123456789/umak-research-management/actions/runs/37184676704). Each later commit has its own status; these earlier runs are not claimed as final-main verification.
+- Model schema/math/mapping checks pass. Both diagrams opened in Threat Dragon 2.6.2; corrected rendered SVG exports and PNGs are in `security/diagrams/`.
+- Actual 60-second terminal recording: `integration/secret-demo.cast`; offline replay: `integration/secret-demo.html`. This records a real fake-secret rejection command, not team-member narration.
+- Both final PDFs and editable decks are in `submissions/`; references precede 14 appended slides in each PDF.
 
-## Limitations and remaining checks
-- GitHub rejected enabling native secret scanning/push protection: HTTP 422, “Secret scanning is not available for this repository.” Gitleaks CI and the local hook remain active; do not claim native push protection.
-- Docker Compose was not run locally because Docker is unavailable. GitHub CI successfully used the same PostgreSQL 18.3 image with a disposable service container.
-- Threat Dragon UI import/export remains pending after browser automation could not complete the local file import. Aaliyah must open both diagrams and export them from the app.
-- Team review, independent setup, two reviewer approvals and final report/deck compilation remain pending. No real incident, NPC submission, production deployment, cloud firewall/TLS, production RPO/RTO, or backup erasure is asserted.
-- The evidence/documentation PR adds records and model renderings; it does not change the tested backend. Its own GitHub checks must pass before merge.
+## Limits
+
+Native GitHub secret scanning/push protection returned HTTP 422 unavailable for this private repository. Gitleaks hook/CI remain active. Local Docker Compose was not executed because Docker is unavailable; CI uses PostgreSQL 18.3 service containers and local tests used PostgreSQL 18.3. Production HTTPS, distributed admission/OS sandboxing, immutable offsite backup, approved retention/deletion replay and external logging remain proposed. No real incident, NPC submission, institutional appointment, peer approval or production loss valuation is asserted. Team understanding/review and TBL submission remain pending. See `docs/COMPLETION_CHECKLIST.md`.

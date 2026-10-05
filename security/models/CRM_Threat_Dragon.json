@@ -520,7 +520,7 @@
                   }
                 },
                 "position": {
-                  "distance": 0.5,
+                  "distance": 0.08,
                   "args": {
                     "keepGradient": true,
                     "ensureLegibility": true
@@ -588,7 +588,7 @@
                   }
                 },
                 "position": {
-                  "distance": 0.5,
+                  "distance": 0.08,
                   "args": {
                     "keepGradient": true,
                     "ensureLegibility": true
@@ -706,7 +706,7 @@
             },
             "attrs": {
               "text": {
-                "text": "P-01 Express routing"
+                "text": "P-01 Express\nrouting"
               },
               "body": {
                 "stroke": "#233442",
@@ -754,7 +754,7 @@
             },
             "attrs": {
               "text": {
-                "text": "P-02 Auth and\npermissions"
+                "text": "P-02 Auth\npermissions"
               },
               "body": {
                 "stroke": "#233442",
@@ -788,7 +788,7 @@
             },
             "attrs": {
               "text": {
-                "text": "P-03 Research and\nprivacy API"
+                "text": "P-03 Research\nprivacy API"
               },
               "body": {
                 "stroke": "#233442",
@@ -875,7 +875,7 @@
             },
             "attrs": {
               "text": {
-                "text": "P-04 Audit writer"
+                "text": "P-04 Audit\nwriter"
               },
               "body": {
                 "stroke": "#233442",
@@ -924,7 +924,7 @@
             "id": "bae78aed-1a55-5d7c-a93e-cba267363afd",
             "data": {
               "name": "D-01 PostgreSQL\nA-01 A-02",
-              "description": "users, sessions, research_records, consents, deletion_requests. A-03 service workflow and A-04 public information remain proposed.",
+              "description": "users, sessions, research_records, consents, deletion_requests. A-03 service workflow persistence remains proposed. A-04 approved public metadata is exposed through bounded parameterized search.",
               "type": "tm.Store",
               "isTrustBoundary": false,
               "outOfScope": false,
@@ -1165,7 +1165,7 @@
             },
             "attrs": {
               "text": {
-                "text": "P-05 GitHub Actions\nand repository A-06"
+                "text": "P-05 GitHub\nCI / A-06"
               },
               "body": {
                 "stroke": "#233442",
@@ -2103,7 +2103,7 @@
                   }
                 },
                 "position": {
-                  "distance": 0.5,
+                  "distance": 0.08,
                   "args": {
                     "keepGradient": true,
                     "ensureLegibility": true
@@ -2171,7 +2171,7 @@
                   }
                 },
                 "position": {
-                  "distance": 0.5,
+                  "distance": 0.08,
                   "args": {
                     "keepGradient": true,
                     "ensureLegibility": true
@@ -2239,7 +2239,7 @@
                   }
                 },
                 "position": {
-                  "distance": 0.5,
+                  "distance": 0.08,
                   "args": {
                     "keepGradient": true,
                     "ensureLegibility": true
@@ -2277,7 +2277,7 @@
             },
             "attrs": {
               "text": {
-                "text": "P-06 Admin backup\nrestore script"
+                "text": "P-06 Backup\nrestore script"
               },
               "body": {
                 "stroke": "#233442",
@@ -2380,7 +2380,7 @@
             },
             "attrs": {
               "text": {
-                "text": "P-07 Python DAG worker\nA-08"
+                "text": "P-07 Python\nDAG / A-08"
               },
               "body": {
                 "stroke": "#233442",
@@ -2524,7 +2524,7 @@
                   }
                 },
                 "position": {
-                  "distance": 0.5,
+                  "distance": 0.08,
                   "args": {
                     "keepGradient": true,
                     "ensureLegibility": true

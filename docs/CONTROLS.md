@@ -18,3 +18,7 @@ Logical model: P-01 is middleware/routing inside Express; P-02 auth, P-03 resear
 Service-request workflows (A-03), uploads and external integrations remain backlog items. Do not present diagram target architecture as deployed microservices.
 
 P-06 is the separate administrative backup/restore script. DF-09 reads PostgreSQL into this process and DF-13 writes the temporary backup file; the research API does not create backups.
+
+P-07 is the Python child worker, reached through DF-14 JSON pipes across TB-04. Staff authentication, 2 MiB body, 5,000 vertices, 25,000 edges, 50,000 memberships, two concurrent children, five-second timeout and 8 MiB stdout limit are implemented and tested. The worker receives no DB credentials; it is not an OS sandbox. A-04 approved research metadata is implemented; full public information pages remain proposed.
+
+Both Threat Dragon views now open and rendered SVG exports are supplied. Native GitHub private-repo secret scanning/push protection was unavailable (422); local hook and Gitleaks CI are implemented. See COMPLETION_CHECKLIST.md for current integration state.

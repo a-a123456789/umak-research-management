@@ -1,0 +1,46 @@
+{
+  "tested_commit": "655114e0f4edf16697b6d4a9ebc9979573af91e0",
+  "checks": [
+    {
+      "command": "npm run db:setup",
+      "exit_code": 0
+    },
+    {
+      "command": "npm test",
+      "exit_code": 0
+    },
+    {
+      "command": "python3 -m unittest discover -s algocom -p 'test_*.py' -v",
+      "exit_code": 0
+    },
+    {
+      "command": "npm run db:setup",
+      "exit_code": 0
+    },
+    {
+      "command": "npm run demo:sqli",
+      "exit_code": 0
+    },
+    {
+      "command": "npm run demo:secret",
+      "exit_code": 0
+    },
+    {
+      "command": "npm run backup:verify",
+      "exit_code": 0
+    },
+    {
+      "command": "npm run check:static",
+      "exit_code": 0
+    },
+    {
+      "command": "npm run check:secrets",
+      "exit_code": 0
+    },
+    {
+      "command": "npm audit --audit-level=high",
+      "exit_code": 0
+    }
+  ],
+  "all_passed": true
+}
