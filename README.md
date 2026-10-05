@@ -1,6 +1,12 @@
-# CRM IAS security implementation
+# UMak Center for Research Management — IAS and ALGOCOM PBL
 
-A small Express/PostgreSQL CRM backend for the III-BCSAD bolanatics IAS milestone. This is a synthetic-data teaching implementation, not the complete university platform or a production deployment.
+Shared repository for the III-BCSAD bolanatics IAS and ALGOCOM milestones, using one Center for Research Management (CRM) project.
+
+- **IAS:** Express/PostgreSQL security implementation, access controls, privacy workflows, threat models, risk analysis and verification evidence.
+- **ALGOCOM:** Independent Python workflow-readiness and DAG critical-path algorithms, correctness tests, synthetic benchmarks and API integration in `algocom/`.
+- **Both:** Technical reports, editable presentation decks and final PDFs in `submissions/`; requirement tracking and team handoff in `docs/`.
+
+This is a synthetic-data teaching implementation, not the complete university platform or a production deployment.
 
 Repository: https://github.com/a-a123456789/umak-research-management
 
