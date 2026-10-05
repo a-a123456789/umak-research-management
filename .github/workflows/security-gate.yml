@@ -57,6 +57,7 @@ jobs:
           docker run --rm -v "$PWD:/src" semgrep/semgrep:1.116.0 semgrep scan --config /src/.semgrep.yml --error /src/src
       - run: python -m pip install -r security/validation/requirements.txt
       - run: python security/validation/validate_package.py
+      - run: python scripts/validate-algorithm-contracts.py
       - run: npm run db:setup
       - run: npm test
       - run: npm run demo:sqli

@@ -1,0 +1,128 @@
+{
+  "type": "object",
+  "properties": {
+    "steps": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^[A-Za-z0-9_-]{1,64}$"
+      },
+      "minItems": 1,
+      "maxItems": 5000,
+      "uniqueItems": true
+    },
+    "dependencies": {
+      "type": "array",
+      "items": {
+        "type": "array",
+        "prefixItems": [
+          {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9_-]{1,64}$"
+          },
+          {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9_-]{1,64}$"
+          }
+        ],
+        "minItems": 2,
+        "maxItems": 2
+      },
+      "maxItems": 25000,
+      "uniqueItems": true
+    },
+    "completed_actions": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^[A-Za-z0-9_-]{1,64}$"
+      },
+      "maxItems": 5000,
+      "uniqueItems": true
+    },
+    "requirements": {
+      "type": "object",
+      "propertyNames": {
+        "type": "string",
+        "pattern": "^[A-Za-z0-9_-]{1,64}$"
+      },
+      "maxProperties": 5000,
+      "additionalProperties": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_-]{1,64}$"
+            },
+            "gate": {
+              "enum": [
+                "received",
+                "verified"
+              ]
+            }
+          },
+          "required": [
+            "id",
+            "gate"
+          ],
+          "additionalProperties": false
+        },
+        "maxItems": 50000,
+        "uniqueItems": true
+      }
+    },
+    "evidence": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9_-]{1,64}$"
+          },
+          "state": {
+            "enum": [
+              "received",
+              "verified"
+            ]
+          }
+        },
+        "required": [
+          "id",
+          "state"
+        ],
+        "additionalProperties": false
+      },
+      "maxItems": 50000,
+      "uniqueItems": true
+    },
+    "durations": {
+      "type": "object",
+      "propertyNames": {
+        "type": "string",
+        "pattern": "^[A-Za-z0-9_-]{1,64}$"
+      },
+      "minProperties": 1,
+      "maxProperties": 5000,
+      "additionalProperties": {
+        "type": "integer",
+        "minimum": 0,
+        "maximum": 525600
+      }
+    }
+  },
+  "required": [
+    "steps",
+    "dependencies",
+    "completed_actions",
+    "requirements",
+    "evidence",
+    "durations"
+  ],
+  "additionalProperties": false,
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.test/crm/algorithm-request.schema.json",
+  "description": "Structural contract. Python additionally enforces references, unique evidence IDs, aggregate 50000 memberships, matching duration keys, DAG and consistent completed state. Transport body limit is 2 MiB."
+}

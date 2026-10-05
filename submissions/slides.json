@@ -1,26 +1,404 @@
 {
-  "ALGOCOM": [
+  "IAS": [
     {
-      "title": "Which action is ready\u2014and what is the bottleneck?",
-      "points": [
-        "CRM workflow readiness + DAG critical-path estimates",
-        "ALGOCOM Milestone 1 \u00b7 III-BCSAD \u00b7 bolanatics",
-        "Synthetic prototype | 4 October 2026"
+      "title": "CRM application security architecture",
+      "points": [],
+      "kind": "cover",
+      "ref": "III-BCSAD \u00b7 bolanatics \u00b7 5 October 2026",
+      "rows": [
+        [
+          "Anjelo Benedict Arnaez \u00b7 K12254175",
+          "CEO / executive sponsor"
+        ],
+        [
+          "Justin Andrew Ducay \u00b7 A12448793",
+          "CIO / infrastructure lead"
+        ],
+        [
+          "Aaliyah Marie Balocating \u00b7 A12448769",
+          "CISO / risk lead"
+        ],
+        [
+          "Gian Brent Maligaya \u00b7 A12448912",
+          "Lead Engineer / DevSecOps"
+        ],
+        [
+          "John David Bomediano \u00b7 A12448927",
+          "DPO / compliance specialist"
+        ]
       ],
-      "ref": "[1]\u2013[3]",
-      "kind": "text"
+      "notes": "Sources and qualification: III-BCSAD \u00b7 bolanatics \u00b7 5 October 2026"
     },
     {
-      "title": "Five engineering responsibilities",
+      "title": "System architecture and real prototype assets",
       "points": [
-        "Aaliyah Marie Balocating \u00b7 A12448769 | Requirements / technical lead",
-        "Gian Brent Maligaya \u00b7 A12448912 | Algorithm designer",
-        "Anjelo Benedict Arnaez \u00b7 K12254175 | Complexity / benchmarking",
-        "John David Bomediano \u00b7 A12448927 | Architecture / repository",
-        "Justin Andrew Ducay \u00b7 A12448793 | Backlog / presentation"
+        "A-01 identity \u00b7 A-02 research \u00b7 A-05 credentials",
+        "A-06 source \u00b7 A-07 audit \u00b7 A-08 solver scenarios",
+        "A-03 persistent workflow is proposed; all records are synthetic."
       ],
-      "ref": "Assigned roles; individual review and defense remain required.",
-      "kind": "team"
+      "kind": "image",
+      "ref": "[1]\u2013[4]; asset classifications in report I",
+      "image": "Algorithm_Architecture.png",
+      "notes": "Sources and qualification: [1]\u2013[4]; asset classifications in report I"
+    },
+    {
+      "title": "Attack surfaces and seven-stage scenario",
+      "points": [],
+      "kind": "table",
+      "ref": "[7], [8]. Hypothetical only. Surfaces: HTTP API, worker pipes, local DB, developer credentials.",
+      "rows": [
+        [
+          "Phase",
+          "Workstation-to-database hypothesis",
+          "MITRE ID"
+        ],
+        [
+          "Recon",
+          "Discover reachable service",
+          "T1595.002"
+        ],
+        [
+          "Weaponize",
+          "Prepare credential-stealing file",
+          "T1587.001"
+        ],
+        [
+          "Deliver",
+          "Phish developer with attachment",
+          "T1566.001"
+        ],
+        [
+          "Exploit",
+          "User executes malicious file",
+          "T1204.002"
+        ],
+        [
+          "Install",
+          "Persist in user cron",
+          "T1053.003"
+        ],
+        [
+          "C2",
+          "Contact attacker web endpoint",
+          "T1071.001"
+        ],
+        [
+          "Objective",
+          "Encrypt accessible A-02 records",
+          "T1486"
+        ]
+      ],
+      "notes": "Sources and qualification: [7], [8]. Hypothetical only. Surfaces: HTTP API, worker pipes, local DB, developer credentials."
+    },
+    {
+      "title": "SQL injection: same payload, verified outcomes",
+      "points": [],
+      "kind": "code",
+      "ref": "[5], [6]. Actual synthetic responses: evidence/integration/local-checks.txt; demo:sqli.",
+      "left": "VULNERABLE (isolated demo)\nSQL contains keyword directly:\n... title ILIKE '%${keyword}%'\n\nPayload: ' UNION SELECT id, email,\npassword_hash, role FROM users--\n\nHTTP 200: synthetic@example.test\nand FAKE_HASH_NOT_A_CREDENTIAL",
+      "right": "PATCHED (normal application)\nWHERE status='Approved'\nAND title ILIKE $1\nORDER BY id LIMIT 100\n\nValues: ['%'+keyword+'%']\n\nSame payload: HTTP 200, []\nBound value remains data, not SQL.",
+      "notes": "Sources and qualification: [5], [6]. Actual synthetic responses: evidence/integration/local-checks.txt; demo:sqli."
+    },
+    {
+      "title": "Privacy and Philippine law mappings",
+      "points": [],
+      "kind": "code",
+      "ref": "[9]\u2013[11], [16], [17]; classroom mapping, not institutional legal approval.",
+      "left": "RA 10173: transparency, purpose,\nproportionality, rights, security.\nRA 10175: illegal access; interception;\ndata or system interference;\nmisuse of devices.\n\nFive provisions from each law\nmap to controls and owners in III.",
+      "right": "POST /api/v1/users/consent\n{ \"policy_version\":\"2026-10-v1\",\n  \"choices\":{\n    \"institutional_analytics\":false,\n    \"email_notifications\":false }}\n\nIdentity and time: server-derived.\nHard deletion works on live rows;\nbackup/key erasure remains proposed.",
+      "notes": "Sources and qualification: [9]\u2013[11], [16], [17]; classroom mapping, not institutional legal approval."
+    },
+    {
+      "title": "Incident response and NPC notification",
+      "points": [
+        "Identify \u2192 Contain \u2192 Analyze \u2192 Eradicate \u2192 Recover \u2192 Lessons learned.",
+        "Draft notice: affected data, scope, discovery time, containment, contact and next update; fill only verified facts.",
+        "Academic simulation. DPO assesses whether notification conditions trigger the 72-hour requirement. No notice was sent."
+      ],
+      "kind": "text",
+      "ref": "[11], [12]; NPC notification draft in report III.",
+      "notes": "Sources and qualification: [11], [12]; NPC notification draft in report III."
+    },
+    {
+      "title": "EISP and default-deny access rules",
+      "points": [
+        "EISP: philosophy \u00b7 scope \u00b7 roles \u00b7 statutory directives \u00b7 review cadence.",
+        "NIST: prioritize now; ISO: staged governance. SETA: awareness, practice, education."
+      ],
+      "kind": "table",
+      "ref": "[2], [3], [13]; complete ACL and implementation evidence in report IV.",
+      "rows": [
+        [
+          "Subject",
+          "Object",
+          "Action",
+          "Constraint",
+          "Decision"
+        ],
+        [
+          "Anonymous",
+          "Search",
+          "POST",
+          "Approved; \u2264100 rows",
+          "Allow"
+        ],
+        [
+          "Student",
+          "Record",
+          "GET",
+          "Owner only",
+          "Allow"
+        ],
+        [
+          "Staff",
+          "Algorithm",
+          "POST",
+          "Auth + bounded job",
+          "Allow"
+        ],
+        [
+          "Runtime",
+          "Audit",
+          "UPDATE/DELETE",
+          "Any context",
+          "Deny"
+        ],
+        [
+          "*",
+          "All routes",
+          "Any",
+          "Unmatched permission",
+          "Deny"
+        ]
+      ],
+      "notes": "Sources and qualification: [2], [3], [13]; complete ACL and implementation evidence in report IV."
+    },
+    {
+      "title": "Git controls and the 60-second demonstration",
+      "points": [
+        "Normal main: 2 approvals, strict security + algocom checks; stale/last-push review rules; no force pushes.",
+        "Replay secret-demo.html: A-05 \u2192 THREAT-04 \u2192 ACL-04 \u2192 SEC-04. A fake secret commit is actually rejected.",
+        "Hooks are bypassable; Gitleaks CI is independent. Prior authorized merge exception was restored and is not peer review."
+      ],
+      "kind": "text",
+      "ref": "PR #3 / bbe0a73; correction PR records its own final checks. Native private-repo secret scanning unavailable.",
+      "notes": "Sources and qualification: PR #3 / bbe0a73; correction PR records its own final checks. Native private-repo secret scanning unavailable."
+    },
+    {
+      "title": "Financial valuation: estimates, not actual loss",
+      "points": [],
+      "kind": "table",
+      "ref": "[4]. Empirical valuation remains incomplete; Aaliyah must obtain evidence or instructor guidance.",
+      "rows": [
+        [
+          "Calculation",
+          "PHP / assumption"
+        ],
+        [
+          "Asset value",
+          "3,600,000 (unsupported estimate)"
+        ],
+        [
+          "SLE = AV \u00d7 .40",
+          "1,440,000"
+        ],
+        [
+          "ALE prior / post",
+          "2,880,000 / 72,000"
+        ],
+        [
+          "Annual safeguard cost",
+          "240,000"
+        ],
+        [
+          "CBA = prior \u2212 post \u2212 cost",
+          "2,568,000"
+        ],
+        [
+          "Lower-loss sensitivity CBA",
+          "\u2212204,000"
+        ]
+      ],
+      "notes": "Sources and qualification: [4]. Empirical valuation remains incomplete; Aaliyah must obtain evidence or instructor guidance."
+    },
+    {
+      "title": "Enterprise risk register: highest priorities",
+      "points": [
+        "Full nine-column register contains all eleven scenarios in report V.",
+        "Targets and DREAD scores are estimates; acceptance requires actual review."
+      ],
+      "kind": "table",
+      "ref": "[4]; security/data/risks.json is the calculation source.",
+      "rows": [
+        [
+          "ID",
+          "Asset",
+          "Agent",
+          "Weakness",
+          "Score",
+          "Treatment",
+          "Control",
+          "PHP/yr",
+          "Target"
+        ],
+        [
+          "R-04",
+          "A-05",
+          "Developer / attacker",
+          "Secret commit",
+          "20",
+          "Mitigate",
+          "Hook + CI",
+          "35,000",
+          "5"
+        ],
+        [
+          "R-01",
+          "A-02",
+          "Web attacker",
+          "Unsafe SQL",
+          "20",
+          "Mitigate",
+          "Bound SQL",
+          "44,000",
+          "5"
+        ],
+        [
+          "R-08",
+          "A-02",
+          "Privileged attacker",
+          "Admin compromise",
+          "20",
+          "Mitigate",
+          "Grants; restore",
+          "48,000",
+          "5"
+        ]
+      ],
+      "notes": "Sources and qualification: [4]; security/data/risks.json is the calculation source."
+    },
+    {
+      "title": "Threat Dragon Level 1 and trust boundaries",
+      "points": [],
+      "kind": "dfd",
+      "ref": "[14]. TB-01 client; TB-02 authorization; TB-03 DB grants; TB-04 child process (not OS sandbox).",
+      "image": "ThreatDragon_Level_1.png",
+      "notes": "Sources and qualification: [14]. TB-01 client; TB-02 authorization; TB-03 DB grants; TB-04 child process (not OS sandbox)."
+    },
+    {
+      "title": "STRIDE and the AND/OR disclosure tree",
+      "points": [
+        "Actor spoofing \u00b7 process tampering \u00b7 flow interception \u00b7 store disclosure/repudiation.",
+        "DREAD leaders: credentials 9.0; SQLi 8.8; privileged extortion 8.6."
+      ],
+      "kind": "tree",
+      "ref": "[14], [15]; AND needs every child, OR needs any complete branch. Metrics are analyst estimates.",
+      "image": "Attack_Tree_Current.png",
+      "notes": "Sources and qualification: [14], [15]; AND needs every child, OR needs any complete branch. Metrics are analyst estimates."
+    },
+    {
+      "title": "Security tickets and executable acceptance",
+      "points": [
+        "CISO reviews traceability; each member independently verifies their own work."
+      ],
+      "kind": "table",
+      "ref": "Report VI and cross-traceability appendix; tests do not prove human acceptance.",
+      "rows": [
+        [
+          "Ticket / owner",
+          "Control linked to asset",
+          "Assertion"
+        ],
+        [
+          "SEC-04 / Gian",
+          "A-05: reject secret commits",
+          "Nonzero commit rejection; CI scan"
+        ],
+        [
+          "SEC-01 / Gian",
+          "A-02: parameterize search",
+          "UNION disclosure only in demo"
+        ],
+        [
+          "SEC-08 / Justin",
+          "A-02: recover synthetic DB",
+          "Six tables restored; runtime denies DDL"
+        ],
+        [
+          "SEC-10 / Gian",
+          "A-08: validate worker result",
+          "Malformed SUCCESS \u2192 502"
+        ]
+      ],
+      "notes": "Sources and qualification: Report VI and cross-traceability appendix; tests do not prove human acceptance."
+    },
+    {
+      "title": "References and remaining external actions",
+      "points": [],
+      "kind": "references",
+      "ref": "Full IEEE references and links appear before this deck. Team review, signatures, real valuation and TBL submission remain.",
+      "references": [
+        "[1] bolanatics / UMak, CRM Labs 1\u20136 and Research Manual, 2025\u20132026.",
+        "[2] NIST, Cybersecurity Framework 2.0, CSWP 29, 2024.",
+        "[3] ISO/IEC, ISO/IEC 27001:2022, 2022.",
+        "[4] Whitman and Mattord, Principles of Information Security, 7th ed., 2022.",
+        "[5] OWASP, Application Security Verification Standard 5.0, 2025.",
+        "[6] MITRE, CWE-89, CWE-862, CWE-400, accessed 2026.",
+        "[7] Lockheed Martin, Cyber Kill Chain, 2011; accessed 2026.",
+        "[8] MITRE, ATT&CK Enterprise technique entries, accessed 2026.",
+        "[9] Philippines, RA 10173: Data Privacy Act, 2012.",
+        "[10] Philippines, RA 10175: Cybercrime Prevention Act, 2012.",
+        "[11] NPC, Circular 16-03: Personal Data Breach Management, 2016.",
+        "[12] NIST, Incident Response Recommendations, SP 800-61 Rev. 3, 2025.",
+        "[13] PostgreSQL, PostgreSQL 18: Privileges, 2025.",
+        "[14] OWASP, Threat Dragon and threat modeling guidance, accessed 2026.",
+        "[15] B. Schneier, \u201cAttack Trees,\u201d Dr. Dobb\u2019s Journal, 1999.",
+        "[16] NIST, Media Sanitization, SP 800-88 Rev. 2, 2025.",
+        "[17] NPC, Advisory 2021-01: Data Subject Rights, 2021."
+      ],
+      "notes": "Sources and qualification: Full IEEE references and links appear before this deck. Team review, signatures, real valuation and TBL submission remain."
+    }
+  ],
+  "ALGOCOM": [
+    {
+      "title": "CRM workflow readiness and critical path",
+      "points": [],
+      "kind": "cover",
+      "ref": "III-BCSAD \u00b7 bolanatics \u00b7 5 October 2026",
+      "rows": [
+        [
+          "Anjelo Benedict Arnaez \u00b7 K12254175",
+          "Complexity / benchmarking"
+        ],
+        [
+          "Justin Andrew Ducay \u00b7 A12448793",
+          "Backlog / presentation"
+        ],
+        [
+          "Aaliyah Marie Balocating \u00b7 A12448769",
+          "Requirements / technical lead"
+        ],
+        [
+          "Gian Brent Maligaya \u00b7 A12448912",
+          "Algorithm designer"
+        ],
+        [
+          "John David Bomediano \u00b7 A12448927",
+          "Architecture"
+        ]
+      ],
+      "notes": "Sources and qualification: III-BCSAD \u00b7 bolanatics \u00b7 5 October 2026"
+    },
+    {
+      "title": "Operational problem and limits",
+      "points": [
+        "Determine the next permissible research-service action from prerequisites and evidence.",
+        "Estimate the dependency bottleneck using DAG dynamic programming and supplied durations.",
+        "No guaranteed calendar date: staff capacity and missing-evidence delays are excluded."
+      ],
+      "kind": "text",
+      "ref": "[1], [3], [7]. Proposed CRM model; institutional gates/durations need confirmation.",
+      "notes": "Sources and qualification: [1], [3], [7]. Proposed CRM model; institutional gates/durations need confirmation."
     },
     {
       "title": "Receipt is not verification",
@@ -30,7 +408,8 @@
         "Service workflows are distinct from stored research records."
       ],
       "ref": "[1], [2]",
-      "kind": "text"
+      "kind": "text",
+      "notes": "Sources and qualification: [1], [2]"
     },
     {
       "title": "A precise graph model",
@@ -40,7 +419,8 @@
         "Output: readiness reasons, earliest finishes, longest duration and path."
       ],
       "ref": "[3]",
-      "kind": "text"
+      "kind": "text",
+      "notes": "Sources and qualification: [3]"
     },
     {
       "title": "The objective is structural duration",
@@ -50,7 +430,8 @@
         "T=max F(v): unlimited parallel capacity; staffing and evidence waits excluded."
       ],
       "ref": "[3]",
-      "kind": "text"
+      "kind": "text",
+      "notes": "Sources and qualification: [3]"
     },
     {
       "title": "Why dynamic programming fits",
@@ -60,7 +441,8 @@
         "Keep one maximizing parent to recover a path certificate."
       ],
       "ref": "[3]",
-      "kind": "text"
+      "kind": "text",
+      "notes": "Sources and qualification: [3]"
     },
     {
       "title": "Walk through the certificate",
@@ -70,7 +452,8 @@
         "F={0,15,60}; critical path [S5,S6]; estimate 60 min."
       ],
       "ref": "Repository example.json",
-      "kind": "text"
+      "kind": "text",
+      "notes": "Sources and qualification: Repository example.json"
     },
     {
       "title": "Correctness depends on invariants",
@@ -80,7 +463,8 @@
         "Backtracking actual maximizing edges certifies the reported longest path."
       ],
       "ref": "[3]",
-      "kind": "text"
+      "kind": "text",
+      "notes": "Sources and qualification: [3]"
     },
     {
       "title": "Growth is linear in the full input",
@@ -90,7 +474,8 @@
         "Storage includes graph, normalized evidence and output\u2014not just the queue."
       ],
       "ref": "[3]",
-      "kind": "text"
+      "kind": "text",
+      "notes": "Sources and qualification: [3]"
     },
     {
       "title": "Measured comparison: 1,000-step cases",
@@ -99,17 +484,19 @@
         "Timing and memory were measured separately. Speedups are machine/input dependent."
       ],
       "ref": "[4], [5]; extended_results.json",
-      "kind": "chart"
+      "kind": "chart",
+      "notes": "Sources and qualification: [4], [5]; extended_results.json"
     },
     {
-      "title": "Keep the computation outside the web thread",
+      "title": "Decoupled client, API, database and worker",
       "points": [
-        "Staff client \u2192 Express auth / bounded admission \u2192 Python child \u2192 pure solver",
-        "Express \u2192 PostgreSQL identities and records; Python receives no DB credentials.",
-        "2 workers | 5 s timeout | 2 MiB body | 5,000 steps | 25,000 edges"
+        "Staff authentication precedes 2 MiB parsing. Python receives no database credentials.",
+        "Complete worker-result validation; 2 jobs / 5 s / 8 MiB output."
       ],
-      "ref": "[6]",
-      "kind": "diagram"
+      "kind": "image",
+      "ref": "[6], [8]; machine-readable schemas under algocom/schemas/.",
+      "image": "Algorithm_Architecture.png",
+      "notes": "Sources and qualification: [6], [8]; machine-readable schemas under algocom/schemas/."
     },
     {
       "title": "Tickets make the claims testable",
@@ -119,7 +506,8 @@
         "ALG-03/04: API failure tests; 5,000-step warmed p95 budget <1,000 ms."
       ],
       "ref": "Tests and CI; Q cap 50,000 memberships",
-      "kind": "text"
+      "kind": "text",
+      "notes": "Sources and qualification: Tests and CI; Q cap 50,000 memberships"
     },
     {
       "title": "Defense: exact model, estimated inputs",
@@ -129,161 +517,25 @@
         "Benchmarks complement proof; ML cold start is not a current feature."
       ],
       "ref": "Full six answers in report VI; review edge-case handling",
-      "kind": "text"
+      "kind": "text",
+      "notes": "Sources and qualification: Full six answers in report VI; review edge-case handling"
     },
     {
-      "title": "Evidence and references",
-      "points": [
-        "19 Python tests; 1,500 randomized comparisons across two suites.",
-        "Local p95: 14.82 / 19.82 / 14.21 ms for the three 5,000-step families.",
-        "[3] CLRS, 4th ed., 2022 \u00b7 [4\u20135] Python docs \u00b7 [6] Node child-process docs."
+      "title": "References and evidence",
+      "points": [],
+      "kind": "references",
+      "ref": "Synthetic results are machine/order dependent. AI assistance disclosed in report I\u2013IV; human review remains required.",
+      "references": [
+        "[1] University of Makati, Research Manual, revised 2025. Operational applicability needs confirmation.",
+        "[2] bolanatics, ALGOCOM Task Guide and PBL Milestone 1 Specification, 2026. Course materials.",
+        "[3] Cormen et al., Introduction to Algorithms, 4th ed. MIT Press, 2022.",
+        "[4] Python Software Foundation, Python 3.12: time, accessed 2026.",
+        "[5] Python Software Foundation, Python 3.12: tracemalloc, accessed 2026.",
+        "[6] OpenJS Foundation, Node.js v24: Child process, accessed 2026.",
+        "[7] Ber\u00e1nek, B\u00f6hm and Cima, \u201cAnalysis of Workflow Schedulers in Simulated Distributed Environments,\u201d 2022.",
+        "[8] Wright et al., JSON Schema Validation, Draft 2020-12, 2022 revision."
       ],
-      "ref": "AI: ChatGPT/Codex; supplied Claude assistance. Human review remains separate.",
-      "kind": "text"
-    }
-  ],
-  "IAS": [
-    {
-      "title": "Protect the research\u2014and show the evidence",
-      "points": [
-        "CRM application security architecture",
-        "IAS Milestone \u00b7 III-BCSAD \u00b7 bolanatics",
-        "Synthetic implementation with explicit production gaps"
-      ],
-      "ref": "[1]",
-      "kind": "text"
-    },
-    {
-      "title": "Classroom governance, clear accountability",
-      "points": [
-        "Anjelo Benedict Arnaez \u00b7 K12254175 | CEO / executive sponsor",
-        "Justin Andrew Ducay \u00b7 A12448793 | CIO / infrastructure lead",
-        "Aaliyah Marie Balocating \u00b7 A12448769 | CISO / risk lead",
-        "Gian Brent Maligaya \u00b7 A12448912 | Lead Engineer / DevSecOps",
-        "John David Bomediano \u00b7 A12448927 | DPO / compliance specialist"
-      ],
-      "ref": "Writing: Gian I; Justin II; John David III; Anjelo IV; Aaliyah V\u2013VI.",
-      "kind": "team"
-    },
-    {
-      "title": "Protect the assets that actually exist",
-      "points": [
-        "A-01 identities | A-02 research | A-05 credentials | A-06 source",
-        "A-07 audit | A-08 solver scenarios; A-03 workflow persistence proposed",
-        "Approved metadata is public; private records and credentials are restricted."
-      ],
-      "ref": "[2]\u2013[4]",
-      "kind": "text"
-    },
-    {
-      "title": "An implementation with defined boundaries",
-      "points": [
-        "Express / Node 24 \u2192 PostgreSQL 18; separate Python worker.",
-        "Owner/staff access checks; hashed expiring bearer sessions; minimal audit.",
-        "No frontend, cloud, SSO, Redis, uploads or Turnitin implementation."
-      ],
-      "ref": "Repository source and model",
-      "kind": "diagram"
-    },
-    {
-      "title": "The same injection payload, two outcomes",
-      "points": [
-        "Isolated vulnerable example: synthetic credential sentinel disclosed.",
-        "Parameterized normal search: HTTP 200 and an empty array.",
-        "Public search also filters Approved records and caps output at 100."
-      ],
-      "ref": "[5], [6]; actual demo:sqli evidence",
-      "kind": "text"
-    },
-    {
-      "title": "The Kill Chain is a conditional scenario",
-      "points": [
-        "Recon \u2192 weaponize \u2192 deliver \u2192 exploit \u2192 install \u2192 command \u2192 impact.",
-        "Proposed upload chain requires a real parser/execution flaw.",
-        "No upload route exists; the chain is not the demonstrated SQLi result."
-      ],
-      "ref": "[7], [8]; seven MITRE-mapped phases in report II",
-      "kind": "text"
-    },
-    {
-      "title": "Privacy controls with honest limits",
-      "points": [
-        "Consent: server identity/time; versioned optional booleans may both be false.",
-        "Deletion: student request, staff review, transactional live-row erasure.",
-        "Old backups remain; retention/replay and cryptographic shredding are proposed."
-      ],
-      "ref": "[9]\u2013[11]",
-      "kind": "text"
-    },
-    {
-      "title": "Rehearse response without inventing an incident",
-      "points": [
-        "Identify \u2192 Contain \u2192 Analyze \u2192 Eradicate \u2192 Recover \u2192 Lessons learned.",
-        "NPC notice is an academic simulation, not submitted or signed.",
-        "Assess notification conditions; apply the 72-hour rule when legally triggered."
-      ],
-      "ref": "[11], [12]",
-      "kind": "text"
-    },
-    {
-      "title": "Policy must match configuration",
-      "points": [
-        "Default-deny ACL: owner/staff predicates and restricted DB grants.",
-        "Normal Git policy: 2 approvals + security/algocom checks.",
-        "Owner-authorized merge exception is recorded; protections must be restored."
-      ],
-      "ref": "[2], [3], [13]; no claim of completed peer review",
-      "kind": "text"
-    },
-    {
-      "title": "Risk math is conditional\u2014not observed loss",
-      "points": [
-        "AV PHP 3.6m \u00d7 EF .40 = SLE PHP 1.44m.",
-        "ALE 2.88m \u2192 72k; annual safeguards 240k; CBA PHP 2.568m.",
-        "Lower-loss sensitivity gives CBA \u2212204k: assumptions change the decision."
-      ],
-      "ref": "[4]; illustrative estimates, not university invoices or incident rates",
-      "kind": "text"
-    },
-    {
-      "title": "Eleven threats across five categories",
-      "points": [
-        "STRIDE spans actors, processes, flows and stores.",
-        "DREAD top priorities: credentials 9.0; SQL injection 8.8; extortion 8.6.",
-        "Resource-exhaustion threat includes bounded Python workers."
-      ],
-      "ref": "[14]; analyst scores, not empirical probabilities",
-      "kind": "text"
-    },
-    {
-      "title": "Trace each mitigation to a test",
-      "points": [
-        "SEC-04: A-05 \u2192 THREAT-04 \u2192 fake-secret commit rejection + CI scan.",
-        "SEC-01: A-02 \u2192 THREAT-01 \u2192 isolated before/after injection evidence.",
-        "SEC-08: A-02 \u2192 THREAT-08 \u2192 full six-table synthetic restore comparison."
-      ],
-      "ref": "[15]; AND/OR prerequisites and residual risks in model",
-      "kind": "text"
-    },
-    {
-      "title": "A 60-second control demonstration",
-      "points": [
-        "Replay evidence/integration/secret-demo.html or the .cast recording.",
-        "Show the actual fake-secret rejection; connect asset, threat and SEC-04.",
-        "Hooks can be bypassed; CI and actual human review are separate controls."
-      ],
-      "ref": "Actual timed terminal capture; not a recording of team-member narration",
-      "kind": "text"
-    },
-    {
-      "title": "What the team must still own",
-      "points": [
-        "Confirm institutional procedures, retention, costs and production decisions.",
-        "Understand and defend each assigned section; instructor acceptance is external.",
-        "References: NIST 2024/2025; ISO 2022; OWASP 2025; laws 2012; NPC 2016."
-      ],
-      "ref": "AI: ChatGPT/Codex and disclosed Claude. No manufactured reviews/signatures.",
-      "kind": "text"
+      "notes": "Sources and qualification: Synthetic results are machine/order dependent. AI assistance disclosed in report I\u2013IV; human review remains required."
     }
   ]
 }

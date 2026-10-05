@@ -1,3 +1,4 @@
+import {validWorkerResult} from './algorithm-result.js';
 import {spawn} from 'node:child_process';
 import {fileURLToPath} from 'node:url';
 export function createAlgorithmRunner({timeoutMs=5000,maxConcurrent=2,workerScript=fileURLToPath(new URL('../algocom/worker.py',import.meta.url)),python=process.env.PYTHON_BIN||'python3'}={}) {
@@ -20,7 +21,7 @@ export function createAlgorithmRunner({timeoutMs=5000,maxConcurrent=2,workerScri
    child.on('close',code=>{
     if(failure)return finish(failure);
     if(code!==0)return finish(Object.assign(Error('Worker failed'),{code:'WORKER_FAILED',httpStatus:502}));
-    try {const value=JSON.parse(output);if(!['SUCCESS','COMPLETE','ERROR'].includes(value.status))throw Error();finish(null,value);}
+    try {const value=JSON.parse(output);if(!validWorkerResult(value,payload))throw Error();finish(null,value);}
     catch {finish(Object.assign(Error('Invalid worker result'),{code:'WORKER_PROTOCOL',httpStatus:502}));}
    });
    if(signal?.aborted)abort();

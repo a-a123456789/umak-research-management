@@ -1,6 +1,6 @@
 """Validate documentation/model consistency; does not test the application."""
 from pathlib import Path
-import json,math,copy,sys
+import json,math,copy,sys,csv
 from decimal import Decimal as D
 from jsonschema import Draft7Validator
 P=Path(__file__).resolve().parents[1]
@@ -47,5 +47,24 @@ assert len({r['category']for r in risks})==5
 assert all(sum(r['category']==cat for r in risks)>=2 for cat in {r['category']for r in risks})
 assert any('Repudiation' in r['stride']for r in risks)
 checks+=['Official Threat Dragon v2 schema including data.threats objects','Flow endpoints, protocols, diagram counts and all eleven threat mappings','Five categories with at least two triples and explicit repudiation scenario']
+# Join exported tables and diagram placement to the risk source, not only ID counts.
+trace=list(csv.DictReader((P/'data/traceability.csv').open()))
+register=list(csv.DictReader((P/'data/risk_register.csv').open()))
+assert len(trace)==len(register)==len(risks)
+for r in risks:
+ tr=next(t for t in trace if t['Risk']==r['id'])
+ for col,key in [('Asset','asset'),('TVA','tva'),('STRIDE Threat','threat'),('Element','element'),('Control','acl'),('Backlog','ticket')]:assert tr[col]==r[key],(r['id'],col)
+ rr=next(t for t in register if t['Risk ID']==r['id'])
+ assert rr['Asset']==r['asset'] and rr['Vulnerability']==r['flaw'] and rr['Countermeasure']==r['control']
+ assert int(rr['Annual Safeguard Allocation PHP'])==r['cost']
+ assert int(rr['Inherent Score'])==math.prod(r['prior']) and int(rr['Target Residual Score'])==math.prod(r['post'])
+ matches=[(c,t) for c in l1 for t in c['data'].get('threats',[]) if t['title'].split()[0]==r['threat']]
+ assert len(matches)==1
+ cell,th=matches[0]
+ assert cell['data']['name'].split()[0]==r['element']
+ assert th['title']==r['threat']+' '+r['title']
+for c in l1:
+ assert c['data'].get('hasOpenThreats',False)==any(t['status']=='Open' for t in c['data'].get('threats',[]))
+checks.append('Risk register and traceability values, model threat titles/placement and open flags agree')
 report={'status':'PASS','checks':checks,'metrics':{'AV':av,'SLE':str(sle),'ALE_prior':str(before),'ALE_post':str(after),'CBA':str(cba),'ACS':f['acs'],'risks':len(risks),'threats':len(all_th)},'limitations':['This validator checks documentation only; application results are recorded separately in evidence.','No live cloud deployment validated; synthetic restore evidence is recorded separately.','Costs, scoring and effectiveness are scenario assumptions.','UI import and report visual review are recorded separately in README.']}
 (P/'validation/results.json').write_text(json.dumps(report,indent=2));print(json.dumps(report,indent=2))

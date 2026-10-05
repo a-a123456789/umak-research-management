@@ -22,3 +22,7 @@ Success HTTP 200 returns `status` (`SUCCESS` or `COMPLETE`), the readiness field
 Errors: 400 malformed JSON or invalid graph/state; 401 unauthenticated; 403 non-staff; 413 body over 2 MiB; 503 capacity/unavailable worker; 504 five-second timeout; 502 failed/invalid/oversized worker output. Algorithm validation returns `{status:"ERROR", error_type, message}`; worker lifecycle errors use the same structured envelope; JSON-parser and authorization errors use the application's `{error}` envelope. See executable tests for exact values. Client disconnect cancels the child; no HTTP response is deliverable after disconnect.
 
 Express spawns a fixed Python script without a shell, with no database credentials, two concurrent workers per server process, no waiting queue, a five-second wall timeout, and an 8 MiB stdout ceiling. Python reads at most 2 MiB. These controls bound ordinary prototype requests; they do not constitute an OS memory sandbox or multi-instance admission control.
+
+## Machine-readable contracts
+
+JSON Schema Draft 2020-12 contracts: `algocom/schemas/request.schema.json` and `response.schema.json`. These are worker request/result contracts; transport errors retain their documented envelopes. Schema validation covers structure; Python checks aggregate membership counts, references, unique evidence IDs, cycles and completed-state consistency. Express validates complete result shapes, types, membership and completion invariants before returning success; malformed worker output becomes HTTP 502 WORKER_PROTOCOL.
