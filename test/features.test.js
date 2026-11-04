@@ -30,6 +30,7 @@ after(async()=>{
 test('trigram typo retrieval, normalization, metadata filters and draft privacy',async()=>{
  for(const [title,status] of [['IoT-Based Waste Management for Campus','Approved'],['IoT-Based Waste Management Private Study','Draft']]){
   const r=await admin.query('INSERT INTO research_records(author_id,title,status,research_year,department) VALUES(1,$1,$2,2026,$3) RETURNING id',[title,status,'Computing']);ids.push(r.rows[0].id);
+  await admin.query('INSERT INTO review_assignments(study_id,staff_id) VALUES($1,3)',[r.rows[0].id]);
  }
  const r=await request(app).post('/api/v1/research/search').send({keyword:'IoT Waste Managemnt',year:2026,department:'Computing'}).expect(200);
  assert.ok(r.body.some(x=>x.id===ids[0]));assert.ok(r.body.every(x=>x.status==='Approved'));assert.ok(!r.body.some(x=>x.id===ids[1]));
@@ -93,7 +94,7 @@ test('migration backfills existing titles, preserves visibility and is repeatabl
   await c.query("CREATE TABLE research_records(id integer PRIMARY KEY,author_id integer REFERENCES users,title text,abstract text,status text)");
   await c.query('INSERT INTO users VALUES(1)');
   await c.query("INSERT INTO research_records VALUES(1,1,'IoT-Based Waste Management','','Approved')");
-  await migrate(c);await migrate(c);
+  await migrate(c,{through:'001_search_consultations.sql'});await migrate(c,{through:'001_search_consultations.sql'});
   const r=await c.query('SELECT * FROM research_records');assert.equal(r.rows[0].normalized_title,'iot based waste management');assert.equal(r.rows[0].status,'Approved');
   assert.equal((await c.query('SELECT count(*) FROM schema_migrations')).rows[0].count,'1');
  }finally{await c.query('ROLLBACK');c.release();}
@@ -103,7 +104,7 @@ test('locked earliest ticket is skipped and becomes eligible again after rollbac
  const first=await create('2026-01-01T00:00:00Z'),second=await create('2026-02-01T00:00:00Z');
  const c=await db.connect();
  try{
-  await c.query('BEGIN');await c.query('SELECT id FROM consultation_tickets WHERE id=$1 FOR UPDATE',[first.id]);
+  await c.query('BEGIN');await c.query("SELECT set_config('app.user_id','3',true)");await c.query('SELECT id FROM consultation_tickets WHERE id=$1 FOR UPDATE',[first.id]);
   const r=await auth(request(app).post('/api/v1/consultations/claim-next'),staff).send({}).expect(200);assert.equal(r.body.id,second.id);
  }finally{await c.query('ROLLBACK');c.release();}
  const r=await auth(request(app).post('/api/v1/consultations/claim-next'),staff).send({}).expect(200);assert.equal(r.body.id,first.id);

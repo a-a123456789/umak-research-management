@@ -1,11 +1,11 @@
 // Both indexed and exhaustive predicates use PostgreSQL's exact pg_trgm scorer.
 // The exhaustive variant is for benchmark/oracle use, never an HTTP option.
-export function searchSql({duplicates=false, exhaustive=false}={}) {
+export function searchSql({duplicates=false,exhaustive=false,publicProjection=true}={}) {
   const fuzzy=exhaustive?'similarity(normalized_title,crm_normalize_title($1)) >= 0.3':'normalized_title % crm_normalize_title($1)';
   const match=duplicates?fuzzy:`(${fuzzy} OR normalized_title LIKE '%'||crm_normalize_title($1)||'%')`;
   return `SELECT id,title,abstract,status,research_year,department,
     similarity(normalized_title,crm_normalize_title($1)) AS similarity
-    FROM research_records WHERE ${duplicates?'TRUE':"status='Approved'"}
+    FROM ${duplicates||!publicProjection?'research_records':'crm_public_research()'} WHERE ${duplicates?'TRUE':"status='Approved'"}
     AND ($2::integer IS NULL OR research_year=$2)
     AND ($3::text IS NULL OR department=$3)
     AND (${duplicates?match:`crm_normalize_title($1)='' OR ${match}`})

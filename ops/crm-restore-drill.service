@@ -1,0 +1,15 @@
+[Unit]
+Description=CRM quarantined offsite restoration drill
+OnFailure=crm-backup-alert.service
+
+[Service]
+Type=oneshot
+User=crm-backup
+WorkingDirectory=/opt/crm
+EnvironmentFile=/etc/crm/backup.env
+ExecStart=/usr/bin/node /opt/crm/scripts/restore-encrypted.js
+UMask=0077
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ReadWritePaths=/var/lib/crm-backup

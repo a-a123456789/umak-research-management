@@ -13,6 +13,10 @@ try {
  // Clone the migrated column definitions so this fixture follows the real search contract.
  // Public supplies the migrated normalizer and pg_trgm operators; local fixture tables shadow operational tables.
  await admin.query(`CREATE TABLE ${schema}.research_records (LIKE public.research_records INCLUDING GENERATED); CREATE TABLE ${schema}.users(id integer,email text,password_hash text,role text)`);
+ // Mirror the public catalogue projection within the isolated fixture schema.
+ // The production function deliberately reads public.research_records, not fixture data.
+ await admin.query(`CREATE FUNCTION ${schema}.crm_public_research() RETURNS TABLE(id integer,title text,abstract text,status text,research_year integer,department text,normalized_title text)
+ LANGUAGE sql STABLE AS $$ SELECT id,title,abstract,status,research_year,department,normalized_title FROM ${schema}.research_records WHERE status='Approved' $$`);
  await admin.query(`INSERT INTO ${schema}.research_records(id,author_id,title,abstract,status) VALUES(1,1,'Public synthetic record','Public abstract','Approved')`);
  await admin.query(`INSERT INTO ${schema}.users VALUES(99,'synthetic@example.test','FAKE_HASH_NOT_A_CREDENTIAL','student')`);
  await admin.query(`GRANT SELECT ON ALL TABLES IN SCHEMA ${schema} TO crm_app`);

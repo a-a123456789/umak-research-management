@@ -18,15 +18,31 @@
     "hooks:install": "git config core.hooksPath .githooks",
     "db:migrate": "node --env-file-if-exists=.env scripts/migrate-db.js",
     "test:features:unit": "node --test test/edf-heap.test.js",
-    "bench:features": "node --env-file-if-exists=.env benchmarks/benchmark-features.js"
+    "bench:features": "node --env-file-if-exists=.env benchmarks/benchmark-features.js",
+    "test:ias:unit": "node --test test/ias-unit.test.js test/ias-plan-baseline.test.js",
+    "test:ias:db": "node --env-file-if-exists=.env --test --test-concurrency=1 test/ias-controls.test.js",
+    "demo:ias": "node --env-file-if-exists=.env scripts/demo-ias.js",
+    "bench:ias": "node --env-file-if-exists=.env benchmarks/benchmark-ias.js",
+    "backup:offsite": "node --env-file-if-exists=.env scripts/backup-offsite.js",
+    "backup:restore:encrypted": "node --env-file-if-exists=.env scripts/restore-encrypted.js",
+    "backup:freshness": "node --env-file-if-exists=.env scripts/backup-freshness.js",
+    "privacy:maintain": "node --env-file-if-exists=.env scripts/privacy-maintenance.js"
   },
   "dependencies": {
+    "@aws-sdk/client-s3": "^3.1161.0",
+    "@aws-sdk/s3-request-presigner": "^3.1161.0",
+    "@node-rs/argon2": "^2.2.2",
+    "@smithy/node-http-handler": "^4.14.1",
     "express": "^5.1.0",
-    "pg": "^8.16.3",
+    "fast-xml-parser": "^5.12.0",
     "helmet": "^8.1.0",
-    "express-rate-limit": "^8.1.0"
+    "pdf-lib": "^1.17.1",
+    "pg": "^8.16.3",
+    "yauzl": "^3.4.0",
+    "zod": "^4.6.7"
   },
   "devDependencies": {
-    "supertest": "^7.1.4"
+    "supertest": "^7.1.4",
+    "yazl": "^3.3.1"
   }
 }

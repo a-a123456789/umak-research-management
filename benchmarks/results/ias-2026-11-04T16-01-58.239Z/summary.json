@@ -1,0 +1,92 @@
+[
+  {
+    "name": "legacy_sync_scrypt_verify",
+    "size": 1,
+    "reps": 30,
+    "p50_ms": 18.189750000000004,
+    "p95_ms": 18.694958000000042,
+    "p99_ms": 19.384167000000048,
+    "peak_rss_bytes": 98631680,
+    "event_loop_p95_ms": 10.903551
+  },
+  {
+    "name": "async_argon2id_verify",
+    "size": 1,
+    "reps": 30,
+    "p50_ms": 6.329416999999921,
+    "p95_ms": 8.554875000000038,
+    "p99_ms": 9.031000000000063,
+    "peak_rss_bytes": 159956992,
+    "event_loop_p95_ms": 10.928127
+  },
+  {
+    "name": "async_argon2id_hash",
+    "size": 1,
+    "reps": 30,
+    "p50_ms": 6.506458000000066,
+    "p95_ms": 6.766875000000027,
+    "p99_ms": 6.789125000000013,
+    "peak_rss_bytes": 160088064,
+    "event_loop_p95_ms": 11.108351
+  },
+  {
+    "name": "app_predicate_owner_admin_baseline",
+    "size": 1000,
+    "reps": 30,
+    "p50_ms": 0.25508300000001327,
+    "p95_ms": 0.3766249999998763,
+    "p99_ms": 0.44337500000006,
+    "peak_rss_bytes": 163840000,
+    "event_loop_p95_ms": 10.723327
+  },
+  {
+    "name": "app_predicate_plus_real_rls_owner",
+    "size": 1000,
+    "reps": 30,
+    "p50_ms": 0.5216250000000855,
+    "p95_ms": 0.6145830000000387,
+    "p99_ms": 0.7020420000001195,
+    "peak_rss_bytes": 167280640,
+    "event_loop_p95_ms": 10.543103
+  },
+  {
+    "name": "audited_research_update",
+    "size": 1000,
+    "reps": 30,
+    "p50_ms": 0.33595900000000256,
+    "p95_ms": 0.44591700000000856,
+    "p99_ms": 0.5607500000000982,
+    "peak_rss_bytes": 168427520,
+    "event_loop_p95_ms": 11.345919
+  },
+  {
+    "name": "app_predicate_owner_admin_baseline",
+    "size": 10000,
+    "reps": 30,
+    "p50_ms": 1.0931660000001102,
+    "p95_ms": 1.2044590000000426,
+    "p99_ms": 1.271833000000015,
+    "peak_rss_bytes": 170360832,
+    "event_loop_p95_ms": 10.723327
+  },
+  {
+    "name": "app_predicate_plus_real_rls_owner",
+    "size": 10000,
+    "reps": 30,
+    "p50_ms": 1.7799169999998412,
+    "p95_ms": 1.8988329999999678,
+    "p99_ms": 1.9017499999999927,
+    "peak_rss_bytes": 171032576,
+    "event_loop_p95_ms": 11.419647
+  },
+  {
+    "name": "audited_research_update",
+    "size": 10000,
+    "reps": 30,
+    "p50_ms": 0.3220829999997932,
+    "p95_ms": 0.37158399999998437,
+    "p99_ms": 0.3783339999999953,
+    "peak_rss_bytes": 171048960,
+    "event_loop_p95_ms": 10.772479
+  }
+]

@@ -1,0 +1,11 @@
+[Unit]
+Description=Export CRM deletion ledger every five minutes
+
+[Timer]
+OnBootSec=2min
+OnUnitActiveSec=5min
+Persistent=true
+Unit=crm-privacy.service
+
+[Install]
+WantedBy=timers.target

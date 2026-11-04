@@ -1,0 +1,7 @@
+owner: private study HTTP 200
+assigned staff: private study HTTP 200
+unassigned staff: private study HTTP 404
+Researcher feedback contains internal notes: false
+Unscoped runtime SQL rows visible: 0 (RLS)
+Runtime audit deletion: denied (42501)
+PASS — real PostgreSQL/API authorization and feedback demo. Cloud and Android are separate deployment checks.

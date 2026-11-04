@@ -1,0 +1,11 @@
+[Unit]
+Description=Daily CRM offsite backup
+
+[Timer]
+OnCalendar=*-*-* 02:00:00 Asia/Manila
+Persistent=true
+RandomizedDelaySec=300
+Unit=crm-backup.service
+
+[Install]
+WantedBy=timers.target

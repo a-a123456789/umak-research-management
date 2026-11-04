@@ -36,6 +36,12 @@ CREATE TABLE IF NOT EXISTS audit_logs (
 REVOKE ALL ON SCHEMA public FROM PUBLIC;
 REVOKE ALL ON ALL TABLES IN SCHEMA public FROM PUBLIC;
 GRANT USAGE ON SCHEMA public TO crm_app;
-GRANT SELECT, INSERT, UPDATE, DELETE ON users, sessions, research_records, consents, deletion_requests TO crm_app;
+GRANT SELECT ON users TO crm_app;
+GRANT UPDATE(email) ON users TO crm_app;
+GRANT SELECT, INSERT, UPDATE, DELETE ON sessions TO crm_app;
+GRANT SELECT,INSERT ON consents TO crm_app;
+GRANT SELECT,INSERT,UPDATE ON deletion_requests TO crm_app;
+GRANT SELECT, INSERT ON research_records TO crm_app;
+GRANT UPDATE(title,abstract) ON research_records TO crm_app;
 GRANT SELECT, INSERT ON audit_logs TO crm_app;
 GRANT USAGE, SELECT ON ALL SEQUENCES IN SCHEMA public TO crm_app;

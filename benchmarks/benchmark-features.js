@@ -63,11 +63,11 @@ try{
    for(const duplicate of [false,true]){
     const options={duplicates:duplicate};
     const args=queries.map(q=>[q,null,null,100,0]);
-    const proposed=async()=>{const rows=[];for(const a of args)rows.push((await client.query(searchSql(options),a)).rows);return rows;};
-    const baseline=async()=>{const rows=[];for(const a of args)rows.push((await client.query(searchSql({...options,exhaustive:true}),a)).rows);return rows;};
+    const proposed=async()=>{const rows=[];for(const a of args)rows.push((await client.query(searchSql({...options,publicProjection:false}),a)).rows);return rows;};
+    const baseline=async()=>{const rows=[];for(const a of args)rows.push((await client.query(searchSql({...options,exhaustive:true,publicProjection:false}),a)).rows);return rows;};
     assert.deepEqual(await proposed(),await baseline());
     const row=await measure(duplicate?'trigram_duplicates':'trigram_public',n,seed,{proposed,baseline});row.queries_per_batch=queries.length;
-    if(seed===1)plans.push({size:n,suite:duplicate?'duplicates':'public',query:queries[2],plan:(await client.query('EXPLAIN (ANALYZE,BUFFERS,FORMAT JSON) '+searchSql(options),args[2])).rows[0]['QUERY PLAN']});
+    if(seed===1)plans.push({size:n,suite:duplicate?'duplicates':'public',query:queries[2],plan:(await client.query('EXPLAIN (ANALYZE,BUFFERS,FORMAT JSON) '+searchSql({...options,publicProjection:false}),args[2])).rows[0]['QUERY PLAN']});
    }
   }
   await client.query('DROP INDEX bench_title_trgm');console.log('trigram',n,'complete');

@@ -17,12 +17,16 @@ try {
   await db.query(`ALTER ROLE crm_app PASSWORD '${pass}'`);
   await db.query(readFileSync(new URL('../db/schema.sql',import.meta.url),'utf8'));
   await migrate(db);
+  await db.query('TRUNCATE login_attempts,rate_buckets');
   for (const [id,email,role] of [[1,'student1@example.test','student'],[2,'student2@example.test','student'],[3,'staff@example.test','staff']]) {
-    await db.query('INSERT INTO users(id,email,password_hash,role) VALUES($1,$2,$3,$4) ON CONFLICT(id) DO UPDATE SET password_hash=EXCLUDED.password_hash',[id,email,hashPassword(demo),role]);
+    await db.query('INSERT INTO users(id,email,password_hash,role) VALUES($1,$2,$3,$4) ON CONFLICT(id) DO UPDATE SET password_hash=EXCLUDED.password_hash',[id,email,await hashPassword(demo),role]);
   }
   for (const r of [[1,1,'Published research','Synthetic public abstract','Approved'],[2,1,'Private research A','Synthetic confidential draft A','Draft'],[3,2,'Private research B','Synthetic confidential draft B','Draft']]) {
     await db.query('INSERT INTO research_records(id,author_id,title,abstract,status) VALUES($1,$2,$3,$4,$5) ON CONFLICT(id) DO NOTHING',r);
   }
+  await db.query('INSERT INTO study_members SELECT id,author_id FROM research_records ON CONFLICT DO NOTHING');
+  // Explicit synthetic reviewer assignments; migrations never grant all staff access.
+  await db.query('INSERT INTO review_assignments SELECT id,3 FROM research_records WHERE id IN (1,2,3) ON CONFLICT DO NOTHING');
   await db.query("SELECT setval(pg_get_serial_sequence('users','id'),GREATEST((SELECT MAX(id) FROM users),1))");
   await db.query("SELECT setval(pg_get_serial_sequence('research_records','id'),GREATEST((SELECT MAX(id) FROM research_records),1))");
   await db.query('COMMIT');
