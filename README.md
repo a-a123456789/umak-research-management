@@ -2,7 +2,7 @@
 
 Shared repository for the III-BCSAD bolanatics IAS and ALGOCOM milestones, using one Center for Research Management (CRM) project.
 
-- **IAS:** Express/PostgreSQL security implementation, access controls, privacy workflows, threat models, risk analysis and verification evidence.
+- **IAS:** [Complete security reference](security/README.md) — Express/PostgreSQL controls, privacy workflows, threat models, risk analysis, tests, benchmarks and verification evidence.
 - **ALGOCOM:** Independent Python workflow-readiness and DAG critical-path algorithms, correctness tests, synthetic benchmarks and API integration in `algocom/`.
 - **Both:** Technical reports, editable presentation decks and final PDFs in `submissions/`; requirement tracking and team handoff in `docs/`.
 
@@ -49,7 +49,7 @@ All nonpublic endpoints require `Authorization: Bearer <token>`.
 | Method / route | Input and access |
 |---|---|
 | GET /health | Public health response |
-| POST /api/v1/auth/login | `email`, `password`; returns one-hour opaque bearer token |
+| POST /api/v1/auth/login | `email`, `password`; returns 15-minute opaque bearer token |
 | POST /api/v1/auth/logout | Authenticated; revokes current token |
 | POST /api/v1/research/search | Public; `keyword`, optional year/department/limit/offset; typo-tolerant approved records only |
 | GET /api/v1/research/:id | Record owner or staff; other records return 404 |
@@ -59,7 +59,7 @@ All nonpublic endpoints require `Authorization: Bearer <token>`.
 | POST /api/v1/admin/deletion-requests/:id/complete | Staff; `confirm_review: true`; synthetic hard deletion |
 | GET /api/v1/admin/audit-logs | Staff only; last 100 minimal audit events |
 
-Consultation ticketing and PostgreSQL trigram search are implemented; see [search and scheduling API](docs/SEARCH_AND_CONSULTATIONS.md). No frontend, uploads, SSO, Redis, cloud deployment or Turnitin integration is claimed.
+Consultation ticketing and PostgreSQL trigram search are implemented; see [search and scheduling API](docs/SEARCH_AND_CONSULTATIONS.md). Private upload adapters and an Android cache/security library are now implemented; see [IAS implementation](docs/IAS_IMPLEMENTATION.md). No complete frontend, SSO, live cloud deployment or Turnitin integration is claimed.
 
 ## Team and submission
 Read [team handoff](docs/TEAM_HANDOFF.md), [report corrections](docs/REPORT_CORRECTIONS.md), [privacy behavior](docs/PRIVACY.md), [controls](docs/CONTROLS.md), and [demo instructions](docs/DEMO.md).
@@ -96,5 +96,9 @@ atomic claims, versioned rescheduling, resolution and cancellation.
 The live queue uses PostgreSQL as its durable authority. An indexed EDF min-heap
 is implemented and benchmarked separately; it is not an authoritative per-server
 cache. See [API and guarantees](docs/SEARCH_AND_CONSULTATIONS.md) and
-[benchmark instructions](benchmarks/README.md). Password hashing and basic audit
-logging retain their existing implementations.
+[benchmark instructions](benchmarks/README.md). Password hashing, auditing and access controls have since been strengthened; see
+[IAS implementation and evidence](docs/IAS_IMPLEMENTATION.md).
+
+## IAS confidentiality, integrity and availability update
+
+See [implementation and deployment guide](docs/IAS_IMPLEMENTATION.md) for native RLS, faculty/membership/reviewer scope, feedback isolation, Argon2id, shared throttling, private documents, TLS, encrypted recovery, Android library and evidence commands. Older reports describe their original submission snapshot.

@@ -1,0 +1,99 @@
+To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/8.9/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+Daemon will be stopped at the end of the build 
+> Task :preBuild UP-TO-DATE
+> Task :preDebugBuild UP-TO-DATE
+> Task :mergeDebugJniLibFolders UP-TO-DATE
+> Task :mergeDebugNativeLibs NO-SOURCE
+> Task :stripDebugDebugSymbols NO-SOURCE
+> Task :copyDebugJniLibsProjectAndLocalJars UP-TO-DATE
+> Task :checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :generateDebugResValues UP-TO-DATE
+> Task :generateDebugResources UP-TO-DATE
+> Task :packageDebugResources UP-TO-DATE
+> Task :parseDebugLocalResources UP-TO-DATE
+> Task :generateDebugRFile UP-TO-DATE
+> Task :kaptGenerateStubsDebugKotlin UP-TO-DATE
+> Task :kaptDebugKotlin UP-TO-DATE
+> Task :compileDebugKotlin UP-TO-DATE
+> Task :extractDebugAnnotations UP-TO-DATE
+> Task :extractDeepLinksForAarDebug UP-TO-DATE
+> Task :javaPreCompileDebug UP-TO-DATE
+> Task :compileDebugJavaWithJavac UP-TO-DATE
+> Task :mergeDebugGeneratedProguardFiles UP-TO-DATE
+> Task :mergeDebugConsumerProguardFiles UP-TO-DATE
+> Task :mergeDebugShaders UP-TO-DATE
+> Task :compileDebugShaders NO-SOURCE
+> Task :generateDebugAssets UP-TO-DATE
+> Task :packageDebugAssets UP-TO-DATE
+> Task :prepareDebugArtProfile UP-TO-DATE
+> Task :prepareLintJarForPublish UP-TO-DATE
+> Task :processDebugManifest UP-TO-DATE
+> Task :processDebugJavaRes UP-TO-DATE
+> Task :mergeDebugJavaResource UP-TO-DATE
+> Task :syncDebugLibJars UP-TO-DATE
+> Task :writeDebugAarMetadata UP-TO-DATE
+> Task :bundleDebugAar UP-TO-DATE
+> Task :assembleDebug UP-TO-DATE
+> Task :bundleLibCompileToJarDebug UP-TO-DATE
+> Task :preDebugAndroidTestBuild UP-TO-DATE
+> Task :checkDebugAndroidTestAarMetadata UP-TO-DATE
+> Task :compileDebugLibraryResources UP-TO-DATE
+> Task :generateDebugAndroidTestResValues UP-TO-DATE
+> Task :mapDebugAndroidTestSourceSetPaths UP-TO-DATE
+> Task :generateDebugAndroidTestResources UP-TO-DATE
+> Task :mergeDebugAndroidTestResources UP-TO-DATE
+> Task :extractDeepLinksDebug UP-TO-DATE
+> Task :processDebugAndroidTestManifest UP-TO-DATE
+> Task :processDebugAndroidTestResources UP-TO-DATE
+> Task :javaPreCompileDebugAndroidTest UP-TO-DATE
+> Task :mergeDebugAndroidTestShaders UP-TO-DATE
+> Task :compileDebugAndroidTestShaders NO-SOURCE
+> Task :generateDebugAndroidTestAssets UP-TO-DATE
+> Task :mergeDebugAndroidTestAssets UP-TO-DATE
+> Task :compressDebugAndroidTestAssets UP-TO-DATE
+> Task :bundleLibRuntimeToJarDebug UP-TO-DATE
+> Task :desugarDebugAndroidTestFileDependencies UP-TO-DATE
+> Task :checkDebugAndroidTestDuplicateClasses UP-TO-DATE
+> Task :mergeExtDexDebugAndroidTest UP-TO-DATE
+> Task :bundleLibRuntimeToDirDebug UP-TO-DATE
+> Task :copyDebugJniLibsProjectOnly UP-TO-DATE
+> Task :mergeDebugAndroidTestJniLibFolders UP-TO-DATE
+> Task :mergeDebugAndroidTestNativeLibs NO-SOURCE
+> Task :mergeLibDexDebugAndroidTest UP-TO-DATE
+> Task :stripDebugAndroidTestDebugSymbols NO-SOURCE
+> Task :validateSigningDebugAndroidTest UP-TO-DATE
+> Task :writeDebugAndroidTestSigningConfigVersions UP-TO-DATE
+> Task :bundleDebugLocalLintAar UP-TO-DATE
+> Task :createFullJarDebug UP-TO-DATE
+> Task :writeDebugLintModelMetadata UP-TO-DATE
+> Task :generateDebugAndroidTestLintModel
+> Task :extractProguardFiles UP-TO-DATE
+> Task :generateDebugLintReportModel UP-TO-DATE
+> Task :preDebugUnitTestBuild UP-TO-DATE
+> Task :generateDebugUnitTestLintModel UP-TO-DATE
+> Task :lintAnalyzeDebug UP-TO-DATE
+> Task :lintAnalyzeDebugUnitTest UP-TO-DATE
+
+> Task :kaptGenerateStubsDebugAndroidTestKotlin
+w: Kapt currently doesn't support language version 2.0+. Falling back to 1.9.
+
+> Task :kaptDebugAndroidTestKotlin UP-TO-DATE
+> Task :compileDebugAndroidTestKotlin
+> Task :compileDebugAndroidTestJavaWithJavac NO-SOURCE
+> Task :dexBuilderDebugAndroidTest
+> Task :mergeDebugAndroidTestGlobalSynthetics
+> Task :processDebugAndroidTestJavaRes
+> Task :mergeProjectDexDebugAndroidTest
+> Task :lintAnalyzeDebugAndroidTest
+> Task :mergeDebugAndroidTestJavaResource
+
+> Task :lintReportDebug
+Wrote HTML report to file:///Users/anjelobenedictarnaez/umak-research-management/android-public-cache/build/reports/lint-results-debug.html
+
+> Task :lintDebug
+> Task :packageDebugAndroidTest
+> Task :createDebugAndroidTestApkListingFileRedirect
+> Task :assembleDebugAndroidTest
+
+BUILD SUCCESSFUL in 8s
+72 actionable tasks: 13 executed, 59 up-to-date

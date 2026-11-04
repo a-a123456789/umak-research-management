@@ -1,0 +1,10 @@
+[Unit]
+Description=Monthly CRM restore verification
+
+[Timer]
+OnCalendar=*-*-01 03:00:00 Asia/Manila
+Persistent=true
+Unit=crm-restore-drill.service
+
+[Install]
+WantedBy=timers.target

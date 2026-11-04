@@ -1,0 +1,61 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: CRM encrypted backups and deletion ledger; deploy in a separate recovery account/region
+Resources:
+  Recovery:
+    Type: AWS::S3::Bucket
+    DeletionPolicy: Retain
+    UpdateReplacePolicy: Retain
+    Properties:
+      PublicAccessBlockConfiguration:
+        BlockPublicAcls: true
+        BlockPublicPolicy: true
+        IgnorePublicAcls: true
+        RestrictPublicBuckets: true
+      OwnershipControls:
+        Rules: [{ObjectOwnership: BucketOwnerEnforced}]
+      BucketEncryption:
+        ServerSideEncryptionConfiguration:
+          - ServerSideEncryptionByDefault: {SSEAlgorithm: AES256}
+      VersioningConfiguration: {Status: Enabled}
+  RecoveryTransport:
+    Type: AWS::S3::BucketPolicy
+    Properties:
+      Bucket: !Ref Recovery
+      PolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Deny
+            Principal: '*'
+            Action: s3:*
+            Resource: [!GetAtt Recovery.Arn, !Sub '${Recovery.Arn}/*']
+            Condition: {Bool: {'aws:SecureTransport': 'false'}}
+          - Effect: Deny
+            Principal: '*'
+            Action: s3:*
+            Resource: [!GetAtt Recovery.Arn, !Sub '${Recovery.Arn}/*']
+            Condition: {NumericLessThan: {'s3:TlsVersion': '1.3'}}
+  BackupWriter:
+    Type: AWS::IAM::ManagedPolicy
+    Properties:
+      PolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Action: [s3:PutObject]
+            Resource: [!Sub '${Recovery.Arn}/backups/*', !Sub '${Recovery.Arn}/deletions/*']
+  RestoreReader:
+    Type: AWS::IAM::ManagedPolicy
+    Properties:
+      PolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Action: [s3:GetObject]
+            Resource: [!Sub '${Recovery.Arn}/backups/*', !Sub '${Recovery.Arn}/deletions/*']
+          - Effect: Allow
+            Action: [s3:ListBucket]
+            Resource: !GetAtt Recovery.Arn
+Outputs:
+  Bucket: {Value: !Ref Recovery}
+  BackupWriterPolicy: {Value: !Ref BackupWriter}
+  RestoreReaderPolicy: {Value: !Ref RestoreReader}

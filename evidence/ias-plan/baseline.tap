@@ -1,0 +1,41 @@
+TAP version 13
+# Subtest: baseline: anonymous private research denied before DB access
+ok 1 - baseline: anonymous private research denied before DB access
+  ---
+  duration_ms: 12.579542
+  type: 'test'
+  ...
+# Subtest: baseline: researcher denied staff audit endpoint
+ok 2 - baseline: researcher denied staff audit endpoint
+  ---
+  duration_ms: 1.8595
+  type: 'test'
+  ...
+# Subtest: baseline: private research lookup binds identity in parameterized API predicate
+ok 3 - baseline: private research lookup binds identity in parameterized API predicate
+  ---
+  duration_ms: 1.488042
+  type: 'test'
+  ...
+# Request failed: XX000
+# Subtest: baseline: dependency failure returns sanitized JSON
+ok 4 - baseline: dependency failure returns sanitized JSON
+  ---
+  duration_ms: 2.749583
+  type: 'test'
+  ...
+# Subtest: baseline: malformed and oversized JSON rejected
+ok 5 - baseline: malformed and oversized JSON rejected
+  ---
+  duration_ms: 8.007209
+  type: 'test'
+  ...
+1..5
+# tests 5
+# suites 0
+# pass 5
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 149.135875

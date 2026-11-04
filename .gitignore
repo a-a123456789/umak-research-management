@@ -10,3 +10,6 @@ coverage/
 *.key
 __pycache__/
 .venv/
+**/.gradle/
+android-public-cache/build/
+android-public-cache/local.properties

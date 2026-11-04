@@ -1,5 +1,7 @@
 # Security implementation and remaining risk
 
+> Historical risk-package snapshot. For the November implementation, current control status and verification limits, start with the [main security README](README.md). The entries below remain synchronized with the original model/risk exports and have not been rewritten as new execution evidence.
+
 Status records are evidence classifications, not peer acceptance. Scores and costs remain estimates.
 
 | Ticket / owner | Status | Control and acceptance |

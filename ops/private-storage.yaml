@@ -1,0 +1,50 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: CRM private manuscript bucket; deploy with a dedicated API role
+Resources:
+  Manuscripts:
+    Type: AWS::S3::Bucket
+    DeletionPolicy: Retain
+    UpdateReplacePolicy: Retain
+    Properties:
+      PublicAccessBlockConfiguration:
+        BlockPublicAcls: true
+        BlockPublicPolicy: true
+        IgnorePublicAcls: true
+        RestrictPublicBuckets: true
+      OwnershipControls:
+        Rules: [{ObjectOwnership: BucketOwnerEnforced}]
+      BucketEncryption:
+        ServerSideEncryptionConfiguration:
+          - ServerSideEncryptionByDefault: {SSEAlgorithm: AES256}
+      VersioningConfiguration: {Status: Enabled}
+  ManuscriptTransport:
+    Type: AWS::S3::BucketPolicy
+    Properties:
+      Bucket: !Ref Manuscripts
+      PolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Sid: DenyPlaintext
+            Effect: Deny
+            Principal: '*'
+            Action: s3:*
+            Resource: [!GetAtt Manuscripts.Arn, !Sub '${Manuscripts.Arn}/*']
+            Condition: {Bool: {'aws:SecureTransport': 'false'}}
+          - Sid: RequireTLS13
+            Effect: Deny
+            Principal: '*'
+            Action: s3:*
+            Resource: [!GetAtt Manuscripts.Arn, !Sub '${Manuscripts.Arn}/*']
+            Condition: {NumericLessThan: {'s3:TlsVersion': '1.3'}}
+  ApiObjectPolicy:
+    Type: AWS::IAM::ManagedPolicy
+    Properties:
+      PolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Action: [s3:GetObject, s3:PutObject, s3:DeleteObject]
+            Resource: !Sub '${Manuscripts.Arn}/manuscripts/*'
+Outputs:
+  Bucket: {Value: !Ref Manuscripts}
+  ApiPolicy: {Value: !Ref ApiObjectPolicy}

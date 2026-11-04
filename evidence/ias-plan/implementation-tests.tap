@@ -1,0 +1,302 @@
+TAP version 13
+# Subtest: worker response validates complete shapes, types and input membership
+ok 1 - worker response validates complete shapes, types and input membership
+  ---
+  duration_ms: 1.046584
+  type: 'test'
+  ...
+# Subtest: algorithm API: authentication, staff boundary, schema and standalone agreement
+ok 2 - algorithm API: authentication, staff boundary, schema and standalone agreement
+  ---
+  duration_ms: 141.65925
+  type: 'test'
+  ...
+# Subtest: worker failures, timeout, concurrency, cancellation and recovery are bounded
+ok 3 - worker failures, timeout, concurrency, cancellation and recovery are bounded
+  ---
+  duration_ms: 183.633042
+  type: 'test'
+  ...
+# Subtest: worker protocol rejects incomplete objects, nonzero exit and oversized output
+ok 4 - worker protocol rejects incomplete objects, nonzero exit and oversized output
+  ---
+  duration_ms: 77.108833
+  type: 'test'
+  ...
+# Subtest: malformed worker results return 502 through the authenticated HTTP route
+ok 5 - malformed worker results return 502 through the authenticated HTTP route
+  ---
+  duration_ms: 31.202459
+  type: 'test'
+  ...
+# Subtest: EDF heap orders overdue, tied and absent deadlines; inputs and outputs are isolated
+ok 6 - EDF heap orders overdue, tied and absent deadlines; inputs and outputs are isolated
+  ---
+  duration_ms: 0.589958
+  type: 'test'
+  ...
+# Subtest: EDF randomized mixed workloads agree with sorted reference including position updates
+ok 7 - EDF randomized mixed workloads agree with sorted reference including position updates
+  ---
+  duration_ms: 111.160291
+  type: 'test'
+  ...
+# Subtest: EDF heap rejects invalid/duplicate IDs and handles absent updates
+ok 8 - EDF heap rejects invalid/duplicate IDs and handles absent updates
+  ---
+  duration_ms: 0.219792
+  type: 'test'
+  ...
+# Subtest: deadlines require real calendar instants in explicit UTC
+ok 9 - deadlines require real calendar instants in explicit UTC
+  ---
+  duration_ms: 0.594708
+  type: 'test'
+  ...
+# Subtest: trigram typo retrieval, normalization, metadata filters and draft privacy
+ok 10 - trigram typo retrieval, normalization, metadata filters and draft privacy
+  ---
+  duration_ms: 85.51375
+  type: 'test'
+  ...
+# Subtest: EDF queue uses deadline, submission and ID ties; claim is durable and audited
+ok 11 - EDF queue uses deadline, submission and ID ties; claim is durable and audited
+  ---
+  duration_ms: 15.539584
+  type: 'test'
+  ...
+# Subtest: ticket scope, version conflicts, reschedule, cancel and resolve permissions
+ok 12 - ticket scope, version conflicts, reschedule, cancel and resolve permissions
+  ---
+  duration_ms: 23.713458
+  type: 'test'
+  ...
+# Subtest: 16 concurrent claimers never assign a ticket twice; empty queue returns 204
+ok 13 - 16 concurrent claimers never assign a ticket twice; empty queue returns 204
+  ---
+  duration_ms: 22.891958
+  type: 'test'
+  ...
+# {"request_id":"742dccbd-6cf7-451e-a0f7-5bcd3ca169a1","code":"Error"}
+# Subtest: ticket mutation rolls back if audit insertion fails
+ok 14 - ticket mutation rolls back if audit insertion fails
+  ---
+  duration_ms: 2.942083
+  type: 'test'
+  ...
+# Subtest: migration backfills existing titles, preserves visibility and is repeatable
+ok 15 - migration backfills existing titles, preserves visibility and is repeatable
+  ---
+  duration_ms: 9.966542
+  type: 'test'
+  ...
+# Subtest: locked earliest ticket is skipped and becomes eligible again after rollback
+ok 16 - locked earliest ticket is skipped and becomes eligible again after rollback
+  ---
+  duration_ms: 7.239375
+  type: 'test'
+  ...
+# Subtest: search threshold is transaction-local and does not leak pooled session settings
+ok 17 - search threshold is transaction-local and does not leak pooled session settings
+  ---
+  duration_ms: 4.17475
+  type: 'test'
+  ...
+# Subtest: native RLS fails closed, isolates profiles and prevents pooled identity leaks
+ok 18 - native RLS fails closed, isolates profiles and prevents pooled identity leaks
+  ---
+  duration_ms: 98.757875
+  type: 'test'
+  ...
+# Subtest: assigned reviewer allowed, unrelated staff/faculty denied; membership grants and revokes access
+ok 19 - assigned reviewer allowed, unrelated staff/faculty denied; membership grants and revokes access
+  ---
+  duration_ms: 21.593333
+  type: 'test'
+  ...
+# Subtest: internal feedback cannot cross researcher/API/database boundaries
+ok 20 - internal feedback cannot cross researcher/API/database boundaries
+  ---
+  duration_ms: 9.945083
+  type: 'test'
+  ...
+# {"request_id":"4c01c8c0-9127-46d6-b604-1f5c2512723d","code":"P0001"}
+# Subtest: audit history is append-only with actor/target/IP and no private content
+ok 21 - audit history is append-only with actor/target/IP and no private content
+  ---
+  duration_ms: 15.539334
+  type: 'test'
+  ...
+# Subtest: Argon2id salts, malformed hashes, Unicode, legacy verification and upgrade
+ok 22 - Argon2id salts, malformed hashes, Unicode, legacy verification and upgrade
+  ---
+  duration_ms: 82.049166
+  type: 'test'
+  ...
+# Subtest: temporary activation is staff-provisioned, expiring, hashed and single-use
+ok 23 - temporary activation is staff-provisioned, expiring, hashed and single-use
+  ---
+  duration_ms: 52.950542
+  type: 'test'
+  ...
+# Subtest: shared failed-login window is atomic across workers and expires individually
+ok 24 - shared failed-login window is atomic across workers and expires individually
+  ---
+  duration_ms: 54.424625
+  type: 'test'
+  ...
+# Subtest: atomic token bucket cannot overshoot and refills elapsed capacity
+ok 25 - atomic token bucket cannot overshoot and refills elapsed capacity
+  ---
+  duration_ms: 1.404417
+  type: 'test'
+  ...
+# Subtest: PDF/document validation rejects spoofing, encrypted archives and oversized buffers
+ok 26 - PDF/document validation rejects spoofing, encrypted archives and oversized buffers
+  ---
+  duration_ms: 2.172167
+  type: 'test'
+  ...
+# {"request_id":"b2c88bf6-79e8-4cd8-bb1e-20a152fad3c9","code":"Error"}
+# Subtest: private upload/download checks membership and assignment; failed scanner leaves no object
+ok 27 - private upload/download checks membership and assignment; failed scanner leaves no object
+  ---
+  duration_ms: 188.820333
+  type: 'test'
+  ...
+# Subtest: baseline: anonymous private research denied before record access
+ok 28 - baseline: anonymous private research denied before record access
+  ---
+  duration_ms: 10.508667
+  type: 'test'
+  ...
+# Subtest: baseline: researcher denied staff audit endpoint
+ok 29 - baseline: researcher denied staff audit endpoint
+  ---
+  duration_ms: 2.136125
+  type: 'test'
+  ...
+# Subtest: baseline: private research lookup binds identity in parameterized API predicate
+ok 30 - baseline: private research lookup binds identity in parameterized API predicate
+  ---
+  duration_ms: 2.133667
+  type: 'test'
+  ...
+# {"request_id":"203b50b3-8ce8-4ef2-9fd7-b28c12ad0f5f","code":"XX000"}
+# Subtest: baseline: dependency failure returns sanitized JSON
+ok 31 - baseline: dependency failure returns sanitized JSON
+  ---
+  duration_ms: 1.660417
+  type: 'test'
+  ...
+# Subtest: baseline: malformed and oversized JSON rejected
+ok 32 - baseline: malformed and oversized JSON rejected
+  ---
+  duration_ms: 4.590917
+  type: 'test'
+  ...
+# Subtest: DOCX validates container and rejects macros, missing parts and expansion limits
+ok 33 - DOCX validates container and rejects macros, missing parts and expansion limits
+  ---
+  duration_ms: 127.092708
+  type: 'test'
+  ...
+# Subtest: ClamAV scanner protocol accepts clean response and rejects malware
+ok 34 - ClamAV scanner protocol accepts clean response and rejects malware
+  ---
+  duration_ms: 5.296125
+  type: 'test'
+  ...
+# Subtest: encrypted backups roundtrip; modified bytes/wrong key and weak key-file permissions fail
+ok 35 - encrypted backups roundtrip; modified bytes/wrong key and weak key-file permissions fail
+  ---
+  duration_ms: 5.219
+  type: 'test'
+  ...
+# Subtest: public cache catalogue has stable ETag and checksummed blank template
+ok 36 - public cache catalogue has stable ETag and checksummed blank template
+  ---
+  duration_ms: 6.614125
+  type: 'test'
+  ...
+# Subtest: production database refuses plaintext/unverified configuration
+ok 37 - production database refuses plaintext/unverified configuration
+  ---
+  duration_ms: 0.132
+  type: 'test'
+  ...
+# Subtest: real SDK presigner binds private key and ten-minute expiry without cloud calls
+ok 38 - real SDK presigner binds private key and ten-minute expiry without cloud calls
+  ---
+  duration_ms: 7.088917
+  type: 'test'
+  ...
+# Subtest: SEC-01 public search returns only approved records; exact SQL injection is neutralized
+ok 39 - SEC-01 public search returns only approved records; exact SQL injection is neutralized
+  ---
+  duration_ms: 57.823084
+  type: 'test'
+  ...
+# Subtest: authentication rejects missing, invalid, expired and revoked tokens
+ok 40 - authentication rejects missing, invalid, expired and revoked tokens
+  ---
+  duration_ms: 30.302625
+  type: 'test'
+  ...
+# Subtest: SEC-02 own record succeeds; another student record hidden; staff allowed
+ok 41 - SEC-02 own record succeeds; another student record hidden; staff allowed
+  ---
+  duration_ms: 8.745625
+  type: 'test'
+  ...
+# Subtest: record creation binds ownership; blocks privilege fields; logs changes
+ok 42 - record creation binds ownership; blocks privilege fields; logs changes
+  ---
+  duration_ms: 7.455584
+  type: 'test'
+  ...
+# Subtest: consent: optional choices can both be false; identity/time cannot be supplied
+ok 43 - consent: optional choices can both be false; identity/time cannot be supplied
+  ---
+  duration_ms: 6.730042
+  type: 'test'
+  ...
+# Subtest: SEC-11 runtime database role cannot alter schema or modify audit history
+ok 44 - SEC-11 runtime database role cannot alter schema or modify audit history
+  ---
+  duration_ms: 5.282542
+  type: 'test'
+  ...
+# Subtest: deletion requires staff review; cascades personal data and invalidates sessions
+ok 45 - deletion requires staff review; cascades personal data and invalidates sessions
+  ---
+  duration_ms: 15.230542
+  type: 'test'
+  ...
+# Subtest: unknown routes deny by default; malformed/oversized JSON handled
+ok 46 - unknown routes deny by default; malformed/oversized JSON handled
+  ---
+  duration_ms: 2.26175
+  type: 'test'
+  ...
+# Subtest: login throttles repeated attempts with HTTP 429
+ok 47 - login throttles repeated attempts with HTTP 429
+  ---
+  duration_ms: 53.578542
+  type: 'test'
+  ...
+# Subtest: SEC-09 public search caps large synthetic result sets at 100
+ok 48 - SEC-09 public search caps large synthetic result sets at 100
+  ---
+  duration_ms: 8.478417
+  type: 'test'
+  ...
+1..48
+# tests 48
+# suites 0
+# pass 48
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 2628.78075

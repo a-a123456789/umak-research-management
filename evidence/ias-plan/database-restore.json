@@ -1,0 +1,30 @@
+{
+  "result": "PASS",
+  "tables_compared": [
+    "account_activations",
+    "audit_history",
+    "audit_logs",
+    "consents",
+    "consultation_tickets",
+    "deletion_requests",
+    "documents",
+    "login_attempts",
+    "object_cleanup",
+    "privacy_deletions",
+    "rate_buckets",
+    "research_feedback",
+    "research_records",
+    "review_assignments",
+    "schema_migrations",
+    "sessions",
+    "staff_notes",
+    "study_members",
+    "users",
+    "policies",
+    "rls",
+    "grants",
+    "sequences"
+  ],
+  "method": "All public table rows, policies, RLS flags, table grants and sequence values after pg_dump/pg_restore",
+  "limitations": "Quiescent synthetic database; not a production RPO/RTO, encrypted backup, or deletion replay proof."
+}
