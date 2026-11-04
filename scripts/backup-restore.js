@@ -10,7 +10,7 @@ const env={...process.env,PGHOST:url.hostname,PGPORT:url.port||'5432',PGUSER:dec
 const name='crm_restore_'+Date.now();const dir=mkdtempSync(join(tmpdir(),'crm-backup-'));
 const admin=new pg.Client({connectionString:url.href});await admin.connect();let target;
 async function snapshot(db){
- const tables=['users','research_records','sessions','consents','deletion_requests','audit_logs'];const out={};
+ const tables=['users','research_records','sessions','consents','deletion_requests','audit_logs','consultation_tickets','schema_migrations'];const out={};
  for(const table of tables){const r=await db.query(`SELECT * FROM ${table} ORDER BY 1`);out[table]=JSON.stringify(r.rows);}
  return out;
 }

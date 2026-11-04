@@ -15,7 +15,7 @@ Passwords use salted scrypt. Bearer tokens are random, hashed in the database, e
 
 Logical model: P-01 is middleware/routing inside Express; P-02 auth, P-03 research/privacy and P-04 audit are modules of the same backend; D-01 operational tables and D-02 audit_logs share PostgreSQL but differ in grants. P-05 is GitHub Actions. D-03 is temporary local backup/export storage; external cloud storage and E-03 identity provider are proposed. TB-01 browser-to-API, TB-02 routing-to-authenticated handlers, TB-03 application-to-database are logical trust boundaries; TB-02 is not a separate network segment.
 
-Service-request workflows (A-03), uploads and external integrations remain backlog items. Do not present diagram target architecture as deployed microservices.
+Consultation ticket requests (A-03) now have authenticated ownership/staff scope, transactional audit events, version checks and atomic deadline-ordered claims; see SEARCH_AND_CONSULTATIONS.md. Uploads and external integrations remain backlog items. Do not present diagram target architecture as deployed microservices.
 
 P-06 is the separate administrative backup/restore script. DF-09 reads PostgreSQL into this process and DF-13 writes the temporary backup file; the research API does not create backups.
 

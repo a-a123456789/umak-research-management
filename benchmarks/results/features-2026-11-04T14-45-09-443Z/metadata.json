@@ -1,0 +1,26 @@
+{
+  "measured_utc": "2026-11-04T14:45:09.460Z",
+  "node": "v24.14.0",
+  "postgres": "PostgreSQL 18.3 (Homebrew) on aarch64-apple-darwin25.2.0, compiled by Apple clang version 17.0.0 (clang-1700.6.3.2), 64-bit",
+  "platform": "darwin",
+  "release": "25.5.0",
+  "cpus": "Apple M4",
+  "ram_bytes": 17179869184,
+  "commit": "f07dcc5e0b6e74a94209feef475ba81559b3e0fa",
+  "dirty_status": " M algocom/README.md\n M package.json\n M scripts/setup-db.js\n M src/app.js\n?? algocom/lifecycle.py\n?? algocom/test_lifecycle.py\n?? benchmarks/\n?? db/migrations/\n?? docs/plans/\n?? scripts/migrate-db.js\n?? scripts/migrations.js\n?? src/consultations/\n?? src/research/\n?? test/edf-heap.test.js\n?? test/features.test.js\n",
+  "reps": 30,
+  "warmups": 5,
+  "seeds": [
+    1,
+    2,
+    3,
+    4,
+    5
+  ],
+  "source_hashes": {
+    "src/research/search.js": "9b763c45b78aceda3ca0048184a39058e118f0075a137aec492b646913087eab",
+    "src/consultations/edf-heap.js": "3312e6d84b5e77d6bf1c5cb6370a10645b407b336292e64699a6f47a040fa336",
+    "benchmarks/benchmark-features.js": "a4801c9ab03ef62128989dc76c25835eb0983d58fde54c288e37e5fdc15b1edf"
+  },
+  "scope": "Local PostgreSQL warm-cache query batches and Node heap; no API/load/SLA. Search seeds vary query sets, heap seeds vary inputs. Memory not profiled."
+}
