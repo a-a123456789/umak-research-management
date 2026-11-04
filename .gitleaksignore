@@ -1,0 +1,4 @@
+# These exact historical findings are SHA-256 source digests, verified against
+# the named files in commit 3ea6a9c, not credentials. Future commits stay scanned.
+3ea6a9c210487f2c933aa51ce4aa09e354196a2f:evidence/ias-plan/source-manifest.json:generic-api-key:43
+3ea6a9c210487f2c933aa51ce4aa09e354196a2f:evidence/ias-plan/source-manifest.json:generic-api-key:52
