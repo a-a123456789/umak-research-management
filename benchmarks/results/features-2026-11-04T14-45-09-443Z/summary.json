@@ -1,0 +1,392 @@
+[
+  {
+    "suite": "edf_heap_vs_scan",
+    "size": 100,
+    "seed": 1,
+    "proposed_median_ms": 0.0575409999999863,
+    "baseline_median_ms": 0.018292000000002417,
+    "speedup": 0.3178950661268795
+  },
+  {
+    "suite": "edf_heap_vs_scan",
+    "size": 100,
+    "seed": 2,
+    "proposed_median_ms": 0.02108400000000188,
+    "baseline_median_ms": 0.01745800000000486,
+    "speedup": 0.8280212483401301
+  },
+  {
+    "suite": "edf_heap_vs_scan",
+    "size": 100,
+    "seed": 3,
+    "proposed_median_ms": 0.0206670000000031,
+    "baseline_median_ms": 0.017583999999999378,
+    "speedup": 0.8508249866936053
+  },
+  {
+    "suite": "edf_heap_vs_scan",
+    "size": 100,
+    "seed": 4,
+    "proposed_median_ms": 0.021707999999989624,
+    "baseline_median_ms": 0.017917000000011285,
+    "speedup": 0.8253639211359798
+  },
+  {
+    "suite": "edf_heap_vs_scan",
+    "size": 100,
+    "seed": 5,
+    "proposed_median_ms": 0.019541000000003805,
+    "baseline_median_ms": 0.017291000000000167,
+    "speedup": 0.8848574791462464
+  },
+  {
+    "suite": "edf_heap_vs_scan",
+    "size": 1000,
+    "seed": 1,
+    "proposed_median_ms": 0.3712500000000034,
+    "baseline_median_ms": 1.2297909999999774,
+    "speedup": 3.312568350168259
+  },
+  {
+    "suite": "edf_heap_vs_scan",
+    "size": 1000,
+    "seed": 2,
+    "proposed_median_ms": 0.3256250000000023,
+    "baseline_median_ms": 1.1987500000000182,
+    "speedup": 3.6813819577735427
+  },
+  {
+    "suite": "edf_heap_vs_scan",
+    "size": 1000,
+    "seed": 3,
+    "proposed_median_ms": 0.2980000000000018,
+    "baseline_median_ms": 1.1631249999999795,
+    "speedup": 3.9031040268455452
+  },
+  {
+    "suite": "edf_heap_vs_scan",
+    "size": 1000,
+    "seed": 4,
+    "proposed_median_ms": 0.3045829999999796,
+    "baseline_median_ms": 1.184082999999987,
+    "speedup": 3.8875544597041403
+  },
+  {
+    "suite": "edf_heap_vs_scan",
+    "size": 1000,
+    "seed": 5,
+    "proposed_median_ms": 0.2989159999999629,
+    "baseline_median_ms": 1.1944579999999974,
+    "speedup": 3.9959654217243163
+  },
+  {
+    "suite": "edf_heap_vs_scan",
+    "size": 10000,
+    "seed": 1,
+    "proposed_median_ms": 6.044415999999728,
+    "baseline_median_ms": 122.59858399999985,
+    "speedup": 20.28294941976286
+  },
+  {
+    "suite": "edf_heap_vs_scan",
+    "size": 10000,
+    "seed": 2,
+    "proposed_median_ms": 6.090041000000383,
+    "baseline_median_ms": 123.45125000000007,
+    "speedup": 20.271004743644962
+  },
+  {
+    "suite": "edf_heap_vs_scan",
+    "size": 10000,
+    "seed": 3,
+    "proposed_median_ms": 5.863041999999041,
+    "baseline_median_ms": 124.64116699999977,
+    "speedup": 21.25878801482578
+  },
+  {
+    "suite": "edf_heap_vs_scan",
+    "size": 10000,
+    "seed": 4,
+    "proposed_median_ms": 5.991500000000087,
+    "baseline_median_ms": 125.95712500000081,
+    "speedup": 21.022636234665605
+  },
+  {
+    "suite": "edf_heap_vs_scan",
+    "size": 10000,
+    "seed": 5,
+    "proposed_median_ms": 5.8596660000002885,
+    "baseline_median_ms": 123.09375,
+    "speedup": 21.006956710500894
+  },
+  {
+    "suite": "trigram_public",
+    "size": 1000,
+    "seed": 1,
+    "proposed_median_ms": 18.53900000000067,
+    "baseline_median_ms": 17.148292000001675,
+    "speedup": 0.9249847348832761,
+    "queries_per_batch": 6
+  },
+  {
+    "suite": "trigram_duplicates",
+    "size": 1000,
+    "seed": 1,
+    "proposed_median_ms": 16.945457999998325,
+    "baseline_median_ms": 15.533167000001413,
+    "speedup": 0.9166566639864764,
+    "queries_per_batch": 6
+  },
+  {
+    "suite": "trigram_public",
+    "size": 1000,
+    "seed": 2,
+    "proposed_median_ms": 18.442583000000013,
+    "baseline_median_ms": 16.97179099999994,
+    "speedup": 0.9202502165775763,
+    "queries_per_batch": 6
+  },
+  {
+    "suite": "trigram_duplicates",
+    "size": 1000,
+    "seed": 2,
+    "proposed_median_ms": 16.67241699999795,
+    "baseline_median_ms": 15.314875000000029,
+    "speedup": 0.918575573055899,
+    "queries_per_batch": 6
+  },
+  {
+    "suite": "trigram_public",
+    "size": 1000,
+    "seed": 3,
+    "proposed_median_ms": 18.37958399999843,
+    "baseline_median_ms": 17.003082999999606,
+    "speedup": 0.925107064447218,
+    "queries_per_batch": 6
+  },
+  {
+    "suite": "trigram_duplicates",
+    "size": 1000,
+    "seed": 3,
+    "proposed_median_ms": 16.921125000000757,
+    "baseline_median_ms": 15.592957999997452,
+    "speedup": 0.9215083512471396,
+    "queries_per_batch": 6
+  },
+  {
+    "suite": "trigram_public",
+    "size": 1000,
+    "seed": 4,
+    "proposed_median_ms": 18.166667000001326,
+    "baseline_median_ms": 16.786165999998047,
+    "speedup": 0.9240091206602082,
+    "queries_per_batch": 6
+  },
+  {
+    "suite": "trigram_duplicates",
+    "size": 1000,
+    "seed": 4,
+    "proposed_median_ms": 16.74866699999984,
+    "baseline_median_ms": 15.359083999996074,
+    "speedup": 0.9170332182254396,
+    "queries_per_batch": 6
+  },
+  {
+    "suite": "trigram_public",
+    "size": 1000,
+    "seed": 5,
+    "proposed_median_ms": 18.181166999995185,
+    "baseline_median_ms": 16.781999999999243,
+    "speedup": 0.9230430587873533,
+    "queries_per_batch": 6
+  },
+  {
+    "suite": "trigram_duplicates",
+    "size": 1000,
+    "seed": 5,
+    "proposed_median_ms": 16.702166000002762,
+    "baseline_median_ms": 15.318208000004233,
+    "speedup": 0.9171390105930991,
+    "queries_per_batch": 6
+  },
+  {
+    "suite": "trigram_public",
+    "size": 10000,
+    "seed": 1,
+    "proposed_median_ms": 122.32783400000335,
+    "baseline_median_ms": 163.9283329999962,
+    "speedup": 1.3400738625028847,
+    "queries_per_batch": 6
+  },
+  {
+    "suite": "trigram_duplicates",
+    "size": 10000,
+    "seed": 1,
+    "proposed_median_ms": 107.09533399999782,
+    "baseline_median_ms": 152.75695799999812,
+    "speedup": 1.4263642709214692,
+    "queries_per_batch": 6
+  },
+  {
+    "suite": "trigram_public",
+    "size": 10000,
+    "seed": 2,
+    "proposed_median_ms": 124.70275000000402,
+    "baseline_median_ms": 167.28566700000374,
+    "speedup": 1.3414753644165693,
+    "queries_per_batch": 6
+  },
+  {
+    "suite": "trigram_duplicates",
+    "size": 10000,
+    "seed": 2,
+    "proposed_median_ms": 107.35958299999766,
+    "baseline_median_ms": 153.83787499999744,
+    "speedup": 1.4329216889748986,
+    "queries_per_batch": 6
+  },
+  {
+    "suite": "trigram_public",
+    "size": 10000,
+    "seed": 3,
+    "proposed_median_ms": 123.50779200000397,
+    "baseline_median_ms": 165.18887499999255,
+    "speedup": 1.3374773552747767,
+    "queries_per_batch": 6
+  },
+  {
+    "suite": "trigram_duplicates",
+    "size": 10000,
+    "seed": 3,
+    "proposed_median_ms": 109.70395799999824,
+    "baseline_median_ms": 156.56325000000652,
+    "speedup": 1.427143130059255,
+    "queries_per_batch": 6
+  },
+  {
+    "suite": "trigram_public",
+    "size": 10000,
+    "seed": 4,
+    "proposed_median_ms": 126.02895799999533,
+    "baseline_median_ms": 167.71708400000352,
+    "speedup": 1.3307821207250619,
+    "queries_per_batch": 6
+  },
+  {
+    "suite": "trigram_duplicates",
+    "size": 10000,
+    "seed": 4,
+    "proposed_median_ms": 110.67266599999857,
+    "baseline_median_ms": 157.66520799999125,
+    "speedup": 1.42460838523573,
+    "queries_per_batch": 6
+  },
+  {
+    "suite": "trigram_public",
+    "size": 10000,
+    "seed": 5,
+    "proposed_median_ms": 124.66404099999636,
+    "baseline_median_ms": 166.90962500000023,
+    "speedup": 1.3388754580802102,
+    "queries_per_batch": 6
+  },
+  {
+    "suite": "trigram_duplicates",
+    "size": 10000,
+    "seed": 5,
+    "proposed_median_ms": 109.64020799999707,
+    "baseline_median_ms": 155.2546250000014,
+    "speedup": 1.4160373081379556,
+    "queries_per_batch": 6
+  },
+  {
+    "suite": "trigram_public",
+    "size": 100000,
+    "seed": 1,
+    "proposed_median_ms": 357.9607090000063,
+    "baseline_median_ms": 877.8909580000036,
+    "speedup": 2.45247854283356,
+    "queries_per_batch": 6
+  },
+  {
+    "suite": "trigram_duplicates",
+    "size": 100000,
+    "seed": 1,
+    "proposed_median_ms": 427.5036670000118,
+    "baseline_median_ms": 821.5199589999975,
+    "speedup": 1.921667630981923,
+    "queries_per_batch": 6
+  },
+  {
+    "suite": "trigram_public",
+    "size": 100000,
+    "seed": 2,
+    "proposed_median_ms": 349.92708299998776,
+    "baseline_median_ms": 860.7007079999894,
+    "speedup": 2.459657310949034,
+    "queries_per_batch": 6
+  },
+  {
+    "suite": "trigram_duplicates",
+    "size": 100000,
+    "seed": 2,
+    "proposed_median_ms": 420.86583300004713,
+    "baseline_median_ms": 802.2160000000149,
+    "speedup": 1.9061086386642487,
+    "queries_per_batch": 6
+  },
+  {
+    "suite": "trigram_public",
+    "size": 100000,
+    "seed": 3,
+    "proposed_median_ms": 370.14233400003286,
+    "baseline_median_ms": 914.4915829999954,
+    "speedup": 2.4706484479019744,
+    "queries_per_batch": 6
+  },
+  {
+    "suite": "trigram_duplicates",
+    "size": 100000,
+    "seed": 3,
+    "proposed_median_ms": 443.3005000000121,
+    "baseline_median_ms": 867.7706659999676,
+    "speedup": 1.9575224165096676,
+    "queries_per_batch": 6
+  },
+  {
+    "suite": "trigram_public",
+    "size": 100000,
+    "seed": 4,
+    "proposed_median_ms": 382.06429100001696,
+    "baseline_median_ms": 972.7490000000107,
+    "speedup": 2.546034850453919,
+    "queries_per_batch": 6
+  },
+  {
+    "suite": "trigram_duplicates",
+    "size": 100000,
+    "seed": 4,
+    "proposed_median_ms": 447.9187089999905,
+    "baseline_median_ms": 866.2419170000358,
+    "speedup": 1.9339266246189644,
+    "queries_per_batch": 6
+  },
+  {
+    "suite": "trigram_public",
+    "size": 100000,
+    "seed": 5,
+    "proposed_median_ms": 391.2160829999484,
+    "baseline_median_ms": 973.2584159999387,
+    "speedup": 2.487777109102304,
+    "queries_per_batch": 6
+  },
+  {
+    "suite": "trigram_duplicates",
+    "size": 100000,
+    "seed": 5,
+    "proposed_median_ms": 437.0672500000801,
+    "baseline_median_ms": 858.0642499999376,
+    "speedup": 1.9632316308297644,
+    "queries_per_batch": 6
+  }
+]

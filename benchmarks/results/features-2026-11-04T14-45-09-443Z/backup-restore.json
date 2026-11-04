@@ -1,0 +1,15 @@
+{
+  "result": "PASS",
+  "tables_compared": [
+    "users",
+    "research_records",
+    "sessions",
+    "consents",
+    "deletion_requests",
+    "audit_logs",
+    "consultation_tickets",
+    "schema_migrations"
+  ],
+  "method": "Full ordered row comparison after pg_dump/pg_restore",
+  "limitations": "Quiescent synthetic database; not a production RPO/RTO, encrypted backup, or deletion replay proof."
+}

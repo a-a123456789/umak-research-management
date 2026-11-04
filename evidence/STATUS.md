@@ -14,3 +14,12 @@ Native GitHub secret scanning/push protection returned HTTP 422 unavailable for 
 ## Submission correction status
 
 Prior integration PR #3 merged as `bbe0a73`; both main checks passed and normal protection was restored. See https://github.com/a-a123456789/umak-research-management/pull/3 . The current correction adds full worker-output validation, schemas and report/deck coverage. See [correction PR #4](https://github.com/a-a123456789/umak-research-management/pull/4) and [correction evidence](corrections/README.md) for commit-specific checks and the merge/protection completion record; earlier checks do not validate later edits.
+
+## 4 November 2026 feature update
+
+Trigram search and consultation EDF ticketing are now implemented, with 27 backend
+and 24 Python tests passing locally. New algorithm/database-query measurements,
+raw samples, migration/backfill checks and eight-table backup verification are in
+[the feature evidence report](FEATURES_2026-11-04.md). This is local uncommitted
+work, not a new merged PR or remote CI claim. Existing dependency audit advisories
+remain; refer to that report for the exact verification limits.

@@ -1,3 +1,5 @@
+import {parseSearch,searchResearch} from './research/search.js';
+import {consultationRouter} from './consultations/routes.js';
 import {createAlgorithmRunner} from './algorithm.js';
 import express from 'express';
 import helmet from 'helmet';
@@ -44,25 +46,31 @@ export function createApp(db, {algorithmRunner=createAlgorithmRunner()}={}) {
   app.post('/api/v1/auth/logout',auth,async(req,res)=>{
     await db.query('DELETE FROM sessions WHERE token_hash=$1',[tokenHash(req.get('authorization').slice(7))]);res.sendStatus(204);
   });
+  app.use('/api/v1/consultations',consultationRouter(db,auth,staff));
   app.post('/api/v1/research/search',async(req,res)=>{
-    const keyword=req.body?.keyword;
-    if (typeof keyword!=='string' || keyword.length>200) return res.status(400).json({error:'keyword must be a string of at most 200 characters'});
-    const result=await db.query("SELECT id,title,abstract,status FROM research_records WHERE status='Approved' AND title ILIKE $1 ORDER BY id LIMIT 100",[`%${keyword}%`]);
-    res.json(result.rows);
+    const args=parseSearch(req.body);
+    if(!args)return res.status(400).json({error:'Invalid search parameters'});
+    res.json(await searchResearch(db,args));
+  });
+  app.post('/api/v1/research/duplicates',auth,staff,async(req,res)=>{
+    const args=parseSearch(req.body,{duplicates:true});
+    if(!args)return res.status(400).json({error:'Invalid duplicate search parameters'});
+    res.json(await searchResearch(db,args,{duplicates:true}));
   });
   app.get('/api/v1/research/:id',auth,async(req,res)=>{
     if (!isId(req.params.id)) return res.status(400).json({error:'Invalid ID'});
-    const result=await db.query("SELECT id,author_id,title,abstract,status FROM research_records WHERE id=$1 AND (author_id=$2 OR $3='staff')",[req.params.id,req.user.id,req.user.role]);
+    const result=await db.query("SELECT id,author_id,title,abstract,status,research_year,department FROM research_records WHERE id=$1 AND (author_id=$2 OR $3='staff')",[req.params.id,req.user.id,req.user.role]);
     if (!result.rowCount) return res.status(404).json({error:'Record not found'});
     res.json(result.rows[0]);
   });
   app.post('/api/v1/research',auth,async(req,res)=>{
-    const {title,abstract=''}=req.body ?? {};
-    if (typeof title!=='string'||!title.trim()||title.length>200||typeof abstract!=='string'||abstract.length>4000||Object.keys(req.body).some(k=>!['title','abstract'].includes(k))) return res.status(400).json({error:'Invalid record'});
+    const {title,abstract='',research_year=null,department=null}=req.body ?? {};
+    if (typeof title!=='string'||!title.trim()||title.length>200||typeof abstract!=='string'||abstract.length>4000||Object.keys(req.body).some(k=>!['title','abstract','research_year','department'].includes(k))) return res.status(400).json({error:'Invalid record'});
+    if((research_year!==null&&(!Number.isInteger(research_year)||research_year<1900||research_year>9999))||(department!==null&&(typeof department!=='string'||!department.trim()||department.length>100)))return res.status(400).json({error:'Invalid research metadata'});
     const client=await db.connect();
     try {
       await client.query('BEGIN');
-      const r=await client.query("INSERT INTO research_records(author_id,title,abstract,status) VALUES($1,$2,$3,'Draft') RETURNING id,author_id,title,abstract,status",[req.user.id,title.trim(),abstract]);
+      const r=await client.query("INSERT INTO research_records(author_id,title,abstract,status,research_year,department) VALUES($1,$2,$3,'Draft',$4,$5) RETURNING id,author_id,title,abstract,status,research_year,department",[req.user.id,title.trim(),abstract,research_year,department]);
       await client.query("INSERT INTO audit_logs(actor_id,action) VALUES($1,'research.created')",[req.user.id]);
       await client.query('COMMIT');res.status(201).json(r.rows[0]);
     } catch(e) {await client.query('ROLLBACK');throw e;} finally {client.release();}

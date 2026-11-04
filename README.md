@@ -51,15 +51,15 @@ All nonpublic endpoints require `Authorization: Bearer <token>`.
 | GET /health | Public health response |
 | POST /api/v1/auth/login | `email`, `password`; returns one-hour opaque bearer token |
 | POST /api/v1/auth/logout | Authenticated; revokes current token |
-| POST /api/v1/research/search | Public; `keyword` string; approved records only |
+| POST /api/v1/research/search | Public; `keyword`, optional year/department/limit/offset; typo-tolerant approved records only |
 | GET /api/v1/research/:id | Record owner or staff; other records return 404 |
-| POST /api/v1/research | Authenticated; `title`, optional `abstract`; own Draft record |
+| POST /api/v1/research | Authenticated; `title`, optional `abstract`, `research_year`, `department`; own Draft record |
 | POST /api/v1/users/consent | `policy_version: "2026-10-v1"`, `choices: {institutional_analytics: false, email_notifications: false}` |
 | POST /api/v1/users/deletion-requests | Student; empty object; requests staff review |
 | POST /api/v1/admin/deletion-requests/:id/complete | Staff; `confirm_review: true`; synthetic hard deletion |
 | GET /api/v1/admin/audit-logs | Staff only; last 100 minimal audit events |
 
-No frontend, uploads, service-ticket workflow, SSO, Redis, cloud deployment or Turnitin integration is claimed.
+Consultation ticketing and PostgreSQL trigram search are implemented; see [search and scheduling API](docs/SEARCH_AND_CONSULTATIONS.md). No frontend, uploads, SSO, Redis, cloud deployment or Turnitin integration is claimed.
 
 ## Team and submission
 Read [team handoff](docs/TEAM_HANDOFF.md), [report corrections](docs/REPORT_CORRECTIONS.md), [privacy behavior](docs/PRIVACY.md), [controls](docs/CONTROLS.md), and [demo instructions](docs/DEMO.md).
@@ -82,3 +82,19 @@ The isolated `algocom/` core now includes DAG duration estimates. Staff can call
 Final report PDFs, editable Markdown and 14-slide PowerPoint decks: [submissions](submissions/README.md). See [completion and team handoff](docs/COMPLETION_CHECKLIST.md), [current evidence](evidence/STATUS.md), and [algorithm API contract](docs/ALGORITHM_API.md). The shared repository is `a-a123456789/umak-research-management`; `algocom/` remains independent of the IAS database.
 
 Next actions for every member: [concise handoff](docs/NEXT_STEPS.md). Financial evidence remains [external](docs/FINANCIAL_EVIDENCE_WORKSHEET.md).
+
+
+## Trigram search and consultation scheduling
+
+`db:setup` now applies versioned migrations before seeding. Existing installations
+can run `npm run db:migrate` using the owner connection; PostgreSQL `pg_trgm` must
+be available. This preserves existing research IDs and Draft/Approved visibility.
+Search adds typo matching and optional year/department filters. Staff can review
+possible duplicates including drafts. Consultation tickets support deadline order,
+atomic claims, versioned rescheduling, resolution and cancellation.
+
+The live queue uses PostgreSQL as its durable authority. An indexed EDF min-heap
+is implemented and benchmarked separately; it is not an authoritative per-server
+cache. See [API and guarantees](docs/SEARCH_AND_CONSULTATIONS.md) and
+[benchmark instructions](benchmarks/README.md). Password hashing and basic audit
+logging retain their existing implementations.

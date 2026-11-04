@@ -1,0 +1,29 @@
+{
+  "measured_utc": "2026-11-04T14:32:00.176414+00:00",
+  "python": "3.14.5 (main, May 10 2026, 10:21:34) [Clang 21.0.0 (clang-2100.0.123.102)]",
+  "platform": "macOS-26.5.2-arm64-arm-64bit-Mach-O",
+  "machine": "arm64",
+  "logical_cpus": 10,
+  "hash_seed": "0",
+  "commit": "f07dcc5e0b6e74a94209feef475ba81559b3e0fa",
+  "dirty_status": "?? algocom/lifecycle.py\n?? algocom/test_lifecycle.py\n?? benchmarks/\n?? docs/plans/\n",
+  "reps": 30,
+  "seeds": [
+    20261104,
+    20261105,
+    20261106,
+    20261107,
+    20261108
+  ],
+  "warmups": 5,
+  "timing": "perf_counter_ns; GC before each sample outside timer; randomized method order",
+  "memory": "separate single tracemalloc run; prebuilt inputs excluded; Python allocations, not RSS",
+  "scope": "Pure Python, no API/database/network/concurrency; synthetic data",
+  "source_sha256": {
+    "benchmarks/benchmark_models.py": "99fec7de17edd0f2d6ee64786beed28cc003f92bf06fd12c49093b78e8b3ee76",
+    "algocom/lifecycle.py": "5fced108849303dbfef01735c238e9b22840f775a41cbeca674925d0a4100e45",
+    "algocom/engine.py": "c1922fd3442db5a9cdd168ebc8b8bab6bb91f6457a2fc907f0d5a5945e4b842d",
+    "algocom/prototype.py": "39d73e93fef2e799c43b7b9ea71fc7687901616488c6efbd0db1b3f483e18f0b",
+    "algocom/bench.py": "37ce142a69aaa78069f50c15719993668138f74812fdfff2951723da044b3f5c"
+  }
+}

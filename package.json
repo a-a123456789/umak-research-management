@@ -15,7 +15,10 @@
     "check:secrets": "node scripts/scan-secrets.js",
     "check:static": "node scripts/static-check.js",
     "backup:verify": "node --env-file-if-exists=.env scripts/backup-restore.js",
-    "hooks:install": "git config core.hooksPath .githooks"
+    "hooks:install": "git config core.hooksPath .githooks",
+    "db:migrate": "node --env-file-if-exists=.env scripts/migrate-db.js",
+    "test:features:unit": "node --test test/edf-heap.test.js",
+    "bench:features": "node --env-file-if-exists=.env benchmarks/benchmark-features.js"
   },
   "dependencies": {
     "express": "^5.1.0",

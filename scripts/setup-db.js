@@ -1,4 +1,5 @@
 import pg from 'pg';
+import {migrate} from './migrations.js';
 import { readFileSync } from 'node:fs';
 import { hashPassword } from '../src/crypto.js';
 if (process.env.ALLOW_SYNTHETIC_SETUP !== 'yes') throw Error('Requires ALLOW_SYNTHETIC_SETUP=yes on a synthetic database');
@@ -15,6 +16,7 @@ try {
   // PostgreSQL utility statements cannot bind passwords; pass is restricted above.
   await db.query(`ALTER ROLE crm_app PASSWORD '${pass}'`);
   await db.query(readFileSync(new URL('../db/schema.sql',import.meta.url),'utf8'));
+  await migrate(db);
   for (const [id,email,role] of [[1,'student1@example.test','student'],[2,'student2@example.test','student'],[3,'staff@example.test','staff']]) {
     await db.query('INSERT INTO users(id,email,password_hash,role) VALUES($1,$2,$3,$4) ON CONFLICT(id) DO UPDATE SET password_hash=EXCLUDED.password_hash',[id,email,hashPassword(demo),role]);
   }
