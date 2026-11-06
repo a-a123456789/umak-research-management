@@ -1,0 +1,45 @@
+{
+  "missing_units": [
+    {
+      "surface": "src/app.js#HTTP routes",
+      "boundary": "src/app.js#auth/staff",
+      "subsystem": "src",
+      "attack_class": "Resource and file handling",
+      "starting_paths": [
+        "src/app.js",
+        "src/server.js",
+        "src/security/limiter.js",
+        "src/security/context.js",
+        "src/security/database-config.js",
+        "src/research/search.js",
+        "src/crypto.js",
+        "db/migrations/002_ias_controls.sql",
+        "scripts/privacy-maintenance.js"
+      ],
+      "selected_companion_blocks": [
+        "RESOURCE-EXHAUSTION-AND-AVAILABILITY.md#Core discipline",
+        "RESOURCE-EXHAUSTION-AND-AVAILABILITY.md#Pre-authentication work imbalance",
+        "RESOURCE-EXHAUSTION-AND-AVAILABILITY.md#Database and downstream query amplification",
+        "RESOURCE-EXHAUSTION-AND-AVAILABILITY.md#Unbounded buffering and cardinality",
+        "RESOURCE-EXHAUSTION-AND-AVAILABILITY.md#Detached work after cancellation",
+        "RESOURCE-EXHAUSTION-AND-AVAILABILITY.md#Worker, pool, and priority starvation",
+        "RESOURCE-EXHAUSTION-AND-AVAILABILITY.md#Universal moves",
+        "RESOURCE-EXHAUSTION-AND-AVAILABILITY.md#Validation rules"
+      ],
+      "excluded_blocks": [
+        {
+          "block": "RESOURCE-EXHAUSTION-AND-AVAILABILITY.md#Decompression and representation amplification",
+          "reason": "Manuscript expansion already storage-owned; inspect ordinary JSON admission only."
+        },
+        {
+          "block": "RESOURCE-EXHAUSTION-AND-AVAILABILITY.md#Quota-accounting scope and reset gaps",
+          "reason": "Existing API activation and storage upload retention candidates are peer-owned."
+        }
+      ],
+      "reason": "Fresh post-wave critic identified missing aggregate HTTP parser, public-search DB-pool admission/cancellation boundary."
+    }
+  ],
+  "reassign_ids": [],
+  "resolved_prior_leads": [],
+  "stop": false
+}
