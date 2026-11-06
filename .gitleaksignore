@@ -2,3 +2,9 @@
 # the named files in commit 3ea6a9c, not credentials. Future commits stay scanned.
 3ea6a9c210487f2c933aa51ce4aa09e354196a2f:evidence/ias-plan/source-manifest.json:generic-api-key:43
 3ea6a9c210487f2c933aa51ce4aa09e354196a2f:evidence/ias-plan/source-manifest.json:generic-api-key:52
+
+# Exact historical generic-api-key false positives in audit guidance prose.
+# These lines describe bridge permissions and account recovery; no credentials.
+# Scope stays limited to this commit, file, rule and line; future edits are scanned.
+a748be1c7d09c192e816ea460e282dacac000ceb:.agents/skills/security-audit/DESKTOP-MOBILE-AND-LOCAL-IPC.md:generic-api-key:36
+a748be1c7d09c192e816ea460e282dacac000ceb:.agents/skills/security-audit/WEB-PROTOCOL-AND-AUTH.md:generic-api-key:75
