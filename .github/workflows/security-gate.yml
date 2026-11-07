@@ -45,6 +45,10 @@ jobs:
           console.log(`::add-mask::${p}`);console.log(`::add-mask::${d}`);
           appendFileSync(process.env.GITHUB_ENV,`APP_DB_PASSWORD=${p}\nDEMO_PASSWORD=${d}\nDATABASE_URL=postgresql://crm_app:${p}@127.0.0.1:5432/crm_ias\n`);
           JS
+      - name: Verify skill provenance and admission policy
+        run: |
+          npm run check:skills
+          npm run test:skills
       - run: npm ci --ignore-scripts
       - run: npm audit --audit-level=high
       - run: npm run check:secrets
