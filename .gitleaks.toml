@@ -5,3 +5,11 @@ useDefault = true
 id = "ias-synthetic-demo"
 description = "Synthetic secret rejection evidence"
 regex = 'IAS_DEMO_SECRET_[A-Za-z0-9]{24}'
+
+[[rules]]
+id = "generic-api-key"
+[[rules.allowlists]]
+description = "Public upstream WEB-PROTOCOL-AND-AUTH.md SHA-256, verified by skill inventory"
+condition = "AND"
+paths = ['^security/skills/registry\.json$']
+regexes = ['^4f3066dffa23c5635859187be9b96c32f2aff29a688186b91ff0c63e47d62b5c$']

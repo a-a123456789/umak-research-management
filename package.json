@@ -26,7 +26,9 @@
     "backup:offsite": "node --env-file-if-exists=.env scripts/backup-offsite.js",
     "backup:restore:encrypted": "node --env-file-if-exists=.env scripts/restore-encrypted.js",
     "backup:freshness": "node --env-file-if-exists=.env scripts/backup-freshness.js",
-    "privacy:maintain": "node --env-file-if-exists=.env scripts/privacy-maintenance.js"
+    "privacy:maintain": "node --env-file-if-exists=.env scripts/privacy-maintenance.js",
+    "check:skills": "node scripts/check-skills.js",
+    "test:skills": "node --test test/skill-integrity.test.js"
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.1161.0",
