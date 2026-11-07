@@ -1,5 +1,7 @@
 # OWASP Agentic Skills Top 10 Assessment
 
+> **Current combined status:** See the [Overall Security Assessment and Remediation Report](OVERALL-SECURITY-ASSESSMENT.md) for both assessments, subsequent changes, verified Linux CI evidence, and outstanding work. Historical baseline statements below remain tied to their original review stage.
+
 Assessment date: 2026-11-07 (Asia/Manila)  
 Reviewed repository commit: `693f2edae511643546e460ff50257a710850b4f7`  
 Original assessment worktree: reported clean; this report was untracked at revision time  

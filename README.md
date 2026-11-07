@@ -10,6 +10,14 @@ This is a synthetic-data teaching implementation, not the complete university pl
 
 Repository: https://github.com/a-a123456789/umak-research-management
 
+## Security assessment reports
+
+Read the [Overall Security Assessment and Remediation Report](OVERALL-SECURITY-ASSESSMENT.md)
+for the combined Cloudflare-method and OWASP AST10 results, implemented changes,
+CI evidence, and remaining validation work. The original
+[application audit](00-INTERIM-SECURITY-AUDIT.md) and
+[OWASP assessment](OWASP-AST10-REPORT.md) retain their assessment snapshots.
+
 ## Start locally
 Requires Python 3.12+, Node 24, npm, Docker Compose (or an existing PostgreSQL 18 instance), and PostgreSQL 18 client tools for the backup exercise.
 

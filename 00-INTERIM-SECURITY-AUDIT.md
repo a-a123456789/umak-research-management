@@ -1,5 +1,7 @@
 # Interim security audit report
 
+> **Current combined status:** See the [Overall Security Assessment and Remediation Report](OVERALL-SECURITY-ASSESSMENT.md) for both assessments, subsequent changes, verified Linux CI evidence, and outstanding work. Historical baseline statements below remain tied to their original review stage.
+
 **Status: Interim — OWASP testing pending.** This report records the completed source-review pass. OWASP testing has not been performed; the overall security assessment remains open and this report is not the final assessment.
 
 ## Scope and reviewed state
