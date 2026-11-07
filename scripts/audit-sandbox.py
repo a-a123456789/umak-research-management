@@ -90,8 +90,14 @@ def run_check(source, harness, mode):
                 break
         selector.close()
         if reason:
-            docker('kill', name)
-        proc.wait(timeout=5)
+            # Disconnect the attach client before killing a noisy container.
+            # Otherwise Docker can block on a full stdout pipe during shutdown.
+            proc.stdout.close()
+            proc.terminate()
+            proc.wait(timeout=5)
+            subprocess.run(['docker', 'kill', name], capture_output=True, timeout=10)
+        else:
+            proc.wait(timeout=5)
         state = json.loads(docker('inspect', name).stdout)[0]['State']
         if state['Running']:
             raise ValueError('Container still running')
@@ -117,12 +123,16 @@ def run_check(source, harness, mode):
         if isinstance(exc, ValueError):
             result['configuration_error'] = str(exc)
     finally:
-        subprocess.run(['docker', 'rm', '--force', name], capture_output=True, timeout=15)
+        if proc and proc.stdout:
+            proc.stdout.close()
         if proc and proc.poll() is None:
             proc.kill()
             proc.wait(timeout=5)
-        if proc and proc.stdout:
-            proc.stdout.close()
+        try:
+            subprocess.run(['docker', 'rm', '--force', name], capture_output=True, timeout=15, check=True)
+        except (subprocess.SubprocessError, OSError):
+            result['passed'] = False
+            result['cleanup_failed'] = True
     return result
 
 
