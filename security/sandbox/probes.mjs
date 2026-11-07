@@ -30,7 +30,7 @@ if(mode==='boundaries'){
   const children=[];let denied=false;
   try{
     for(let i=0;i<100;i++){
-      const child=spawn('/bin/sleep',['10']);children.push(child);
+      const child=spawn('/bin/sleep',['10'],{stdio:'ignore'});children.push(child);
       await new Promise((res,rej)=>{child.once('spawn',res);child.once('error',e=>{if(e.code==='EAGAIN'){denied=true;res()}else rej(e)})});
       if(denied)break;
     }
