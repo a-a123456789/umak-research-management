@@ -47,3 +47,12 @@ They do not approve arbitrary commands, prove container-escape resistance, or
 establish another agent runtime's isolation. Changes to the launcher, probes,
 workflow or image require review and a fresh successful run. Do not switch the
 skill registry to universal runtime approval based on this limited harness.
+
+## Verified run
+
+[Run 42342595964](https://github.com/project-works-collab/umak-research-management/actions/runs/42342595964)
+passed all eight probes and the approved workload on 2026-11-07 in 30 seconds
+for the complete job. The source revision and bounded results are preserved in
+[evidence/8ac44ea.json](evidence/8ac44ea.json). The application security gate and
+algorithm checks also passed for that revision. These results apply to the
+recorded code/image/configuration, with the scope limitations above.

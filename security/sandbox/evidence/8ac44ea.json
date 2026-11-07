@@ -1,0 +1,107 @@
+{
+  "version": 1,
+  "image": "node@sha256:01d566e8d94d8c619591d78652babfccd3c6992a3dffa9ed5ab39e11cf6c70e9",
+  "status": "passed",
+  "checks": [
+    {
+      "check": "boundaries",
+      "passed": true,
+      "exit_code": 0,
+      "oom_killed": false,
+      "termination": "process_exit",
+      "output_bytes": 0,
+      "elapsed_seconds": 0.977
+    },
+    {
+      "check": "file-size",
+      "passed": true,
+      "exit_code": 0,
+      "oom_killed": false,
+      "termination": "process_exit",
+      "output_bytes": 0,
+      "elapsed_seconds": 0.135
+    },
+    {
+      "check": "disk",
+      "passed": true,
+      "exit_code": 0,
+      "oom_killed": false,
+      "termination": "process_exit",
+      "output_bytes": 0,
+      "elapsed_seconds": 0.159
+    },
+    {
+      "check": "processes",
+      "passed": true,
+      "exit_code": 0,
+      "oom_killed": false,
+      "termination": "process_exit",
+      "output_bytes": 0,
+      "elapsed_seconds": 0.225
+    },
+    {
+      "check": "memory",
+      "passed": true,
+      "exit_code": 137,
+      "oom_killed": true,
+      "termination": "process_exit",
+      "output_bytes": 0,
+      "elapsed_seconds": 0.352
+    },
+    {
+      "check": "cpu",
+      "passed": true,
+      "exit_code": 137,
+      "oom_killed": false,
+      "termination": "process_exit",
+      "output_bytes": 0,
+      "elapsed_seconds": 3.995
+    },
+    {
+      "check": "wall",
+      "passed": true,
+      "exit_code": 137,
+      "oom_killed": false,
+      "termination": "wall_limit",
+      "output_bytes": 0,
+      "elapsed_seconds": 2.063
+    },
+    {
+      "check": "output",
+      "passed": true,
+      "exit_code": 137,
+      "oom_killed": false,
+      "termination": "output_limit",
+      "output_bytes": 73728,
+      "elapsed_seconds": 0.158
+    },
+    {
+      "check": "workload",
+      "passed": true,
+      "exit_code": 0,
+      "oom_killed": false,
+      "termination": "process_exit",
+      "output_bytes": 201,
+      "elapsed_seconds": 0.179
+    }
+  ],
+  "scope": "isolation probes and dependency-free worker-result unit tests",
+  "limits": {
+    "memory_bytes": 268435456,
+    "cpu_cores": 0.5,
+    "cpu_seconds": 2,
+    "processes": 64,
+    "file_bytes": 8388608,
+    "scratch_bytes": 67108864,
+    "wall_seconds": 20,
+    "output_bytes": 65536
+  },
+  "source_ref": "8ac44ea6d199ba10a67e9770795b6318f30cf9f5",
+  "worktree_dirty": false,
+  "source_files": {
+    "package.json": "a5433dd465f907ae0702775691d24bf8a1468fd3b357468687953d9357b1837e",
+    "src/algorithm-result.js": "923105ff9a848b5679c9c92af8ea462dd18489f4b475d84c4da6cd166822aa4d",
+    "test/algorithm-result.test.js": "93c0e2a5055fb5fd3956f5fef35f6ad6b724128434d95febbb4bbc80e2378134"
+  },
+  "harness_sha256": "c9e3218198fbe7bf7d1da0a3080bf05ca2e28bd787ec16ae1c1077f8829f7b90"
+}

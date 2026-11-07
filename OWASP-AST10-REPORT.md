@@ -24,16 +24,25 @@ runner policy, or production deployment was inspected. Those facts are
 **UNVERIFIED**. Existing audit artifacts record that target execution was not
 run because the required OS-enforced sandbox controls were unavailable.
 
-## Linux sandbox implementation follow-up
+## Linux sandbox implementation and verified CI evidence
 
-A manually dispatchable Linux workflow and host-side Docker launcher are now
-implemented under `.github/workflows/audit-sandbox.yml`,
-`scripts/audit-sandbox.py`, and `security/sandbox/`. The launcher gates a fixed,
-dependency-free unit-test workload on negative isolation/resource probes and
-retains bounded host-generated receipts. This is scoped execution evidence,
-not general approval of the audit skill or other agent runtimes. Local launcher
-unit tests pass; live CI status must be evaluated from its receipt and workflow
-result before treating AST03/AST06 runtime controls as verified for that run.
+The Linux workflow and host-side Docker launcher are implemented under
+`.github/workflows/audit-sandbox.yml`, `scripts/audit-sandbox.py`, and
+`security/sandbox/`. On 2026-11-07, [CI run 42342595964](https://github.com/project-works-collab/umak-research-management/actions/runs/42342595964)
+passed all eight negative isolation/resource probes and the fixed,
+dependency-free worker-result test workload. The host-generated receipt is
+retained at `security/sandbox/evidence/8ac44ea.json` and records the reviewed
+source revision, exact input hashes, immutable image digest, limits and results.
+The existing security gate and algorithm checks also passed at that revision.
+
+AST03 and AST06 now have **SATISFIED evidence for this specific Linux harness,
+image, fixed workload and run**: filesystem/environment/egress boundaries,
+file-size/disk/process/memory/CPU limits, wall timeout and output overflow were
+exercised. General skill execution, other platforms, arbitrary commands, and
+full application integration workloads remain **UNVERIFIED**. The general
+runtime block in the skill registry is intentionally retained. CI artifacts and
+the checked-in receipt are evidence, not independently tamper-evident logs.
+No publisher signature or semantic behavioral-scanner coverage is claimed.
 
 ## Remediation update — 2026-11-07
 
