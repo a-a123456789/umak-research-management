@@ -1,0 +1,306 @@
+{
+  "run_id": "run-1",
+  "repo": "umak-research-management",
+  "target": "/Users/anjelobenedictarnaez/umak-research-management",
+  "source_ref": {
+    "commit": "d44e926c1405be27041bf4c93043f1956d06d6a6",
+    "dirty": true,
+    "status": [
+      "?? .agents/skills/security-audit/AI-AND-LLM.md",
+      "?? .agents/skills/security-audit/ATTACK-CLASSES.md",
+      "?? .agents/skills/security-audit/CLIENT-SIDE.md",
+      "?? .agents/skills/security-audit/CLOUD-AND-DEPLOYMENT.md",
+      "?? .agents/skills/security-audit/DATA-ISOLATION-AND-LIFECYCLE.md",
+      "?? .agents/skills/security-audit/DESKTOP-MOBILE-AND-LOCAL-IPC.md",
+      "?? .agents/skills/security-audit/HUNTING.md",
+      "?? .agents/skills/security-audit/MEMORY-SAFETY-AND-BINARY.md",
+      "?? .agents/skills/security-audit/PROTOCOLS-RPC-AND-MESSAGING.md",
+      "?? .agents/skills/security-audit/RECONNAISSANCE.md",
+      "?? .agents/skills/security-audit/RESOURCE-EXHAUSTION-AND-AVAILABILITY.md",
+      "?? .agents/skills/security-audit/SKILL.md",
+      "?? .agents/skills/security-audit/SUPPLY-CHAIN-AND-RELEASE.md",
+      "?? .agents/skills/security-audit/VALIDATION-AND-REPORTING.md",
+      "?? .agents/skills/security-audit/WEB-PROTOCOL-AND-AUTH.md",
+      "?? .agents/skills/security-audit/report-schema.json",
+      "?? .agents/skills/security-audit/validate-coverage-ledger.cjs",
+      "?? .agents/skills/security-audit/validate-coverage-ledger.test.cjs",
+      "?? .agents/skills/security-audit/validate-findings.cjs",
+      "?? .agents/skills/security-audit/validate-findings.test.cjs",
+      "?? skills-lock.json"
+    ]
+  },
+  "profile": "standard",
+  "scope_paths": [
+    "."
+  ],
+  "budget": null,
+  "execution_policy": "sandboxed-source-and-local-only",
+  "selected_companion_files": [
+    "DATA-ISOLATION-AND-LIFECYCLE.md",
+    "WEB-PROTOCOL-AND-AUTH.md",
+    "RESOURCE-EXHAUSTION-AND-AVAILABILITY.md",
+    "CLOUD-AND-DEPLOYMENT.md",
+    "DESKTOP-MOBILE-AND-LOCAL-IPC.md",
+    "SUPPLY-CHAIN-AND-RELEASE.md"
+  ],
+  "prior_run_paths": [],
+  "shared_file_owners": {
+    "all": "parent"
+  },
+  "run_status": "complete",
+  "uncommitted_files": [
+    {
+      "path": ".agents/skills/security-audit/AI-AND-LLM.md",
+      "sha256": "7335a95c43554eadefcf03ece639291bb0e038c398a179299e3887ffe06bd2ef",
+      "size": 10617
+    },
+    {
+      "path": ".agents/skills/security-audit/ATTACK-CLASSES.md",
+      "sha256": "3ee4f00c6e8c9dcf6dd02dd5ac2a4ceb322e2085f3e9fbe79cf0c6330bc7ef83",
+      "size": 15695
+    },
+    {
+      "path": ".agents/skills/security-audit/CLIENT-SIDE.md",
+      "sha256": "613f6b98f86083e045525c5b60154ffdab122bac35f1e05eb17488e6e453370c",
+      "size": 8594
+    },
+    {
+      "path": ".agents/skills/security-audit/CLOUD-AND-DEPLOYMENT.md",
+      "sha256": "3c80f3088be22345e07b057c056d6ed99fe2b0304f794398964f7ccd5a496ca3",
+      "size": 8291
+    },
+    {
+      "path": ".agents/skills/security-audit/DATA-ISOLATION-AND-LIFECYCLE.md",
+      "sha256": "307dcb3e24d292715c4a041190e7bb135646a37eb6187619ae01d000a634a4ad",
+      "size": 7798
+    },
+    {
+      "path": ".agents/skills/security-audit/DESKTOP-MOBILE-AND-LOCAL-IPC.md",
+      "sha256": "58eae8ee0ca6a46611c501ec5a3ab47fdff88dd7db0d8d74789bbf8bb19d8cb2",
+      "size": 8739
+    },
+    {
+      "path": ".agents/skills/security-audit/HUNTING.md",
+      "sha256": "71c121decea1322c47c718f6e110f1a892980bb4266bd7ac55ef043a213ade09",
+      "size": 22446
+    },
+    {
+      "path": ".agents/skills/security-audit/MEMORY-SAFETY-AND-BINARY.md",
+      "sha256": "7c8b0dccfb35315cca2455509674d49632b2fe37e1f3aac16c1a496a7e9924a7",
+      "size": 10513
+    },
+    {
+      "path": ".agents/skills/security-audit/PROTOCOLS-RPC-AND-MESSAGING.md",
+      "sha256": "8b73816fa5b3697c9c40977f0c836b40f01d6e81929ff2720fe83ce089e9a619",
+      "size": 7483
+    },
+    {
+      "path": ".agents/skills/security-audit/RECONNAISSANCE.md",
+      "sha256": "02ca887aca84de8ae137f1891bd2f0a54f28d3fa6da92a27f54734382b3381a2",
+      "size": 15902
+    },
+    {
+      "path": ".agents/skills/security-audit/RESOURCE-EXHAUSTION-AND-AVAILABILITY.md",
+      "sha256": "4326fab5c92a0b4c420a70196254040105cd794026562130b59bf1a6db3e4baa",
+      "size": 7476
+    },
+    {
+      "path": ".agents/skills/security-audit/SKILL.md",
+      "sha256": "5e3e96a1e438d8f35fef0a1e38f02d4f00e2bdf910401b7dfe00e6779c6dac85",
+      "size": 22026
+    },
+    {
+      "path": ".agents/skills/security-audit/SUPPLY-CHAIN-AND-RELEASE.md",
+      "sha256": "f372e919940e335468ba1ae09f99026c3986a345f7fe26f8068f132e199f52a5",
+      "size": 7258
+    },
+    {
+      "path": ".agents/skills/security-audit/VALIDATION-AND-REPORTING.md",
+      "sha256": "b892470cb89bb31f33403e050d4bdfbe2cdaef940ade1496fa65e32b2e129449",
+      "size": 17843
+    },
+    {
+      "path": ".agents/skills/security-audit/WEB-PROTOCOL-AND-AUTH.md",
+      "sha256": "4f3066dffa23c5635859187be9b96c32f2aff29a688186b91ff0c63e47d62b5c",
+      "size": 12300
+    },
+    {
+      "path": ".agents/skills/security-audit/report-schema.json",
+      "sha256": "6575c9de4a62255699ea052ebf9a49ebfb373a32891bcd89af6f55cc84b35519",
+      "size": 14494
+    },
+    {
+      "path": ".agents/skills/security-audit/validate-coverage-ledger.cjs",
+      "sha256": "2eb280bd2e33c002916f86db9b29f9edfedb6454e5db973c766290465b868ac8",
+      "size": 33522
+    },
+    {
+      "path": ".agents/skills/security-audit/validate-coverage-ledger.test.cjs",
+      "sha256": "cfb9df26b03469a4279a70e7664a2a5434dd6f8c2c204e91f9b0aeb9dd71e648",
+      "size": 28483
+    },
+    {
+      "path": ".agents/skills/security-audit/validate-findings.cjs",
+      "sha256": "e85f232e36bfac0f866f244da50376692d6b45c690beadcb00608b0e6c8b5283",
+      "size": 28806
+    },
+    {
+      "path": ".agents/skills/security-audit/validate-findings.test.cjs",
+      "sha256": "b92001117a92c4161d43777a0ba2fa182a8a4d97f2304cc8c0cee5331497b73b",
+      "size": 26384
+    },
+    {
+      "path": "skills-lock.json",
+      "sha256": "faea08213040cc69d6141aa8288b71c5b3b39a2778c30593c623b8547be23861",
+      "size": 291
+    }
+  ],
+  "sandbox_preflight": {
+    "platform": "Darwin",
+    "available": "/usr/bin/sandbox-exec",
+    "unavailable_commands": [
+      "docker",
+      "podman",
+      "bwrap"
+    ],
+    "target_execution": "prohibited",
+    "missing_controls": [
+      "No configured OS-enforced memory, process-count and scratch disk quota limits; sandbox-exec alone does not establish all required resource bounds."
+    ],
+    "services": "psql client available; no disposable service started or shared service contacted"
+  },
+  "companion_exclusions": {
+    "AI-AND-LLM.md": "No model/agent runtime in application",
+    "MEMORY-SAFETY-AND-BINARY.md": "No repository-owned native unsafe parser/runtime",
+    "CLIENT-SIDE.md": "No browser UI/service worker/DOM authorization boundary",
+    "PROTOCOLS-RPC-AND-MESSAGING.md": "No custom broker/RPC identity; fixed worker/scanner framing covered by ordinary classes"
+  },
+  "plan_estimate": {
+    "baseline_recon_invocations": 4,
+    "units": 31,
+    "hunter_assignments": 8,
+    "mandatory_critics_minimum": 3,
+    "verifiers": "two independent passes for each candidate",
+    "budget": null
+  },
+  "source_manifest": "source-manifest.json",
+  "baseline_recon_assignments": [
+    "recon_product (Phase1a)",
+    "recon_controls (Phase1b)",
+    "recon_inputs (Phase1c)",
+    "recon_product separate invocation (Phase1d)"
+  ],
+  "execution_policy_details": {
+    "target_code_executed": false,
+    "network_used": false,
+    "services_started": false,
+    "artifact_allowlist": [],
+    "artifact_promotion": "not required; no execution artifacts",
+    "synthetic_data": "planned fixtures only; no runtime fixtures processed",
+    "credentials": "not accessed; ambient environment not captured"
+  },
+  "agent_capacity": {
+    "concurrent_slots": 4,
+    "temporary_refusals": "spawn_agent returned agent thread limit reached while the three child contexts were active",
+    "post_wave_critic": "fresh context post_wave_critic successfully created after hunter assignments completed",
+    "independence": "Fresh-to-candidate reviewers are separate from hunters; final verifier differs from candidate verifier for each fingerprint. Contexts reused only across different fingerprints."
+  },
+  "coverage_waves": [
+    {
+      "wave": 1,
+      "hunter_assignments": 7,
+      "critic": "post_wave_critic",
+      "accepted_missing_units": 1
+    },
+    {
+      "wave": 2,
+      "hunter_assignments": 1,
+      "status": "reviewed",
+      "post_wave_critic": "post_wave_2_critic",
+      "accepted_missing_units": 0
+    }
+  ],
+  "skill_directory": "/Users/anjelobenedictarnaez/umak-research-management/.agents/skills/security-audit",
+  "date": "2026-11-06",
+  "timezone": "Asia/Manila",
+  "prior_run_use": {
+    "compatible_ledgers": [],
+    "carried_confirmations": [],
+    "changed_source_revalidations": []
+  },
+  "assignment_owners": {
+    "hunter_api": "recon_product",
+    "hunter_database": "recon_controls",
+    "hunter_storage": "recon_inputs",
+    "hunter_workers": "recon_product",
+    "hunter_backup": "recon_controls",
+    "hunter_android": "recon_inputs",
+    "hunter_ci": "recon_controls",
+    "hunter_api_resources": "hunter_api_resources"
+  },
+  "final_clean_critic": "final_clean_critic",
+  "independent_review_map": [
+    {
+      "fingerprint": "public-search-definer-materialization-shared-pool",
+      "hunter": "hunter_api_resources",
+      "phase3": "candidate_verifier_1",
+      "phase3_context": "candidate_verifier_1",
+      "phase5": "record_verifier_1",
+      "phase5_context": "candidate_verifier_2"
+    },
+    {
+      "fingerprint": "src/app.js:activation-shared-account-lockout",
+      "hunter": "hunter_api",
+      "phase3": "candidate_verifier_2_retry",
+      "phase3_context": "post_wave_critic",
+      "phase5": "record_verifier_2",
+      "phase5_context": "candidate_verifier_1"
+    },
+    {
+      "fingerprint": "src/storage/routes.js:compressed-body-abort-upload-slot-retention",
+      "hunter": "hunter_storage",
+      "phase3": "candidate_verifier_3",
+      "phase3_context": "candidate_verifier_1",
+      "phase5": "record_verifier_3",
+      "phase5_context": "post_wave_critic"
+    },
+    {
+      "fingerprint": "src/storage/validate.js:pdf-object-stream-expanded-bytes-unbounded",
+      "hunter": "hunter_storage/hunter_workers",
+      "phase3": "candidate_verifier_4",
+      "phase3_context": "candidate_verifier_2",
+      "phase5": "record_verifier_4",
+      "phase5_context": "candidate_verifier_1"
+    }
+  ],
+  "discarded_review_responses": [
+    {
+      "agent_id": "candidate_verifier_2",
+      "candidate": "src/app.js:activation-shared-account-lockout",
+      "reason": "Schema/semantic validation rejected intermediate trace kind sink; response discarded without parent repair and independent new reviewer candidate_verifier_2_retry returned valid record."
+    }
+  ],
+  "reviewer_context_reuse": "Reviewer contexts handled different fingerprints in separate assignments. For every final record, hunter, candidate verifier and final verifier are different reviewers. No reviewer received another verifier conclusion for the same fingerprint.",
+  "completed_at_utc": "2026-11-06T15:49:17.592841+00:00",
+  "completion_meaning": "All workflow phases, independently verified records, reports and both validators completed. Source-only coverage has14 blocked units and no target execution; no exhaustive or deployed-security claim.",
+  "final_counts": {
+    "coverage_units": 31,
+    "source_covered": 12,
+    "blocked": 14,
+    "candidate_linked": 5,
+    "deferred": 0,
+    "confirmed": 0,
+    "needs_validation": 4,
+    "rejected": 0
+  },
+  "agent_invocations": {
+    "reconnaissance": 4,
+    "hunters": 8,
+    "coverage_critics": 3,
+    "candidate_validation": 5,
+    "record_verification": 4,
+    "source_result_persistence_only": 1,
+    "total": 25,
+    "note": "Failed spawn attempts did not create assignments. One candidate-validation response discarded; its retry counted."
+  }
+}

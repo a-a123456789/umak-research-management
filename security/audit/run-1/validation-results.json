@@ -1,0 +1,24 @@
+[
+  {
+    "command": [
+      "node",
+      "/Users/anjelobenedictarnaez/umak-research-management/.agents/skills/security-audit/validate-findings.cjs",
+      "/Users/anjelobenedictarnaez/security-audit-skill/umak-research-management/run-1/findings.json"
+    ],
+    "exit_code": 0,
+    "stdout": "PASS: 4 findings valid",
+    "stderr": "",
+    "meaning": "audit artifact schema/semantic consistency only; no target application execution"
+  },
+  {
+    "command": [
+      "node",
+      "/Users/anjelobenedictarnaez/umak-research-management/.agents/skills/security-audit/validate-coverage-ledger.cjs",
+      "/Users/anjelobenedictarnaez/security-audit-skill/umak-research-management/run-1/coverage-ledger.json"
+    ],
+    "exit_code": 0,
+    "stdout": "PASS: 31 coverage units valid",
+    "stderr": "",
+    "meaning": "audit artifact schema/semantic consistency only; no target application execution"
+  }
+]

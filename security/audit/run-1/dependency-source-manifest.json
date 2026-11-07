@@ -1,0 +1,62 @@
+[
+  {
+    "path": "node_modules/body-parser/lib/types/raw.js",
+    "sha256": "4004d7e49853d2293e6f1dd1101a17cf61d7ffd072030810a140111750dd33bc",
+    "size": 805,
+    "provenance": "ignored local installed dependency; not verified against lock integrity"
+  },
+  {
+    "path": "node_modules/body-parser/lib/read.js",
+    "sha256": "c77982d481a9fe5b13c0fdd68515a5931729961e7135124f70236d5a30bdd701",
+    "size": 6094,
+    "provenance": "ignored local installed dependency; not verified against lock integrity"
+  },
+  {
+    "path": "node_modules/body-parser/lib/utils.js",
+    "sha256": "9b50ce0f96b1027a12c5a0528a3ba05c5a7eed1d442cb5062bd30e7f1361fc83",
+    "size": 1862,
+    "provenance": "ignored local installed dependency; not verified against lock integrity"
+  },
+  {
+    "path": "node_modules/raw-body/index.js",
+    "sha256": "e1c1ff9152ec1f5cf1ef1c2b853d6723e93ba13e4e9f1f15f9c6b2026a39a1cb",
+    "size": 7171,
+    "provenance": "ignored local installed dependency; not verified against lock integrity"
+  },
+  {
+    "path": "node_modules/pdf-lib/cjs/core/parser/PDFParser.js",
+    "sha256": "390fc8e6464b2938e9e8726b3ae23649514dc157beed55f333e58a0bc6899c58",
+    "size": 16906,
+    "provenance": "ignored local installed dependency; not verified against lock integrity"
+  },
+  {
+    "path": "node_modules/pdf-lib/cjs/core/parser/PDFObjectStreamParser.js",
+    "sha256": "55a12aa6d4ccc5af18286abc9e264e0b219e90129404f83645d248badbf3fb7a",
+    "size": 3776,
+    "provenance": "ignored local installed dependency; not verified against lock integrity"
+  },
+  {
+    "path": "node_modules/pdf-lib/cjs/core/parser/ByteStream.js",
+    "sha256": "f7489621ec58792b4c6c4d1e8b38ce5fcd17d997b0f9d2c0b7d81176e55cbf12",
+    "size": 2184,
+    "provenance": "ignored local installed dependency; not verified against lock integrity"
+  },
+  {
+    "path": "node_modules/pdf-lib/cjs/core/streams/decode.js",
+    "sha256": "d9a689fe9004122c9b96c5e331defa1a22a7c27f2591f42033ccdcb562e1d689",
+    "size": 2818,
+    "provenance": "ignored local installed dependency; not verified against lock integrity"
+  },
+  {
+    "path": "node_modules/pdf-lib/cjs/core/streams/DecodeStream.js",
+    "sha256": "666dc30139cceee5ef849a09a990d761c2de801e0aaa264178b93cf99640adcb",
+    "size": 5062,
+    "provenance": "ignored local installed dependency; not verified against lock integrity"
+  },
+  {
+    "path": "node_modules/pdf-lib/cjs/core/streams/FlateStream.js",
+    "sha256": "e5e279bd3642c8fd52582605f61514162cdff563523ae0963664a7aa05ff4f03",
+    "size": 16547,
+    "provenance": "ignored local installed dependency; not verified against lock integrity"
+  }
+]

@@ -2,3 +2,9 @@
 # the named files in commit 3ea6a9c, not credentials. Future commits stay scanned.
 3ea6a9c210487f2c933aa51ce4aa09e354196a2f:evidence/ias-plan/source-manifest.json:generic-api-key:43
 3ea6a9c210487f2c933aa51ce4aa09e354196a2f:evidence/ias-plan/source-manifest.json:generic-api-key:52
+
+# The same source-manifest digests also appear in commit d44e926.
+# Verified SHA-256 of scripts/demo-secret.js (43) and scripts/scan-secrets.js (52)
+# against that commit; these are source hashes, not authentication secrets.
+d44e926c1405be27041bf4c93043f1956d06d6a6:evidence/ias-plan/source-manifest.json:generic-api-key:43
+d44e926c1405be27041bf4c93043f1956d06d6a6:evidence/ias-plan/source-manifest.json:generic-api-key:52

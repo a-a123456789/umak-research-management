@@ -1,0 +1,448 @@
+[
+  {
+    "fingerprint": "public-search-definer-materialization-shared-pool",
+    "title": "Public search may materialize the complete approved catalogue before applying bounded search filters",
+    "description": "An anonymous POST /api/v1/research/search can issue a small validated selective query against crm_public_research(). The SECURITY DEFINER SQL function accepts no predicates or bounds and selects all Approved catalogue rows; outer SQL applies filtering, ordering and pagination. This is a source-grounded hypothesis of corpus-dependent work that could occupy the same ten-connection pool used for login, authentication and the global limiter. It is not an established availability vulnerability: an expensive valid search alone is insufficient, actual function materialization and meaningful interference with another principal remain unobserved. Strong controls include parameterized SQL, a strict 16KiB JSON body and bounded keyword/metadata/pagination, Approved-only public projection with pinned search_path, the global 300-token/5-per-second IP bucket, a configured 10-second statement timeout and 5-second acquisition timeout, transaction rollback and finally-release. No search cancellation listener or separate search concurrency admission appears. Recovery should occur on statement completion/timeout and transaction cleanup; no persistent resource loss is claimed.",
+    "claimed_root_cause": "The bounded public search filters and pagination occur outside an unparameterized SECURITY DEFINER set-returning function. If this prevents predicate pushdown/materializes a sufficiently large Approved corpus, admitted anonymous searches can consume the shared authentication/limiter pool until statement completion or timeout. The source establishes the path, not the decisive shared availability effect.",
+    "trace": [
+      {
+        "kind": "entrypoint",
+        "file": "src/app.js",
+        "line": 132,
+        "scope": "public search route",
+        "description": "Anonymous POST /api/v1/research/search accepts a validated search body and calls searchResearch without authentication."
+      },
+      {
+        "kind": "propagation",
+        "file": "src/research/search.js",
+        "line": 8,
+        "scope": "searchSql",
+        "description": "Selects from crm_public_research(), applying keyword/year/department predicates and LIMIT/OFFSET outside the function."
+      },
+      {
+        "kind": "propagation",
+        "file": "db/migrations/002_ias_controls.sql",
+        "line": 84,
+        "scope": "crm_public_research",
+        "description": "SECURITY DEFINER SQL set-returning function selects every Approved record including abstract, without accepting filter or limit parameters."
+      },
+      {
+        "kind": "sink",
+        "file": "src/research/search.js",
+        "line": 30,
+        "scope": "searchResearch shared database query",
+        "description": "Awaits query completion on the shared connection before COMMIT/release; no request cancellation is propagated to this function."
+      }
+    ],
+    "evidence": [
+      {
+        "file": "src/research/search.js",
+        "line": 21,
+        "description": "Strongest input limits constrain result count to 100 and offset to 10000, not the number of rows obtained from the function."
+      },
+      {
+        "file": "db/migrations/001_search_consultations.sql",
+        "line": 9,
+        "description": "Trigram and metadata indexes exist on research_records; a non-inlined function boundary may prevent outer search predicates from using them."
+      },
+      {
+        "file": "src/security/database-config.js",
+        "line": 4,
+        "description": "Shared pool max10, 5000ms acquisition timeout and 10000ms statement timeout are explicit preventing/limiting controls and must be included in validation."
+      },
+      {
+        "file": "src/app.js",
+        "line": 26,
+        "description": "Global limiter itself uses the same scoped database before the search handler."
+      },
+      {
+        "file": "src/security/limiter.js",
+        "line": 3,
+        "description": "Per-IP request bucket permits capacity300 and refill5/sec; it is a rate gate rather than separate concurrent-search admission."
+      },
+      {
+        "file": "src/research/search.js",
+        "line": 33,
+        "description": "Pool release occurs in finally after database work finishes; unlike the algorithm route, public search has no close listener or AbortController."
+      },
+      {
+        "file": "src/server.js",
+        "line": 10,
+        "description": "Production entrypoint constructs one pool through databaseConfig and passes it to createApp; request/header receipt timeouts are 60/15 seconds at line 14."
+      },
+      {
+        "file": "src/security/validation.js",
+        "line": 15,
+        "description": "Strict search schema bounds keyword to 200 characters, year and department, limit to 100 and offset to 10000. Parameterized outer SQL prevents SQL injection."
+      },
+      {
+        "file": "src/security/context.js",
+        "line": 18,
+        "description": "Scoped db.query uses the same pool and releases its transaction connection after COMMIT/ROLLBACK, including for limiter and authentication calls."
+      }
+    ],
+    "blockers": [
+      "Required OS-enforced execution sandbox is unavailable: sandbox-exec alone lacks configured memory, process-count and scratch-disk quotas; docker, podman and bwrap are unavailable. No target code was executed.",
+      "No disposable PostgreSQL service was available for a bounded query-plan/materialization and cancellation fixture; neither query amplification nor a meaningful effect on a separate dummy principal was demonstrated.",
+      "Actual catalogue cardinality, upstream search admission/concurrency, deployment pool isolation and timeout attachment remain owner-observed facts. Source alone does not establish that these controls permit meaningful shared interference."
+    ],
+    "validation_plan": {
+      "local": "Use only a fully enforced offline sandbox and disposable PostgreSQL with synthetic Approved and private rows. Preserve configured max10 pool, 10-second statement and 5-second acquisition timeouts. At two bounded corpus sizes, EXPLAIN (ANALYZE, BUFFERS) one selective keyword/year/department query with limit1 to establish Function Scan/materialization and filtering behavior. With a deterministic test-only query gate rather than load, inspect that one cancelled public request retains its connection until query cleanup and whether independently admitted dummy authentication work shares that resource. Do not saturate or stress the pool. Reject security classification if the result shows only ordinary search cost without meaningful shared effect; treat cancellation or workload isolation as hardening in that case.",
+      "deployment": "Owner should inspect existing normal-query plans and telemetry, catalogue size, deployed statement/acquisition timeout attachment, public-search concurrency/admission bounds and shared-pool topology. Establish whether permitted search work can delay another principal beyond the service availability budget, accounting for timeout recovery; do not send probes or generate load."
+    },
+    "verdict": "needs_validation"
+  },
+  {
+    "fingerprint": "src/app.js:activation-shared-account-lockout",
+    "title": "Anonymous failed activation requests consume a global activation account allowance",
+    "description": "Source review supports a shared activation reservation key: five syntactically valid failed activation requests could cause a different invitee to receive 429 before token verification. Independent runtime reproduction remains blocked. The apparent effect is temporary activation denial, not account takeover or denial of existing authenticated sessions.",
+    "claimed_root_cause": "The activation endpoint passes the constant string activation to a limiter designed to reject on either account-specific or IP-specific failed-attempt budgets, causing unrelated invitees to share an attacker-consumable account bucket.",
+    "trace": [
+      {
+        "kind": "entrypoint",
+        "file": "src/app.js",
+        "line": 68,
+        "scope": "anonymous activation endpoint",
+        "description": "Strict schema accepts a lowercase 64-hex token and a 12\u2013128-character password without bearer authentication."
+      },
+      {
+        "kind": "propagation",
+        "file": "src/app.js",
+        "line": 70,
+        "scope": "activation reservation selector",
+        "description": "The account selector is the constant activation for every token and invitee; source IP remains a separate selector."
+      },
+      {
+        "kind": "propagation",
+        "file": "src/security/limiter.js",
+        "line": 13,
+        "scope": "reserveLogin key construction",
+        "description": "SHA-256 of account:activation is identical for all activation requests; account and IP hashes are forwarded independently."
+      },
+      {
+        "kind": "propagation",
+        "file": "src/security/context.js",
+        "line": 19,
+        "scope": "reservation transaction persistence",
+        "description": "Each db.query commits its own transaction, so successful reservation insertion is committed before the later token-verification query and invalid-token return."
+      },
+      {
+        "kind": "propagation",
+        "file": "db/migrations/002_ias_controls.sql",
+        "line": 141,
+        "scope": "reservation accumulation",
+        "description": "Admitted requests insert one reservation under each key, guarded by sorted transaction advisory locks; expiry pruning is 15 minutes."
+      },
+      {
+        "kind": "propagation",
+        "file": "src/app.js",
+        "line": 72,
+        "scope": "invalid activation cleanup",
+        "description": "crm_activate returning false causes 400 without crm_finish_login; successful activation only deletes its own request UUID reservations."
+      },
+      {
+        "kind": "propagation",
+        "file": "db/migrations/002_ias_controls.sql",
+        "line": 140,
+        "scope": "later unrelated reservation",
+        "description": "A later request with another IP still shares the account key; five retained account reservations cause false before new insertion."
+      },
+      {
+        "kind": "sink",
+        "file": "src/app.js",
+        "line": 70,
+        "scope": "unrelated valid invitee rejection",
+        "description": "A false reservation result returns 429 and Retry-After 900 before crm_activate can verify an otherwise valid invitation. This cross-IP HTTP result has not been executed."
+      }
+    ],
+    "evidence": [
+      {
+        "file": "src/app.js",
+        "line": 70,
+        "description": "Constant activation account selector is used for anonymous activation requests."
+      },
+      {
+        "file": "src/app.js",
+        "line": 72,
+        "description": "Invalid tokens retain reservations; only successful activation reaches cleanup."
+      },
+      {
+        "file": "src/security/limiter.js",
+        "line": 13,
+        "description": "Account/IP hashes are forwarded as two independent rejection keys."
+      },
+      {
+        "file": "db/migrations/002_ias_controls.sql",
+        "line": 139,
+        "description": "Reservations expire after 15 minutes; threshold is five on either key. Sorted advisory locking makes the shared state atomic across API instances."
+      },
+      {
+        "file": "db/migrations/005_activation_and_cleanup.sql",
+        "line": 24,
+        "description": "The token verifier correctly checks expiry, unused state and row locking, but runs only after the shared limiter has admitted the request."
+      },
+      {
+        "file": "src/app.js",
+        "line": 26,
+        "description": "General request limiter precedes activation. Its default capacity 300 and refill 5/second in src/security/limiter.js:3 do not visibly prevent five sequential accepted invalid requests."
+      },
+      {
+        "file": "src/security/context.js",
+        "line": 19,
+        "description": "The reservation query commits independently, excluding an enclosing HTTP transaction rollback as a source-visible refutation."
+      },
+      {
+        "file": "src/crypto.js",
+        "line": 8,
+        "description": "Four concurrent expensive operations are allowed. Sequential requests avoid concurrency rejection; this cap does not partition reservation ownership."
+      },
+      {
+        "file": "db/migrations/002_ias_controls.sql",
+        "line": 145,
+        "description": "crm_finish_login deletes only the current request UUID, not all account reservations. SQL grants permit the application to call limiter helpers."
+      },
+      {
+        "file": "scripts/privacy-maintenance.js",
+        "line": 26,
+        "description": "Maintenance deletes reservations older than 15 minutes, limiting persistence but not preventing the earlier shared-window effect."
+      },
+      {
+        "file": "test/ias-controls.test.js",
+        "line": 93,
+        "description": "Existing source tests cover single-use and expiring activation; login limiter tests at line 108 cover shared-window semantics, but neither independently demonstrates this cross-invitee activation trace."
+      }
+    ],
+    "blockers": [
+      "No bounded HTTP/PostgreSQL reproduction was executed. The parent-approved OS sandbox is unavailable because configured OS-enforced memory, process-count and scratch disk quotas are missing, and Docker/Podman/bwrap are absent.",
+      "A disposable seeded PostgreSQL service inside the required sandbox was not started or contacted."
+    ],
+    "validation_plan": {
+      "local": "When the complete OS sandbox is available, start disposable PostgreSQL with current migrations and synthetic roles; use an empty allowlisted environment, read-only source/tools, scratch-only writes, network isolation with loopback only, and explicit CPU/memory/process/file/disk/time limits. Create a synthetic staff invitation and first establish a clean valid activation control. Reset synthetic state, make five sequential compliant activation requests with nonmatching dummy tokens from one fixture-controlled peer IP, then submit a fresh valid invitation token from a different fixture-controlled peer IP. Observe the exact HTTP statuses, unchanged active/used state, and five account-key reservations; stop at that minimum result. Control peer IP with a trusted injected test adapter or separate isolated loopback source bindings, without enabling trust proxy. Confirm recovery by aging only disposable reservation timestamps beyond 15 minutes and issuing a fresh unexpired synthetic invitation. No real accounts, ambient credentials, live services or stress. Existing source controls require valid JSON under 16 KiB, sufficient ordinary request tokens and successful sequential password hashing."
+    },
+    "verdict": "needs_validation"
+  },
+  {
+    "fingerprint": "src/storage/routes.js:compressed-body-abort-upload-slot-retention",
+    "title": "Interrupted compressed uploads may retain process-wide upload slots",
+    "description": "A student or faculty member with access to a study can pass authentication, membership and per-user upload-rate admission, then reserve one of two process-wide upload slots before raw body parsing. Cleanup is idempotent but runs only from the raw-parser error callback or subsequent handler finally. Locally installed body-parser source enables compression by default, pipes the HTTP request to a decoder and passes that decoder to raw-body; raw-body listens for decoder abort/end/error rather than HTTP-request abort. If an interrupted compressed request never completes the decoder callback, two small interrupted uploads could exhaust this process-wide capacity and deny uploads to another researcher. This cross-principal availability outcome and retention beyond the HTTP timeout are hypotheses, not observed effects. Strong controls include opaque-session authentication, student/faculty role and study membership checks before body parsing, global and per-user upload token buckets (upload burst5, refill1/180 seconds), exact octet-stream requirement, a 25,000,000-byte parsed-body limit, two-slot concurrency cap, parser-error/finally cleanup and server request/header timeouts of 60/15 seconds. Normal malformed or completed bodies can release slots; persistence until process restart is not established.",
+    "claimed_root_cause": "Upload admission cleanup depends on body-parser completing its callback; compressed-stream cancellation has no independent request lifecycle cleanup hook.",
+    "trace": [
+      {
+        "kind": "entrypoint",
+        "file": "src/storage/routes.js",
+        "line": 11,
+        "scope": "POST document upload",
+        "description": "Authenticated member researcher supplies octet-stream content, filename and Content-Encoding."
+      },
+      {
+        "kind": "propagation",
+        "file": "src/storage/routes.js",
+        "line": 18,
+        "scope": "upload admission",
+        "description": "Increment process-global uploads and install release closure, without registering HTTP abort/close listeners."
+      },
+      {
+        "kind": "propagation",
+        "file": "src/storage/routes.js",
+        "line": 22,
+        "scope": "raw body acquisition",
+        "description": "Call express.raw with a byte limit and default inflation behavior; release on error only after its callback runs."
+      },
+      {
+        "kind": "propagation",
+        "file": "node_modules/body-parser/lib/read.js",
+        "line": 118,
+        "scope": "compressed request reader",
+        "description": "Locally installed dependency creates a decompression stream and req.pipe(stream); getBody at line 134 receives that stream. Correspondence to locked package bytes is unverified."
+      },
+      {
+        "kind": "propagation",
+        "file": "node_modules/raw-body/index.js",
+        "line": 203,
+        "scope": "raw-body stream events",
+        "description": "Locally installed raw-body registers aborted/close/data/end/error listeners on the supplied decoder stream; close cleans listeners without itself completing the callback. Actual Node request-abort propagation is unobserved."
+      },
+      {
+        "kind": "sink",
+        "file": "src/storage/routes.js",
+        "line": 16,
+        "scope": "shared upload admission",
+        "description": "If two slots remain retained, all further uploads receive capacity-exceeded 503, irrespective of study or user."
+      }
+    ],
+    "evidence": [
+      {
+        "file": "src/storage/routes.js",
+        "line": 19,
+        "description": "Release closure is called by parser error callback or final handler finally; no request abort release is registered."
+      },
+      {
+        "file": "node_modules/body-parser/lib/utils.js",
+        "line": 45,
+        "description": "Inflation enabled unless explicitly false; upload route does not disable it."
+      },
+      {
+        "file": "node_modules/body-parser/lib/read.js",
+        "line": 118,
+        "description": "Compressed bodies use an independently created decoder with req.pipe(stream)."
+      },
+      {
+        "file": "node_modules/raw-body/index.js",
+        "line": 203,
+        "description": "Listener registration targets only the stream passed to raw-body."
+      },
+      {
+        "file": "src/server.js",
+        "line": 14,
+        "description": "HTTP request timeout is present; whether socket closure completes decoder callback is the decisive missing fact."
+      },
+      {
+        "file": "package-lock.json",
+        "line": 761,
+        "description": "Committed lock selects body-parser 2.4.0; installed local dependency source was read as text, not executed."
+      },
+      {
+        "file": "src/storage/routes.js",
+        "line": 11,
+        "description": "Upload-specific limiter allows burst5/refill1 per180 seconds, then checks configured services, researcher role, study membership and capacity before accepting exact octet-stream content."
+      },
+      {
+        "file": "src/storage/validate.js",
+        "line": 4,
+        "description": "MAX_DOCUMENT_BYTES is 25,000,000 and is used as the raw parser decoded-byte limit; this bounds accepted body size but does not independently release admission on cancellation."
+      },
+      {
+        "file": "node_modules/raw-body/index.js",
+        "line": 291,
+        "description": "Installed dependency close cleanup removes stream listeners and buffer; completion callback occurs through done on end/error/aborted. Runtime decoder lifecycle remains decisive and dependency bytes are not lock-integrity verified."
+      }
+    ],
+    "blockers": [
+      "No target execution permitted: available Darwin sandbox-exec lacks configured memory, process-count and scratch-disk quotas, and no complete alternative sandbox is available. Repeatable retention after abort and after the configured HTTP timeout was not observed.",
+      "Node24 HTTP request abort/timeout to zlib decoder event propagation is decisive. The parser source alone cannot prove that its callback remains pending, that slots remain retained, or that a second dummy researcher is denied after cleanup should have occurred.",
+      "Locally installed dependency files match the recorded dependency-source-manifest hashes when read during this review, but ignored installed source is not commit-controlled or verified against package-lock integrity.",
+      "Deployed ingress compression rejection, full request buffering, disconnect propagation and process recovery/topology were not observed and may prevent or limit this scenario."
+    ],
+    "validation_plan": {
+      "local": "In a fully OS-enforced offline sandbox with low CPU/memory/process/file/disk/time bounds and isolated loopback, use the intended Node24 runtime and dependencies independently verified against the committed lock. Start the actual server timeout configuration with disposable PostgreSQL, synthetic researcher/member sessions and fake scanner/object store. Abort at most two tiny incomplete gzip uploads after deterministic admission confirmation, then inspect counter cleanup and one tiny valid upload from a second dummy researcher. Include observation after the 60-second request timeout within a bounded fixture; do not infer indefinite retention from a brief delay. Compare identity-body abort and compressed-body completion/error controls. Stop at the counter/admission result, never contact shared services, and reject the candidate if cleanup releases capacity.",
+      "deployment": "Owner should inspect ingress compressed-body acceptance/rejection, buffering and disconnect propagation, configured HTTP deadlines, process isolation and restart behavior from configuration and existing telemetry. Do not probe or load a deployed service."
+    },
+    "verdict": "needs_validation"
+  },
+  {
+    "fingerprint": "src/storage/validate.js:pdf-object-stream-expanded-bytes-unbounded",
+    "title": "PDF object-stream expansion may exceed the worker memory budget",
+    "description": "An authenticated student/faculty member can reach eager PDF object-stream decoding with an upload of at most 25,000,000 bytes. The inspected local dependency grows typed-array buffers without an application decoded-byte ceiling. Two concurrent upload admissions, per-user upload throttling, a 128 MiB V8 old-generation limit, a 4 MiB stack limit, and a ten-second termination timer constrain the path. No accepted expansion fixture, bypass of those effective bounds, or meaningful effect on another principal has been observed. The missing decoded-byte cap alone is hardening; the shared-memory availability hypothesis remains unvalidated.",
+    "claimed_root_cause": "PDF parsing eagerly expands compressed object streams inside a worker thread of the API process without an explicit decoded-byte budget. If typed-array backing allocations can exceed the effective worker budget before termination, the resulting memory pressure may affect unrelated requests in the same API process; runtime accounting and that cross-principal consequence remain decisive unknowns.",
+    "trace": [
+      {
+        "kind": "entrypoint",
+        "file": "src/storage/routes.js",
+        "line": 22,
+        "scope": "raw manuscript body",
+        "description": "After bearer authentication, student/faculty role and research membership checks, a caller submits application/octet-stream bytes under the 25,000,000-byte raw-body limit; uploads are admitted at most two at a time per process."
+      },
+      {
+        "kind": "propagation",
+        "file": "src/storage/routes.js",
+        "line": 27,
+        "scope": "document validation dispatch",
+        "description": "Accepted bytes and filename enter worker validation before antivirus scanning/storage."
+      },
+      {
+        "kind": "propagation",
+        "file": "src/storage/isolated-validation.js",
+        "line": 4,
+        "scope": "API-process worker thread",
+        "description": "Bytes are supplied to a fixed worker module with 128 MiB old-generation and 4 MiB stack limits. A ten-second timer and message/error/exit handlers terminate the worker; total typed-array memory containment is not established by this source."
+      },
+      {
+        "kind": "propagation",
+        "file": "src/storage/validation-worker.js",
+        "line": 3,
+        "scope": "validation worker",
+        "description": "Construct buffer and call validateDocument."
+      },
+      {
+        "kind": "propagation",
+        "file": "src/storage/validate.js",
+        "line": 51,
+        "scope": "PDF branch",
+        "description": "PDFDocument.load parses the document before page count/encryption checks, with no expansion option supplied."
+      },
+      {
+        "kind": "propagation",
+        "file": "node_modules/pdf-lib/cjs/core/parser/PDFParser.js",
+        "line": 140,
+        "scope": "PDF object-stream dispatch",
+        "description": "ObjStm indirect objects enter PDFObjectStreamParser."
+      },
+      {
+        "kind": "propagation",
+        "file": "node_modules/pdf-lib/cjs/core/parser/ByteStream.js",
+        "line": 58,
+        "scope": "raw object stream decoding",
+        "description": "Decode entire PDF raw stream eagerly before constructing parser ByteStream."
+      },
+      {
+        "kind": "sink",
+        "file": "node_modules/pdf-lib/cjs/core/streams/DecodeStream.js",
+        "line": 133,
+        "scope": "decoded buffer allocation",
+        "description": "The inspected dependency doubles an allocation size and creates/copies a Uint8Array without an explicit expanded-byte ceiling. Allocation beyond effective runtime bounds and shared API impact are not observed."
+      }
+    ],
+    "evidence": [
+      {
+        "file": "src/storage/validate.js",
+        "line": 47,
+        "description": "Input buffer size is bounded; DOCX has separate inflated-size accounting, while PDF load has none."
+      },
+      {
+        "file": "src/storage/isolated-validation.js",
+        "line": 4,
+        "description": "Worker limits old-generation heap and stack; timeout is 10 seconds at line 8."
+      },
+      {
+        "file": "node_modules/pdf-lib/cjs/core/parser/PDFObjectStreamParser.js",
+        "line": 14,
+        "description": "Constructor calls ByteStream.fromPDFRawStream before object-offset validation."
+      },
+      {
+        "file": "node_modules/pdf-lib/cjs/core/streams/DecodeStream.js",
+        "line": 125,
+        "description": "decode repeatedly calls readBlock until EOF."
+      },
+      {
+        "file": "node_modules/pdf-lib/cjs/core/streams/FlateStream.js",
+        "line": 280,
+        "description": "Flate backreferences trigger buffer expansion via ensureBuffer."
+      },
+      {
+        "file": "package-lock.json",
+        "line": 1614,
+        "description": "Committed lock selects pdf-lib 1.17.1; dependency implementation was inspected as local source only."
+      },
+      {
+        "file": "src/storage/routes.js",
+        "line": 11,
+        "description": "Upload bucket capacity is five with one token per 180 seconds, keyed to authenticated identity; role, membership, enabled storage/scanner, and at most two process-wide admitted uploads precede raw body parsing."
+      },
+      {
+        "file": "src/storage/isolated-validation.js",
+        "line": 6,
+        "description": "Success, invalid result, error, exit and ten-second deadline converge on finish, which clears the timer and invokes worker termination. No post-timeout resource retention was observed."
+      }
+    ],
+    "blockers": [
+      "No target code or PDF fixture was executed: the required OS sandbox lacks configured OS-enforced memory, process-count and scratch-disk quotas; Docker/Podman/bwrap are unavailable.",
+      "No bounded accepted PDF fixture establishes expansion magnitude, worker typed-array memory accounting under the selected Node runtime, or whether existing heap/time/admission bounds prevent meaningful shared-process pressure. No other-principal impact or resource retention after termination was observed.",
+      "Actual API process/container limits, supervisor recovery, upstream upload admission and deployed dependency bytes are unobserved. Local installed dependency source was not independently reproduced from lock integrity."
+    ],
+    "validation_plan": {
+      "local": "Only after complete OS enforcement is available, reproduce locked dependency bytes in an empty allowlisted environment with no external network, read-only source/tools, scratch-only writes and low memory/process/disk/time limits. Use one synthetic authenticated member and disposable/mock database, scanner and object store. Through the native upload interface, compare a benign control with predeclared small compressed ObjStm fixtures at two low decoded-size points, capped at 8 MiB total expanded bytes. Observe acceptance/rejection, worker external/array-buffer accounting and total-process memory against the control, deadline termination and post-termination recovery. Keep a second synthetic principal making a trivial bounded request as a health control; do not cause or approach exhaustion. Stop at the predeclared limits. Small expansion alone does not confirm a vulnerability: require a defensible connection to an owner-observed shared budget without stress, or retain hardening/unvalidated status. Promote evidence only using the trusted parent bounded no-follow procedure.",
+      "deployment": "Owner should inspect effective rendered API/container memory and worker isolation settings, upload ingress limits, deployed Node/dependency versions and supervisor recovery. Determine whether worker backing allocations count against a separate enforceable budget or the same API-process budget and whether the bounded amplification could materially impair another principal under configured two-upload admission. Use isolated staging with synthetic data only; do not probe or exhaust production."
+    },
+    "verdict": "needs_validation"
+  }
+]
